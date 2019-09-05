@@ -15,6 +15,12 @@
   when:
     - ansible_service_mgr == "systemd"
 
+- name: Set freshclam to start at boot
+  service:
+    name: clamav-freshclam
+    enabled: yes
+    state: started
+
 - name: Wait for new signatures to be downloaded and installed by freshclam
   wait_for:
     timeout: 300
