@@ -26,4 +26,3 @@
     name: clamav-daemon
     enabled: yes
     state: started
-    

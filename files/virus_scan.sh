@@ -10,9 +10,7 @@ LAST_DETECTION_FILENAME='/var/log/clamav/last_detection'
 clamdscan --infected --fdpass / &> ${LAST_SCAN_LOG_FILENAME}
 
 # if any infections are found, touch the detection file
-grep -q "Infected files: 0" ${LAST_SCAN_LOG_FILENAME}
-
-if [ $? -ne 0 ]
+if ! grep -q "Infected files: 0" ${LAST_SCAN_LOG_FILENAME}
 then
     touch ${LAST_DETECTION_FILENAME}
 fi
