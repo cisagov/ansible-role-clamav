@@ -6,7 +6,7 @@
 
 Installs [ClamAV](https://www.clamav.net)
 and a related cron job.  This allows servers to be quickly queried en mass for any
-matched signatures.   
+matched signatures.
 
 ## Requirements ##
 
