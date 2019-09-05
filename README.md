@@ -1,4 +1,4 @@
-# ansible-role-clamav #
+# ansible-role-clamav 🦪 #
 
 [![Build Status](https://travis-ci.com/cisagov/ansible-role-clamav.svg?branch=develop)](https://travis-ci.com/cisagov/ansible-role-clamav)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/ansible-role-clamav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-clamav/alerts/)
