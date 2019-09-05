@@ -1,8 +1,8 @@
-# skeleton-ansible-role #
+# ansible-role-clamav #
 
-[![Build Status](https://travis-ci.com/cisagov/skeleton-ansible-role.svg?branch=develop)](https://travis-ci.com/cisagov/skeleton-ansible-role)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/skeleton-ansible-role.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/skeleton-ansible-role/alerts/)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/skeleton-ansible-role.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/skeleton-ansible-role/context:python)
+[![Build Status](https://travis-ci.com/cisagov/ansible-role-clamav.svg?branch=develop)](https://travis-ci.com/cisagov/ansible-role-clamav)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/ansible-role-clamav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-clamav/alerts/)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/ansible-role-clamav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-clamav/context:python)
 
 This is a skeleton project that can be used to quickly get a new
 [cisagov](https://github.com/cisagov) Ansible role GitHub project
