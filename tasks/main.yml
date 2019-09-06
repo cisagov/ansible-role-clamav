@@ -4,6 +4,15 @@
 - name: Install ClamAV package
   package: name=clamav-daemon state=present
 
+- name: Modify ClamAV configuration
+  blockinfile:
+    path: /etc/clamav/clamd.conf
+    state: present
+    block: |
+      ExcludePath ^/dev/
+      ExcludePath ^/proc/
+      ExcludePath ^/sys/
+
 - name: Install virus_scan cron job
   copy: src="virus_scan.sh" dest="/etc/cron.weekly/virus_scan" mode=755
 
