@@ -7,6 +7,8 @@
 Installs [ClamAV](https://www.clamav.net)
 and a related cron job.  This allows servers to be quickly queried en mass for any
 matched signatures.
+The [ClamAV-Report](https://github.com/cisagov/clamav-report) tool
+can be used to gather scan data from systems using this role.
 
 ## Requirements ##
 
