@@ -1,12 +1,29 @@
 ---
-# tasks file for clamav
+- name: Determine ClamAV package names and config file (RedHat)
+  set_fact:
+    package_names:
+      - clamd
+      - clamav-update
+    config_file_name: /etc/clamd.d/scan.conf
+    service_name: clamd@scan
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Determine ClamAV package names and config file (not RedHat)
+  set_fact:
+    package_names:
+      - clamav-daemon
+    config_file_name: /etc/clamav/clamd.conf
+    service_name: clamav-daemon
+  when: ansible_facts['os_family'] != 'RedHat'
 
 - name: Install ClamAV package
-  package: name=clamav-daemon state=present
+  package:
+    name: '{{ package_names }}'
+    state: present
 
 - name: Modify ClamAV configuration
   blockinfile:
-    path: /etc/clamav/clamd.conf
+    path: '{{ config_file_name }}'
     state: present
     block: |
       ExcludePath ^/dev/
@@ -14,7 +31,10 @@
       ExcludePath ^/sys/
 
 - name: Install virus_scan cron job
-  copy: src="virus_scan.sh" dest="/etc/cron.weekly/virus_scan" mode=755
+  copy:
+    src: virus_scan.sh
+    dest: /etc/cron.weekly/virus_scan
+    mode: 0755
 
 # Unless you do this, systemd can sometimes get confused when you try
 # to start a service you just installed
@@ -24,11 +44,20 @@
   when:
     - ansible_service_mgr == "systemd"
 
-- name: Set freshclam to start at boot
+# freshclam is run via a cron job on RedHat, so there is no service to
+# start in that case
+- name: Start and enable freshclam
   service:
     name: clamav-freshclam
     enabled: yes
     state: started
+  when: ansible_facts['os_family'] != 'RedHat'
+
+- name: Make sure freshclam has been run at least once
+  command: /usr/bin/freshclam
+  args:
+    creates: /var/lib/clamav/bytecode.cvd
+  when: ansible_facts['os_family'] == 'RedHat'
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   wait_for:
@@ -38,6 +67,6 @@
 
 - name: Set ClamAV to start at boot
   service:
-    name: clamav-daemon
+    name: '{{ service_name }}'
     enabled: yes
     state: started
