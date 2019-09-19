@@ -1,18 +1,18 @@
 ---
-- name: Determine ClamAV package names and config file (RedHat)
+- name: Determine ClamAV package names and config file (Fedora)
   set_fact:
     package_names:
       - clamd
       - clamav-update
     config_file_name: /etc/clamd.d/scan.conf
-  when: ansible_facts['os_family'] == 'RedHat'
+  when: ansible_facts['distribution'] == 'Fedora'
 
-- name: Determine ClamAV package names and config file (not RedHat)
+- name: Determine ClamAV package names and config file (Debian)
   set_fact:
     package_names:
       - clamav-daemon
     config_file_name: /etc/clamav/clamd.conf
-  when: ansible_facts['os_family'] != 'RedHat'
+  when: ansible_facts['distribution'] == 'Debian'
 
 - name: Install ClamAV package
   package:
@@ -25,28 +25,30 @@
     dest: /etc/cron.weekly/virus_scan
     mode: 0755
 
-# Unless you do this, systemd can sometimes get confused when you try
-# to start a service you just installed
-- name: Systemd daemon-reload
-  systemd:
-    daemon_reload: true
-  when:
-    - ansible_service_mgr == "systemd"
+- name: Systemd setup
+  block:
+    # Unless you do this, systemd can sometimes get confused when you
+    # try to start a service you just installed
+    - name: Systemd daemon-reload
+      systemd:
+        daemon_reload: true
 
-# freshclam is run via a cron job on RedHat, so there is no service to
-# start in that case
-- name: Start and enable freshclam
-  service:
-    name: clamav-freshclam
-    enabled: yes
-    state: started
-  when: ansible_facts['os_family'] != 'RedHat'
+    # freshclam is run via a cron job on Fedora, so there is no
+    # service to start in that case
+    - name: Start and enable freshclam
+      service:
+        name: clamav-freshclam
+        enabled: yes
+        state: started
+  when: ansible_facts['distribution'] == 'Debian'
 
-- name: Make sure freshclam has been run at least once
+# This happens automatically on Debian when we start the
+# clamav-freshclam service
+- name: Run freshclam (Fedora)
   command: /usr/bin/freshclam
   args:
     creates: /var/lib/clamav/bytecode.cvd
-  when: ansible_facts['os_family'] == 'RedHat'
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   wait_for:
