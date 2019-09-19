@@ -6,7 +6,8 @@ set -o pipefail
 LAST_SCAN_LOG_FILENAME='/var/log/clamav/lastscan.log'
 LAST_DETECTION_FILENAME='/var/log/clamav/last_detection'
 
-# scan the entire system and write to the log
+# Scan the entire file system (modulo the /dev, /sys, and /proc trees)
+# and write to the log
 clamscan --infected --recursive \
          --log=${LAST_SCAN_LOG_FILENAME} \
          --exclude-dir=/dev \
