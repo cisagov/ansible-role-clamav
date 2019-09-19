@@ -4,11 +4,11 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/cisagov/ansible-role-clamav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-clamav/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/cisagov/ansible-role-clamav.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/cisagov/ansible-role-clamav/context:python)
 
-Installs [ClamAV](https://www.clamav.net)
-and a related cron job.  This allows servers to be quickly queried en mass for any
-matched signatures.
-The [ClamAV-Report](https://github.com/cisagov/clamav-report) tool
-can be used to gather scan data from systems using this role.
+Installs [ClamAV](https://www.clamav.net) and a related cron job.
+This allows servers to be quickly queried en mass for any matched
+signatures.  The
+[ClamAV-Report](https://github.com/cisagov/clamav-report) tool can be
+used to gather scan data from systems using this role.
 
 ## Requirements ##
 
@@ -61,4 +61,4 @@ with this waiver of copyright interest.
 
 ## Author Information ##
 
-First Last - <first.last@trio.dhs.gov>
+Mark Feldhousen, Jr. - <mark.feldhousen@trio.dhs.gov>
