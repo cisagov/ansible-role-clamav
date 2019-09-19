@@ -1,12 +1,12 @@
 ---
-- name: Determine ClamAV package names and config file (Fedora)
+- name: Determine ClamAV package names (Fedora)
   set_fact:
     package_names:
       - clamav
       - clamav-update
   when: ansible_facts['distribution'] == 'Fedora'
 
-- name: Determine ClamAV package names and config file (Debian)
+- name: Determine ClamAV package names (Debian)
   set_fact:
     package_names:
       - clamav-daemon
