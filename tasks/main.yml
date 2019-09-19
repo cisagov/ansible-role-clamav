@@ -4,14 +4,12 @@
     package_names:
       - clamav
       - clamav-update
-    config_file_name: /etc/clamd.d/scan.conf
   when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Determine ClamAV package names and config file (Debian)
   set_fact:
     package_names:
       - clamav-daemon
-    config_file_name: /etc/clamav/clamd.conf
   when: ansible_facts['distribution'] == 'Debian'
 
 - name: Install ClamAV packages
