@@ -5,7 +5,6 @@
       - clamd
       - clamav-update
     config_file_name: /etc/clamd.d/scan.conf
-    service_name: clamd@scan
   when: ansible_facts['os_family'] == 'RedHat'
 
 - name: Determine ClamAV package names and config file (not RedHat)
@@ -13,22 +12,12 @@
     package_names:
       - clamav-daemon
     config_file_name: /etc/clamav/clamd.conf
-    service_name: clamav-daemon
   when: ansible_facts['os_family'] != 'RedHat'
 
 - name: Install ClamAV package
   package:
     name: '{{ package_names }}'
     state: present
-
-- name: Modify ClamAV configuration
-  blockinfile:
-    path: '{{ config_file_name }}'
-    state: present
-    block: |
-      ExcludePath ^/dev/
-      ExcludePath ^/proc/
-      ExcludePath ^/sys/
 
 - name: Install virus_scan cron job
   copy:
@@ -64,9 +53,3 @@
     timeout: 300
     path: /var/lib/clamav/bytecode.cvd
     state: present
-
-- name: Set ClamAV to start at boot
-  service:
-    name: '{{ service_name }}'
-    enabled: yes
-    state: started
