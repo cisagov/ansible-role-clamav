@@ -1,6 +1,7 @@
 """Module containing the tests for the default scenario."""
 
 import os
+
 # import pytest
 
 import testinfra.utils.ansible_runner
@@ -20,6 +21,7 @@ def test_pip(host):
     installed = [package.is_installed for package in packages]
     assert len(pkgs) != 0
     assert all(installed)
+
 
 # @pytest.mark.parametrize("x", [True])
 # def test_packages(host, x):
