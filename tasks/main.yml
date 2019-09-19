@@ -2,7 +2,7 @@
 - name: Determine ClamAV package names and config file (Fedora)
   set_fact:
     package_names:
-      - clamd
+      - clamav
       - clamav-update
     config_file_name: /etc/clamd.d/scan.conf
   when: ansible_facts['distribution'] == 'Fedora'
