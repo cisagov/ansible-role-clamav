@@ -42,12 +42,22 @@
         state: started
   when: ansible_facts['distribution'] == 'Debian'
 
-# This happens automatically on Debian when we start the
-# clamav-freshclam service
-- name: Run freshclam (Fedora)
-  command: /usr/bin/freshclam
-  args:
-    creates: /var/lib/clamav/bytecode.cvd
+- name: Fedora-specific setup
+  block:
+    - name: Create /var/log/clamav directory
+      file:
+        owner: root
+        group: root
+        mode: 0700
+        path: /var/log/clamav
+        state: directory
+
+    # This happens automatically on Debian when we start the
+    # clamav-freshclam service
+    - name: Run freshclam (Fedora)
+      command: /usr/bin/freshclam
+      args:
+        creates: /var/lib/clamav/bytecode.cvd
   when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
