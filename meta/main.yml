@@ -10,6 +10,9 @@ galaxy_info:
       versions:
         - stretch
         - buster
+    - name: Fedora
+      versions:
+        - 29
     - name: Amazon
       versions:
         - 2018.03
