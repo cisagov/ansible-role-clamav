@@ -14,7 +14,7 @@
     config_file_name: /etc/clamav/clamd.conf
   when: ansible_facts['distribution'] == 'Debian'
 
-- name: Install ClamAV package
+- name: Install ClamAV packages
   package:
     name: '{{ package_names }}'
     state: present
