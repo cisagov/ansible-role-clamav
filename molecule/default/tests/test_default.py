@@ -12,10 +12,14 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_packages(host):
     """Test that the appropriate packages were installed."""
-    if host.system_info.distribution == "fedora":
+    distribution = host.system_info.distribution
+    if distribution == "fedora":
         pkgs = ["clamav", "clamav-update"]
-    else:
+    elif distribution == "debian":
         pkgs = ["clamav-daemon"]
+    else:
+        # We don't support this distribution
+        assert False
     packages = [host.package(pkg) for pkg in pkgs]
     installed = [package.is_installed for package in packages]
     assert len(pkgs) != 0
