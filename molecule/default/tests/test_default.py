@@ -36,3 +36,13 @@ def test_packages(host):
 def test_files_and_dirs(host, path):
     """Test that the expected files and directories were created."""
     assert host.file(path).exists
+
+
+@pytest.mark.parametrize(
+    "service,isEnabled", [("clamav-daemon", False), ("clamav-freshclam", True)]
+)
+def test_services(host, service, isEnabled):
+    """Test that the expected services were enabled or disabled as intended."""
+    if host.system_info.distribution == "debian":
+        svc = host.service(service)
+        assert svc.is_enabled == isEnabled
