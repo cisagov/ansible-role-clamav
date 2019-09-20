@@ -31,6 +31,12 @@
       systemd:
         daemon_reload: true
 
+    # Debian seems to enable clamav-daemon by default
+    - name: Disable clamav-daemon
+      service:
+        name: clamav-daemon
+        enabled: no
+
     # freshclam is run via a cron job on Fedora, so there is no
     # service to start in that case
     - name: Start and enable freshclam
