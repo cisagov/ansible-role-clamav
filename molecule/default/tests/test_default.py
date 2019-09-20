@@ -12,10 +12,14 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_packages(host):
     """Test that the appropriate packages were installed."""
-    if host.system_info.distribution == "fedora":
+    distribution = host.system_info.distribution
+    if distribution == "fedora":
         pkgs = ["clamav", "clamav-update"]
-    else:
+    elif distribution == "debian":
         pkgs = ["clamav-daemon"]
+    else:
+        # We don't support this distribution
+        assert False
     packages = [host.package(pkg) for pkg in pkgs]
     installed = [package.is_installed for package in packages]
     assert len(pkgs) != 0
@@ -36,3 +40,13 @@ def test_packages(host):
 def test_files_and_dirs(host, path):
     """Test that the expected files and directories were created."""
     assert host.file(path).exists
+
+
+@pytest.mark.parametrize(
+    "service,isEnabled", [("clamav-daemon", False), ("clamav-freshclam", True)]
+)
+def test_services(host, service, isEnabled):
+    """Test that the expected services were enabled or disabled as intended."""
+    if host.system_info.distribution == "debian":
+        svc = host.service(service)
+        assert svc.is_enabled == isEnabled
