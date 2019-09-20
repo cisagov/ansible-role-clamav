@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  author: First Last
-  description: Skeleton Ansible role
-  company: CISA NCATS
+  author: Mark Feldhousen, Jr.
+  description: Install ClamAV and a cron job to run automated AV scans
+  company: CISA Cyber Assessments
   license: CC0
   min_ansible_version: 2.0
   platforms:
@@ -10,10 +10,10 @@ galaxy_info:
       versions:
         - stretch
         - buster
-    - name: Amazon
+    - name: Fedora
       versions:
-        - 2018.03
+        - 29
   galaxy_tags:
-    - skeleton
+    - clamav
 
 dependencies: []

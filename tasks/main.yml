@@ -1,43 +1,65 @@
 ---
-# tasks file for clamav
+- name: Determine ClamAV package names (Fedora)
+  set_fact:
+    package_names:
+      - clamav
+      - clamav-update
+  when: ansible_facts['distribution'] == 'Fedora'
 
-- name: Install ClamAV package
-  package: name=clamav-daemon state=present
+- name: Determine ClamAV package names (Debian)
+  set_fact:
+    package_names:
+      - clamav-daemon
+  when: ansible_facts['distribution'] == 'Debian'
 
-- name: Modify ClamAV configuration
-  blockinfile:
-    path: /etc/clamav/clamd.conf
+- name: Install ClamAV packages
+  package:
+    name: '{{ package_names }}'
     state: present
-    block: |
-      ExcludePath ^/dev/
-      ExcludePath ^/proc/
-      ExcludePath ^/sys/
 
 - name: Install virus_scan cron job
-  copy: src="virus_scan.sh" dest="/etc/cron.weekly/virus_scan" mode=755
+  copy:
+    src: virus_scan.sh
+    dest: /etc/cron.weekly
+    mode: 0755
 
-# Unless you do this, systemd can sometimes get confused when you try
-# to start a service you just installed
-- name: Systemd daemon-reload
-  systemd:
-    daemon_reload: true
-  when:
-    - ansible_service_mgr == "systemd"
+- name: Systemd setup
+  block:
+    # Unless you do this, systemd can sometimes get confused when you
+    # try to start a service you just installed
+    - name: Systemd daemon-reload
+      systemd:
+        daemon_reload: true
 
-- name: Set freshclam to start at boot
-  service:
-    name: clamav-freshclam
-    enabled: yes
-    state: started
+    # freshclam is run via a cron job on Fedora, so there is no
+    # service to start in that case
+    - name: Start and enable freshclam
+      service:
+        name: clamav-freshclam
+        enabled: yes
+        state: started
+  when: ansible_facts['distribution'] == 'Debian'
+
+- name: Fedora-specific setup
+  block:
+    - name: Create /var/log/clamav directory
+      file:
+        owner: root
+        group: root
+        mode: 0700
+        path: /var/log/clamav
+        state: directory
+
+    # This happens automatically on Debian when we start the
+    # clamav-freshclam service
+    - name: Run freshclam (Fedora)
+      command: /usr/bin/freshclam
+      args:
+        creates: /var/lib/clamav/bytecode.cvd
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   wait_for:
     timeout: 300
     path: /var/lib/clamav/bytecode.cvd
     state: present
-
-- name: Set ClamAV to start at boot
-  service:
-    name: clamav-daemon
-    enabled: yes
-    state: started
