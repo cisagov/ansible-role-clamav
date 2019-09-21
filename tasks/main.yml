@@ -6,11 +6,11 @@
       - clamav-update
   when: ansible_facts['distribution'] == 'Fedora'
 
-- name: Determine ClamAV package names (Debian)
+- name: Determine ClamAV package names (Debian, Ubuntu)
   set_fact:
     package_names:
       - clamav-daemon
-  when: ansible_facts['distribution'] == 'Debian'
+  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Install ClamAV packages
   package:
