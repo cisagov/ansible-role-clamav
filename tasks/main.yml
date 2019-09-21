@@ -44,7 +44,7 @@
         name: clamav-freshclam
         enabled: yes
         state: started
-  when: ansible_facts['distribution'] == 'Debian'
+  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Fedora-specific setup
   block:
