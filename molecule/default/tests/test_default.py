@@ -33,8 +33,6 @@ def test_packages(host):
         "/etc/cron.weekly/virus_scan.sh",
         # The clamav log directory (created for Fedora)
         "/var/log/clamav",
-        # freshclam virus signatures
-        "/var/lib/clamav/bytecode.cvd",
     ],
 )
 def test_files_and_dirs(host, path):
