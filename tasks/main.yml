@@ -38,7 +38,7 @@
         enabled: no
 
     # freshclam is run via a cron job on Fedora, so there is no
-    # service to enable in that case
+    # service to start in that case
     - name: Enable freshclam
       service:
         name: clamav-freshclam
@@ -55,8 +55,8 @@
         path: /var/log/clamav
         state: directory
 
-    # This happens automatically on Debian and Ubuntu when the
-    # clamav-freshclam service starts on the next boot
+    # This happens automatically on Debian when we start the
+    # clamav-freshclam service
     - name: Run freshclam (Fedora)
       command: /usr/bin/freshclam
       args:
