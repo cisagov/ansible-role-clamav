@@ -6,11 +6,11 @@
       - clamav-update
   when: ansible_facts['distribution'] == 'Fedora'
 
-- name: Determine ClamAV package names (Debian)
+- name: Determine ClamAV package names (Debian, Ubuntu)
   set_fact:
     package_names:
       - clamav-daemon
-  when: ansible_facts['distribution'] == 'Debian'
+  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Install ClamAV packages
   package:
@@ -44,7 +44,7 @@
         name: clamav-freshclam
         enabled: yes
         state: started
-  when: ansible_facts['distribution'] == 'Debian'
+  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Fedora-specific setup
   block:
@@ -66,6 +66,6 @@
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   wait_for:
-    timeout: 300
+    timeout: 600
     path: /var/lib/clamav/bytecode.cvd
     state: present

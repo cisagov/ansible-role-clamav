@@ -11,7 +11,6 @@ platforms:
     privileged: yes
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-      - /var/lib/docker
     command: /lib/systemd/systemd
     pre_build_image: yes
   - name: debian10_systemd
@@ -29,6 +28,20 @@ platforms:
   # Fedora 30.
   # - name: fedora30
   #   image: fedora:30
+  - name: ubuntu_bionic_systemd
+    image: geerlingguy/docker-ubuntu1604-ansible:latest
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+    pre_build_image: yes
+  - name: ubuntu_xenial_systemd
+    image: geerlingguy/docker-ubuntu1804-ansible:latest
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+    pre_build_image: yes
 provisioner:
   name: ansible
   lint:
@@ -37,5 +50,6 @@ scenario:
   name: default
 verifier:
   name: testinfra
+  directory: ../tests
   lint:
     name: flake8

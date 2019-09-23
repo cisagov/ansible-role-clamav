@@ -15,7 +15,7 @@ def test_packages(host):
     distribution = host.system_info.distribution
     if distribution == "fedora":
         pkgs = ["clamav", "clamav-update"]
-    elif distribution == "debian":
+    elif distribution == "debian" or distribution == "ubuntu":
         pkgs = ["clamav-daemon"]
     else:
         # We don't support this distribution
@@ -47,6 +47,9 @@ def test_files_and_dirs(host, path):
 )
 def test_services(host, service, isEnabled):
     """Test that the expected services were enabled or disabled as intended."""
-    if host.system_info.distribution == "debian":
+    if (
+        host.system_info.distribution == "debian"
+        or host.system_info.distribution == "ubuntu"
+    ):
         svc = host.service(service)
         assert svc.is_enabled == isEnabled

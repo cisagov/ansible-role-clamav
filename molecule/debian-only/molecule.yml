@@ -1,0 +1,33 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: debian9_systemd
+    image: geerlingguy/docker-debian9-ansible:latest
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+    pre_build_image: yes
+  - name: debian10_systemd
+    image: geerlingguy/docker-debian10-ansible:latest
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+    pre_build_image: yes
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: debian-only
+verifier:
+  name: testinfra
+  directory: ../tests
+  lint:
+    name: flake8
