@@ -39,10 +39,11 @@
 
     # freshclam is run via a cron job on Fedora, so there is no
     # service to start in that case
-    - name: Enable freshclam
+    - name: Start and enable freshclam
       service:
         name: clamav-freshclam
         enabled: yes
+        state: started
   when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Fedora-specific setup
@@ -62,3 +63,9 @@
       args:
         creates: /var/lib/clamav/bytecode.cvd
   when: ansible_facts['distribution'] == 'Fedora'
+
+- name: Wait for new signatures to be downloaded and installed by freshclam
+  wait_for:
+    timeout: 600
+    path: /var/lib/clamav/bytecode.cvd
+    state: present
