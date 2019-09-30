@@ -24,19 +24,3 @@
       package:
         name:
           - init
-
-# The Ubuntu Xenial Docker image we are using
-# (geerlingguy/docker-ubuntu1604-ansible:latest) needs a cache update
-# before it can install anything.
-- name: Group hosts by OS distribution and major version
-  hosts: all
-  tasks:
-    - name: Group hosts by OS distribution and major version
-      group_by:
-        key: os_{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version'] }}
-- name: Update apt cache
-  hosts: os_Ubuntu_16
-  tasks:
-    - name: Update apt cache
-      apt:
-        update_cache: yes
