@@ -1,5 +1,5 @@
 ---
-# The Ubuntu Xenial Docker image we are using
+# The Ubuntu 16.04 Docker image we are using
 # (geerlingguy/docker-ubuntu1604-ansible:latest) needs a cache update
 # before it can install anything.
 - name: Group hosts by OS distribution and major version
@@ -8,7 +8,7 @@
     - name: Group hosts by OS distribution and major version
       group_by:
         key: os_{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version'] }}
-- name: Update apt cache
+- name: Update apt cache (Ubuntu 16)
   hosts: os_Ubuntu_16
   tasks:
     - name: Update apt cache
