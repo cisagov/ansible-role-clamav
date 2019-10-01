@@ -30,7 +30,7 @@ def test_packages(host):
     "path",
     [
         # The virus scan cron job
-        "/etc/cron.weekly/virus_scan.sh",
+        "/etc/cron.weekly/virus_scan",
         # The clamav log directory (created for Fedora)
         "/var/log/clamav",
         # freshclam virus signatures
