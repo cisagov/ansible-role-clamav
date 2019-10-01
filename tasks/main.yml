@@ -20,7 +20,7 @@
 - name: Install virus_scan cron job
   copy:
     src: virus_scan.sh
-    dest: /etc/cron.weekly
+    dest: /etc/cron.weekly/virus_scan
     mode: 0755
 
 - name: Systemd setup
