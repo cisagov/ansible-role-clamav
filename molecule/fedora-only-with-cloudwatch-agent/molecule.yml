@@ -1,0 +1,27 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  # The role does not use systemd for Fedora systems
+  - name: fedora29
+    image: fedora:29
+  # Ansible currently insists on installing python2-dnf, which does
+  # not exist in Fedora 30.  Until that is resolved, we can't use
+  # Fedora 30.
+  # - name: fedora30
+  #   image: fedora:30
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: fedora-only-with-cloudwatch-agent
+verifier:
+  name: testinfra
+  directory: ../tests
+  lint:
+    name: flake8

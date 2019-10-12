@@ -1,0 +1,4 @@
+---
+- src: https://github.com/cisagov/ansible-role-cloudwatch-agent
+  version: feature/add_configuration
+  name: cloudwatch_agent

@@ -1,0 +1,5 @@
+---
+- name: Install Amazon CloudWatch Agent
+  hosts: all
+  roles:
+    - cloudwatch_agent
