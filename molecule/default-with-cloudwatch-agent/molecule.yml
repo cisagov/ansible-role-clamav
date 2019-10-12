@@ -56,7 +56,7 @@ provisioner:
   lint:
     name: ansible-lint
 scenario:
-  name: with-cloudwatch-agent
+  name: default-with-cloudwatch-agent
 verifier:
   name: testinfra
   directory: ../tests
