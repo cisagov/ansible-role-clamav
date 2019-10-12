@@ -1,5 +1,6 @@
 """Module containing the tests for the default scenario."""
 
+import json
 import os
 
 import pytest
@@ -53,3 +54,15 @@ def test_services(host, service, isEnabled):
     ):
         svc = host.service(service)
         assert svc.is_enabled == isEnabled
+
+
+@pytest.mark.parametrize("log_group_name", ["/instance-logs/freshclam"])
+def test_cloudwatch_agent_config(host, log_group_name):
+    """Test that the expected sections were added to the Amazon CloudWatch Agent config."""
+    config_file = host.file(
+        "/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json"
+    )
+    if config_file.exists:
+        config = json.loads(config_file.content)
+        log_sections = config["logs"]["logs_collected"]["files"]["collect_list"]
+        assert any([x["log_group_name"] == log_group_name for x in log_sections])
