@@ -1,16 +1,16 @@
 ---
-- name: Determine ClamAV package names (Fedora)
+- name: Determine ClamAV package names (RedHat)
   set_fact:
     package_names:
       - clamav
       - clamav-update
-  when: ansible_facts['distribution'] == 'Fedora'
+  when: ansible_facts['os_family'] == 'RedHat'
 
-- name: Determine ClamAV package names (Debian, Ubuntu)
+- name: Determine ClamAV package names (Debian)
   set_fact:
     package_names:
       - clamav-daemon
-  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+  when: ansible_facts['os_family'] == 'Debian'
 
 - name: Install ClamAV packages
   package:
@@ -37,16 +37,16 @@
         name: clamav-daemon
         enabled: no
 
-    # freshclam is run via a cron job on Fedora, so there is no
+    # freshclam is run via a cron job on RedHat, so there is no
     # service to start in that case
     - name: Start and enable freshclam
       service:
         name: clamav-freshclam
         enabled: yes
         state: started
-  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+  when: ansible_facts['os_family'] == 'Debian'
 
-- name: Fedora-specific setup
+- name: RedHat-specific setup
   block:
     - name: Create /var/log/clamav directory
       file:
@@ -58,11 +58,49 @@
 
     # This happens automatically on Debian when we start the
     # clamav-freshclam service
-    - name: Run freshclam (Fedora)
+    - name: Run freshclam (RedHat)
       command: /usr/bin/freshclam
       args:
         creates: /var/lib/clamav/bytecode.cvd
-  when: ansible_facts['distribution'] == 'Fedora'
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Configure Amazon CloudWatch Agent, if necessary
+  block:
+    - name: Determine if amazon-cloudwatch-agent is installed
+      stat:
+        path: /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent
+      register: agent_binary
+    - name: Configure Amazon CloudWatch Agent, if it is installed
+      block:
+        - name: Set path to freshclam log file (Debian)
+          set_fact:
+            freshclam_log_file: /var/log/clamav/freshclam.log
+          when: ansible_facts['os_family'] == 'Debian'
+        - name: Set path to freshclam log file (RedHat)
+          set_fact:
+            freshclam_log_file: /var/log/freshclam.log
+          when: ansible_facts['os_family'] == 'RedHat'
+        - name: Check if CloudWatch Agent configuration already has a section for the freshclam log
+          json_patch:
+            src: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+            operations:
+              - op: test
+                path: "/logs/logs_collected/files/collect_list/*/file_path"
+                value: '{{ freshclam_log_file }}'
+          register: freshclam_check
+        - name: Add CloudWatch Agent configuration for freshclam, if necessary
+          json_patch:
+            src: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+            operations:
+              - op: add
+                path: "/logs/logs_collected/files/collect_list/-"
+                value:
+                  file_path: '{{ freshclam_log_file }}'
+                  log_group_name: /instance-logs/freshclam
+                  log_stream_name: {instance_id}
+          when: not freshclam_check.tested
+      when: agent_binary.stat.exists
+  when: add_logs_to_cloudwatch_agent_config
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   wait_for:
