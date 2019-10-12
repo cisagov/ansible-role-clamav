@@ -6,14 +6,23 @@ driver:
 lint:
   name: yamllint
 platforms:
-  # The role does not use systemd for Fedora systems
-  - name: fedora29
-    image: fedora:29
+  - name: fedora29_systemd
+    image: geerlingguy/docker-fedora29-ansible:latest
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+    pre_build_image: yes
   # Ansible currently insists on installing python2-dnf, which does
   # not exist in Fedora 30.  Until that is resolved, we can't use
   # Fedora 30.
-  # - name: fedora30
-  #   image: fedora:30
+  # - name: fedora30_systemd
+  #   image: geerlingguy/docker-fedora30-ansible:latest
+  #   privileged: yes
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   command: /lib/systemd/systemd
+  #   pre_build_image: yes
 provisioner:
   name: ansible
   lint:
