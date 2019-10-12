@@ -10,6 +10,9 @@ matrix:
     - env: MOLECULE_SCENARIO=debian-only
     - env: MOLECULE_SCENARIO=fedora-only
     - env: MOLECULE_SCENARIO=ubuntu-only
+    - env: MOLECULE_SCENARIO=debian-only-with-cloudwatch-agent
+    - env: MOLECULE_SCENARIO=fedora-only-with-cloudwatch-agent
+    - env: MOLECULE_SCENARIO=ubuntu-only-with-cloudwatch-agent
 
 # Cache pip packages and pre-commit plugins to speed up builds
 cache:
