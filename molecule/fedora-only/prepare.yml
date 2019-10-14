@@ -17,8 +17,3 @@
         name: "*"
         state: latest
         update_cache: yes
-
-- name: Install Amazon CloudWatch Agent
-  hosts: all
-  roles:
-    - cloudwatch_agent

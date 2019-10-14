@@ -28,6 +28,11 @@
 # The Ubuntu 16.04 Docker image we are using
 # (geerlingguy/docker-ubuntu1604-ansible:latest) needs a cache update
 # before it can install anything.
+#
+# The Fedora 29 image we are using
+# (geerlingguy/docker-fedora29-ansible:latest) needs a cache update
+# and all packages updated; otherwise, we get sporadic errors from dnf
+# about "No such file or directory: /var/lib/dnf/rpmdb_lock.pid".
 - name: Group hosts by OS distribution and major version
   hosts: all
   tasks:
@@ -39,4 +44,12 @@
   tasks:
     - name: Update apt cache
       apt:
+        update_cache: yes
+- name: Update all packages (Fedora 29)
+  hosts: os_Fedora_29
+  tasks:
+    - name: Update all packages (Fedora 29)
+      dnf:
+        name: "*"
+        state: latest
         update_cache: yes
