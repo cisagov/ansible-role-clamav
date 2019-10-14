@@ -16,7 +16,7 @@
   tasks:
     - name: Group hosts by OS family
       group_by:
-        key: os_{{ ansible_facts['family'] }}
+        key: os_{{ ansible_facts['os_family'] }}
 - name: Install init (Debian)
   hosts: os_Debian
   tasks:
