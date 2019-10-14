@@ -4,13 +4,13 @@
     package_names:
       - clamav
       - clamav-update
-  when: ansible_facts['family'] == 'RedHat'
+  when: ansible_facts['os_family'] == 'RedHat'
 
 - name: Determine ClamAV package names (Debian)
   set_fact:
     package_names:
       - clamav-daemon
-  when: ansible_facts['family'] == 'Debian'
+  when: ansible_facts['os_family'] == 'Debian'
 
 - name: Install ClamAV packages
   package:
@@ -44,7 +44,7 @@
         name: clamav-freshclam
         enabled: yes
         state: started
-  when: ansible_facts['family'] == 'Debian'
+  when: ansible_facts['os_family'] == 'Debian'
 
 - name: RedHat-specific setup
   block:
@@ -62,7 +62,7 @@
       command: /usr/bin/freshclam
       args:
         creates: /var/lib/clamav/bytecode.cvd
-  when: ansible_facts['family'] == 'RedHat'
+  when: ansible_facts['os_family'] == 'RedHat'
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   wait_for:
