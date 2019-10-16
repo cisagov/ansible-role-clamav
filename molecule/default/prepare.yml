@@ -4,19 +4,19 @@
 # viewed here:
 # https://github.com/philpep/testinfra/blob/master/testinfra/modules/service.py#L51-L63.
 #
-# The Debian 9 and Debian 10 Docker images that we are using suffer
-# from this issue; therefore, we need to install the init package as a
+# The Debian and Ubuntu Docker images that we are using suffer from
+# this issue; therefore, we need to install the init package as a
 # workaround.  Any real (non-Docker) host will have this package
 # installed anyway.
 #
 # This is a known testinfra issue.  See
 # https://github.com/philpep/testinfra/issues/416 for more details.
-- name: Group hosts by OS distribution
+- name: Group hosts by OS family
   hosts: all
   tasks:
-    - name: Group hosts by OS distribution
+    - name: Group hosts by OS family
       group_by:
-        key: os_{{ ansible_facts['distribution'] }}
+        key: os_{{ ansible_facts['os_family'] }}
 - name: Install init (Debian)
   hosts: os_Debian
   tasks:
