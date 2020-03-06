@@ -6,6 +6,8 @@ driver:
 lint:
   name: yamllint
 platforms:
+  - name: amazonlinux2
+    image: amazonlinux:2
   - name: debian9_systemd
     image: geerlingguy/docker-debian9-ansible:latest
     privileged: yes
@@ -28,6 +30,8 @@ platforms:
   # Fedora 30.
   # - name: fedora30
   #   image: fedora:30
+  - name: fedora31
+    image: fedora:31
   - name: ubuntu_bionic_systemd
     image: geerlingguy/docker-ubuntu1604-ansible:latest
     privileged: yes
