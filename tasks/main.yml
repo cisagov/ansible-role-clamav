@@ -25,46 +25,20 @@
     dest: /etc/cron.weekly/virus_scan
     mode: 0755
 
-- name: Debian-specific setup
-  block:
-    # Unless you do this, systemd can sometimes get confused when you
-    # try to start a service you just installed
-    - name: Systemd daemon-reload
-      systemd:
-        daemon_reload: true
-
-    # Debian seems to enable clamav-daemon by default
-    - name: Disable clamav-daemon
-      service:
-        name: clamav-daemon
-        enabled: no
-
-    # freshclam is run via a cron job on RedHat, so there is no
-    # service to start in that case
-    - name: Start and enable freshclam
-      service:
-        name: clamav-freshclam
-        enabled: yes
-        state: started
-  when: ansible_os_family == 'Debian'
-
-- name: RedHat-specific setup
-  block:
-    - name: Create /var/log/clamav directory
-      file:
-        owner: root
-        group: root
-        mode: 0700
-        path: /var/log/clamav
-        state: directory
-
-    # This happens automatically on Debian when we start the
-    # clamav-freshclam service
-    - name: Run freshclam (RedHat)
-      command: /usr/bin/freshclam
-      args:
-        creates: /var/lib/clamav/bytecode.cvd
-  when: ansible_os_family == 'RedHat'
+- name: Load tasks file with setup tasks based on the OS type
+  include: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - setup_{{ ansible_distribution }}.yml
+        - setup_{{ ansible_os_family }}.yml
+        # The OS family and distribution for Kali is "Kali GNU/Linux",
+        # which is not an allowable file name in Linux due to the
+        # slash.  We will allow Kali to fall through and use the
+        # Debian setup tasks file.
+        - setup_Debian.yml
+      paths:
+        - tasks
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   wait_for:

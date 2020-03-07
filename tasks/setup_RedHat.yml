@@ -1,0 +1,15 @@
+---
+- name: Create /var/log/clamav directory
+  file:
+    owner: root
+    group: root
+    mode: 0700
+    path: /var/log/clamav
+    state: directory
+
+# This happens automatically on Debian when we start the
+# clamav-freshclam service
+- name: Run freshclam
+  command: /usr/bin/freshclam
+  args:
+    creates: /var/lib/clamav/bytecode.cvd
