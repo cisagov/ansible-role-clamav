@@ -17,6 +17,14 @@
     name: '{{ package_names }}'
     state: present
 
+# Later versions of Fedora do not come with a cron implementation
+# installed.
+- name: Install cronie (Fedora)
+  package:
+    name: cronie
+    state: present
+  when: ansible_distribution == 'Fedora'
+
 - name: Install virus_scan cron job
   copy:
     src: virus_scan.sh
