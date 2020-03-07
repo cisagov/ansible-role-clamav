@@ -1,7 +1,9 @@
 """Module containing the tests for the default scenario."""
 
+# Standard Python Libraries
 import os
 
+# Third-Party Libraries
 import pytest
 import testinfra.utils.ansible_runner
 
