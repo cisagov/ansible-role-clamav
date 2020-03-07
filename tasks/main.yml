@@ -1,29 +1,23 @@
 ---
-- name: Determine ClamAV package names (RedHat)
-  set_fact:
-    package_names:
-      - clamav
-      - clamav-update
-  when: ansible_os_family == 'RedHat'
-
-- name: Determine ClamAV package names (Debian)
-  set_fact:
-    package_names:
-      - clamav-daemon
-  when: ansible_os_family == 'Debian'
+- name: Load var file with package names based on the OS type
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        # The OS family and distribution for Kali is "Kali GNU/Linux",
+        # which is not an allowable file name in Linux due to the
+        # slash.  We will allow Kali to fall through and use the
+        # Debian vars file.
+        - Debian.yml
+      paths:
+        - vars
 
 - name: Install ClamAV packages
   package:
     name: '{{ package_names }}'
     state: present
-
-# Later versions of Fedora do not come with a cron implementation
-# installed.
-- name: Install cronie (Fedora)
-  package:
-    name: cronie
-    state: present
-  when: ansible_distribution == 'Fedora'
 
 - name: Install virus_scan cron job
   copy:

@@ -1,0 +1,7 @@
+---
+# vars file for RedHat
+
+# The ClamAV package names
+package_names:
+  - clamav
+  - clamav-update
