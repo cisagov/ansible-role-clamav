@@ -6,8 +6,14 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: amazonlinux2
-    image: amazonlinux:2
+  # Amazon Linux 2 does not appear to offer ClamAV
+  # - name: amazonlinux2_systemd
+  #   image: geerlingguy/docker-amazonlinux2-ansible:latest
+  #   privileged: yes
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   command: /lib/systemd/systemd
+  #   pre_build_image: yes
   - name: debian9_systemd
     image: geerlingguy/docker-debian9-ansible:latest
     privileged: yes
