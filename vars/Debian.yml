@@ -1,0 +1,6 @@
+---
+# vars file for Debian
+
+# The ClamAV package names
+package_names:
+  - clamav-daemon

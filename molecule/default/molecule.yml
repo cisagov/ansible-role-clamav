@@ -6,6 +6,14 @@ driver:
 lint:
   name: yamllint
 platforms:
+  # Amazon Linux 2 does not appear to offer ClamAV
+  # - name: amazonlinux2_systemd
+  #   image: geerlingguy/docker-amazonlinux2-ansible:latest
+  #   privileged: yes
+  #   volumes:
+  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  #   command: /lib/systemd/systemd
+  #   pre_build_image: yes
   - name: debian9_systemd
     image: geerlingguy/docker-debian9-ansible:latest
     privileged: yes
@@ -28,6 +36,8 @@ platforms:
   # Fedora 30.
   # - name: fedora30
   #   image: fedora:30
+  - name: fedora31
+    image: fedora:31
   - name: ubuntu_bionic_systemd
     image: geerlingguy/docker-ubuntu1604-ansible:latest
     privileged: yes
@@ -50,6 +60,5 @@ scenario:
   name: default
 verifier:
   name: testinfra
-  directory: ../tests
   lint:
     name: flake8

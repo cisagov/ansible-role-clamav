@@ -1,0 +1,10 @@
+---
+# vars file for Fedora
+
+# The ClamAV package names
+package_names:
+  - clamav
+  - clamav-update
+  # Later versions of Fedora do not come with a cron implementation
+  # installed, but we need one.
+  - cronie
