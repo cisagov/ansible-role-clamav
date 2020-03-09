@@ -15,3 +15,15 @@
     - name: Update apt cache
       apt:
         update_cache: yes
+
+# We want to copy a cron job to /etc/cron.daily, so that directory
+# needs to exist.  In our Kali image it does not, so we need to
+# install a cron implementation.  On Kali, the default cron package
+# name is called cron.
+- name: Install cron (Kali)
+  hosts: 'os_Kali_GNU_Linux'
+  tasks:
+    - name: Install cron
+      package:
+        name:
+          - cron

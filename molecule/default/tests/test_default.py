@@ -17,7 +17,7 @@ def test_packages(host):
     distribution = host.system_info.distribution
     if distribution == "fedora":
         pkgs = ["clamav", "clamav-update"]
-    elif distribution == "debian" or distribution == "ubuntu":
+    elif distribution == "debian" or distribution == "ubuntu" or distribution == "kali":
         pkgs = ["clamav-daemon"]
     else:
         # We don't support this distribution
