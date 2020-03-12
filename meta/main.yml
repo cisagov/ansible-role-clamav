@@ -14,6 +14,9 @@ galaxy_info:
       versions:
         - stretch
         - buster
+        # Kali linux isn't an option here, but it is based on Debian
+        # testing
+        - bullseye
     - name: Fedora
       versions:
         - 29
