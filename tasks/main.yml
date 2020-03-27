@@ -12,7 +12,7 @@
         # Debian vars file.
         - Debian.yml
       paths:
-        - vars
+        - "{{ role_path }}/vars"
 
 - name: Install ClamAV packages
   package:
@@ -38,7 +38,7 @@
         # Debian setup tasks file.
         - setup_Debian.yml
       paths:
-        - tasks
+        - "{{ role_path }}/tasks"
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   wait_for:
