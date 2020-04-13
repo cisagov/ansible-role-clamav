@@ -1,0 +1,7 @@
+---
+# vars file for Kali
+
+# The ClamAV package names.  These values are identical to those for
+# Debian.
+package_names:
+  - clamav-daemon
