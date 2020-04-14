@@ -4,13 +4,11 @@
   vars:
     params:
       files:
-        - "{{ ansible_distribution }}.yml"
-        - "{{ ansible_os_family }}.yml"
-        # The OS family and distribution for Kali is "Kali GNU/Linux",
-        # which is not an allowable file name in Linux due to the
-        # slash.  We will allow Kali to fall through and use the
-        # Debian vars file.
-        - Debian.yml
+        # Add regex_replace() filters to remove spaces and
+        # slashes. This allows the OS family/distribution for Kali,
+        # "Kali GNU/Linux", to be easily mapped to a vars file.
+        - "{{ ansible_distribution | regex_replace('[ /]', '_') }}.yml"
+        - "{{ ansible_os_family | regex_replace('[ /]', '_') }}.yml"
       paths:
         - "{{ role_path }}/vars"
 
@@ -30,13 +28,11 @@
   vars:
     params:
       files:
-        - setup_{{ ansible_distribution }}.yml
-        - setup_{{ ansible_os_family }}.yml
-        # The OS family and distribution for Kali is "Kali GNU/Linux",
-        # which is not an allowable file name in Linux due to the
-        # slash.  We will allow Kali to fall through and use the
-        # Debian setup tasks file.
-        - setup_Debian.yml
+        # Add regex_replace() filters to remove spaces and
+        # slashes. This allows the OS family/distribution for Kali,
+        # "Kali GNU/Linux", to be easily mapped to a vars file.
+        - setup_{{ ansible_distribution | regex_replace('[ /]', '_') }}.yml
+        - setup_{{ ansible_os_family | regex_replace('[ /]', '_') }}.yml
       paths:
         - "{{ role_path }}/tasks"
 

@@ -1,0 +1,3 @@
+---
+- name: Use Debian tasks for Kali
+  include_tasks: setup_Debian.yml
