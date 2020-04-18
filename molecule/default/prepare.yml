@@ -21,7 +21,7 @@
 # need to install a cron implementation.  On these platforms, the
 # default cron package name is called cron.
 - name: Install cron (Kali)
-  hosts: os_Kali_GNU_Linux | os_Debian
+  hosts: os_Kali_GNU_Linux:os_Debian
   tasks:
     - name: Install cron
       package:
