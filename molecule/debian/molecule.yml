@@ -9,14 +9,6 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  # Amazon Linux 2 does not appear to offer ClamAV
-  # - name: amazonlinux2_systemd
-  #   image: geerlingguy/docker-amazonlinux2-ansible:latest
-  #   privileged: yes
-  #   volumes:
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  #   command: /lib/systemd/systemd
-  #   pre_build_image: yes
   - name: debian9_systemd
     image: geerlingguy/docker-debian9-ansible:latest
     privileged: yes
@@ -45,16 +37,6 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     command: /lib/systemd/systemd
     pre_build_image: yes
-  # The role does not use systemd for Fedora systems
-  - name: fedora29
-    image: fedora:29
-  # Ansible currently insists on installing python2-dnf, which does
-  # not exist in Fedora 30.  Until that is resolved, we can't use
-  # Fedora 30.
-  # - name: fedora30
-  #   image: fedora:30
-  - name: fedora31
-    image: fedora:31
   - name: ubuntu_bionic_systemd
     image: geerlingguy/docker-ubuntu1604-ansible:latest
     privileged: yes
@@ -79,7 +61,7 @@ provisioner:
       # underscores when creating the group name.
       force_valid_group_names: always
 scenario:
-  name: default
+  name: debian
 verifier:
   name: testinfra
   directory: ../tests
