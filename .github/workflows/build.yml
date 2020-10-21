@@ -73,5 +73,4 @@ jobs:
           pip install --upgrade --requirement requirements-test.txt
       - name: Run molecule tests
         run: |
-          molecule test --scenario-name=debian &&
-          molecule test --scenario-name=redhat
+          molecule test
