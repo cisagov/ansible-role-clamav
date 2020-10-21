@@ -3,8 +3,15 @@ galaxy_info:
   author: Mark Feldhousen, Jr.
   description: Install ClamAV and a cron job to run automated AV scans
   company: CISA Cyber Assessments
+  galaxy_tags:
+    - clamav
   license: CC0
-  min_ansible_version: 2.0
+  # With the release of version 2.10, Ansible finally correctly
+  # identifies Kali Linux as being the Kali distribution of the Debian
+  # OS family.  This simplifies a lot of things for roles that support
+  # Kali Linux, so it makes sense to force the installation of Ansible
+  # 2.10 or newer.
+  min_ansible_version: 2.10
   platforms:
     # Amazon Linux 2 does not appear to offer ClamAV
     # - name: Amazon
@@ -20,17 +27,13 @@ galaxy_info:
         - bullseye
     - name: Fedora
       versions:
-        - 29
-        # Ansible currently insists on installing python2-dnf, which
-        # does not exist in Fedora 30.  Until that is resolved, we
-        # can't use Fedora 30.
-        # - 30
-        - 31
+        - 32
+        - 33
     - name: Ubuntu
       versions:
-        - bionic
         - xenial
-  galaxy_tags:
-    - clamav
+        - bionic
+        - focal
+  role_name: clamav
 
 dependencies: []
