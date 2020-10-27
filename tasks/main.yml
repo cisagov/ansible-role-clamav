@@ -34,6 +34,6 @@
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   wait_for:
-    timeout: 1200
+    timeout: 600
     path: /var/lib/clamav/bytecode.cvd
     state: present
