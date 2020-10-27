@@ -41,13 +41,6 @@ The log of the last scan is accessible at: `/var/log/clamav/lastscan.log`
 If a detection occurs the file `/var/log/clamav/last_detection` will be touched.
 Its modification time represents the time of the last detection.
 
-## New Repositories from a Skeleton ##
-
-Please see our [Project Setup guide](https://github.com/cisagov/development-guide/tree/develop/project_setup)
-for step-by-step instructions on how to start a new repository from
-a skeleton. This will save you time and effort when configuring a
-new repository!
-
 ## Contributing ##
 
 We welcome contributions!  Please see [`CONTRIBUTING.md`](CONTRIBUTING.md) for
