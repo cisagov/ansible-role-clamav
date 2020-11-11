@@ -71,6 +71,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install --upgrade --requirement requirements-test.txt
+      # Note that we have to break up the testing among a few
+      # scenarios since the instances that GitHub Actions gives us are
+      # not able to handle testing everything at once.
       - name: Run molecule tests
         run: |
-          molecule test
+          molecule test --scenario-name debian && \
+          molecule test --scenario-name fedora && \
+          molecule test --scenario-name ubuntu
