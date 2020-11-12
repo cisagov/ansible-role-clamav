@@ -11,6 +11,28 @@
     name: clamav-daemon
     enabled: no
 
+# Debian and Kali ship with an AppArmor profile for /usr/bin/freshclam
+# that, when applied to /usr/bin/freshclam running in a Docker
+# container, does not allow /usr/bin/freshclam to query DNS.  (The
+# same profile works as expected when run outside of Docker on a
+# Debian or Kali AMI.)  This obviously interferes with the downloading
+# of updated ClamAV databases and breaks this Ansible role.  Until we
+# can figure out exactly what is happening, the only remedy I have
+# found is to disable the AppArmor profile for /usr/bin/freshclam.
+#
+# Ideally this problem will eventually be either sorted out by us or
+# fixed upstream, and we can remove this block.
+- name: Disable usr.bin.freshclam AppArmor profile
+  block:
+    - name: Install apparmor-utils
+      package:
+        name:
+          - apparmor-utils
+    - name: Disable the usr.bin.freshclam AppArmor profile
+      command:
+        cmd: /usr/sbin/aa-disable /usr/bin/freshclam
+        creates: /etc/apparmor.d/disable/usr.bin.freshclam
+
 # freshclam is run via a cron job on RedHat, so there is no service to
 # start in that case
 - name: Start and enable freshclam
