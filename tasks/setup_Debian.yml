@@ -22,6 +22,17 @@
 #
 # Ideally this problem will eventually be either sorted out by us or
 # fixed upstream, and we can remove this block.
+#
+# Note that we need not do anything if AppArmor is not enabled in the
+# kernel.
+- name: Check if AppArmor is enabled
+  command:
+    cmd: /usr/bin/grep Y /sys/module/apparmor/parameters/enabled
+  changed_when: false
+  register: apparmor_enabled
+  ignore_errors: true
+  tags:
+    - molecule-idempotence-notest
 - name: Disable usr.bin.freshclam AppArmor profile
   block:
     - name: Install apparmor-utils
@@ -32,6 +43,16 @@
       command:
         cmd: /usr/sbin/aa-disable /usr/bin/freshclam
         creates: /etc/apparmor.d/disable/usr.bin.freshclam
+      # Disabling the profile means that it is removed from the
+      # kernel.  When we are testing in molecule we have several
+      # Docker containers on the same host sharing the same kernel, so
+      # the first Docker container to disable the profile will disable
+      # it for all the other Docker containers.  This task will then
+      # return an error when the other Docker containers (which will
+      # not have the /etc/apparmor.d/disable/usr.bin.freshclam file)
+      # run.  This is the reason for the ignore_errors: yes.
+      ignore_errors: yes
+  when: not apparmor_enabled.failed
 
 # freshclam is run via a cron job on RedHat, so there is no service to
 # start in that case
