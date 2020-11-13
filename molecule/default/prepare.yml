@@ -55,7 +55,7 @@
             Switch the usr.bin.freshclam AppArmor profile to complain \
             mode
           block:
-            # We do this so because we need the usr.bin.freshclam
+            # We do this because we need the usr.bin.freshclam
             # AppArmor profile to be present before we can change its
             # mode
             - name: Install apparmor-utils and clamav-freshclam
