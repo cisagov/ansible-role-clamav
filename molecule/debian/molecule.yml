@@ -61,7 +61,7 @@ provisioner:
         # we use auto_legacy or auto.
         #
         # The one place where it _does_ matter is our Debian9 AKA CyHy
-        # instances.  Here the /usr/bin/python _and_ /usr/bin/python3
+        # instances, where the /usr/bin/python _and_ /usr/bin/python3
         # interpreters are both installed.  In Ansible 2.10 a Debian
         # entry was added to the internal map, so now auto_legacy
         # selects the /usr/bin/python interpreter while auto selects
