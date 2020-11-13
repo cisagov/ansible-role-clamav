@@ -9,16 +9,63 @@
 # needs to exist.  In our Kali and Debian 11 images it does not, so we
 # need to install a cron implementation.  On these platforms, the
 # default cron package name is called cron.
+#
+# Debian and Kali ship with an AppArmor profile for /usr/bin/freshclam
+# that, when applied to /usr/bin/freshclam running in a Docker
+# container, does not allow /usr/bin/freshclam to query DNS.  (The
+# same profile works as expected when run outside of Docker on a
+# Debian or Kali AMI.)  This obviously interferes with the downloading
+# of updated ClamAV databases and breaks this Ansible role.  Until we
+# can figure out exactly what is happening, the only remedy I have
+# found is to switch the AppArmor profile for /usr/bin/freshclam to
+# complain mode (or disable it entirely).
 - name: Group hosts by OS distribution
   hosts: all
   tasks:
     - name: Group hosts by OS distribution
       group_by:
         key: os_{{ ansible_distribution }}
-- name: Install cron (Debian and Kali)
+- name: Debian and Kali-specific tasks
   hosts: os_Kali:os_Debian
   tasks:
     - name: Install cron
       package:
         name:
           - cron
+    # Ideally this problem will eventually be either sorted out by us
+    # or fixed upstream, and we can remove this block.
+    #
+    # Note that we need not do anything if AppArmor is not enabled in
+    # the kernel.
+    - name: Handle Docker+freshclam AppArmor bug
+      block:
+        - name: Check if AppArmor is enabled
+          command:
+            cmd: >-
+              /bin/grep --fixed-strings
+              Y
+              /sys/module/apparmor/parameters/enabled
+          # grep returns an error if the pattern is not found, which
+          # we want to ignore
+          ignore_errors: true
+          register: apparmor_enabled
+          tags:
+            - molecule-idempotence-notest
+        - name: |
+            Switch the usr.bin.freshclam AppArmor profile to complain \
+            mode
+          block:
+            # We do this so because we need the usr.bin.freshclam
+            # AppArmor profile to be present before we can change its
+            # mode
+            - name: Install apparmor-utils and clamav-freshclam
+              package:
+                name:
+                  - apparmor-utils
+                  - clamav-freshclam
+            - name: >-
+                Switch the usr.bin.freshclam AppArmor profile to
+                complain mode
+              command:
+                cmd: /usr/sbin/aa-complain /usr/bin/freshclam
+          when: not apparmor_enabled.failed
