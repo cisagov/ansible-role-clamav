@@ -43,7 +43,7 @@ Its modification time represents the time of the last detection.
 
 ## Contributing ##
 
-We welcome contributions!  Please see [here](CONTRIBUTING.md) for
+We welcome contributions!  Please see [`CONTRIBUTING.md`](CONTRIBUTING.md) for
 details.
 
 ## License ##
