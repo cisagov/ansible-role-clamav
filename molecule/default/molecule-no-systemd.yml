@@ -1,7 +1,8 @@
 ---
 # This molecule configuration file is suitable for testing Ansible
-# roles that _do_ require SystemD.  If your Ansible role _does not_
-# require SystemD then you should use molecule-no-systemd.yml instead.
+# roles that _do not_ require SystemD.  If your Ansible role _does_
+# require SystemD then you should use molecule-with-systemd.yml
+# instead.
 #
 # Note that the molecule configuration file that is symlinked to
 # molecule.yml is the one that will be used.
@@ -15,19 +16,27 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  # Amazon Linux 2 doesn't appear to support clamav
-  # - name: amazonlinux2_systemd
-  #   image: geerlingguy/docker-amazonlinux2-ansible:latest
-  #   privileged: yes
-  #   volumes:
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  #   command: /lib/systemd/systemd
-  #   pre_build_image: yes
-  # systemd is not required for this role on RedHat
+  - name: amazonlinux2
+    image: amazonlinux:2
+  - name: debian9
+    image: debian:stretch-slim
+    dockerfile: Dockerfile_debian_9.j2
+  - name: debian10
+    image: debian:buster-slim
+  - name: debian11
+    image: debian:bullseye-slim
+  - name: kali
+    image: kalilinux/kali-rolling
   - name: fedora32
     image: fedora:32
   - name: fedora33
     image: fedora:33
+  - name: ubuntu16
+    image: ubuntu:xenial
+  - name: ubuntu18
+    image: ubuntu:bionic
+  - name: ubuntu20
+    image: ubuntu:focal
 provisioner:
   name: ansible
   config_options:
@@ -39,7 +48,7 @@ provisioner:
       force_valid_group_names: always
   inventory:
     host_vars:
-      debian9_systemd:
+      debian9:
         # auto_legacy is still the default behavior until Ansible 2.12
         # is released, but Molecule overrides this and forces the use
         # of auto.
@@ -67,7 +76,6 @@ provisioner:
         # * https://github.com/ansible/ansible/blob/v2.10.1/lib/ansible/executor/interpreter_discovery.py
         ansible_python_interpreter: auto_legacy
 scenario:
-  name: fedora
+  name: default
 verifier:
   name: testinfra
-  directory: ../tests

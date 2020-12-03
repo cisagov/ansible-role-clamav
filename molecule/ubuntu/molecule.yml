@@ -1,4 +1,10 @@
 ---
+# This molecule configuration file is suitable for testing Ansible
+# roles that _do_ require SystemD.  If your Ansible role _does not_
+# require SystemD then you should use molecule-no-systemd.yml instead.
+#
+# Note that the molecule configuration file that is symlinked to
+# molecule.yml is the one that will be used.
 dependency:
   name: galaxy
 driver:
@@ -9,21 +15,21 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: ubuntu_bionic_systemd
+  - name: ubuntu_16_systemd
     image: geerlingguy/docker-ubuntu1604-ansible:latest
     privileged: yes
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     command: /lib/systemd/systemd
     pre_build_image: yes
-  - name: ubuntu_xenial_systemd
+  - name: ubuntu_18_systemd
     image: geerlingguy/docker-ubuntu1804-ansible:latest
     privileged: yes
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     command: /lib/systemd/systemd
     pre_build_image: yes
-  - name: ubuntu_focal_systemd
+  - name: ubuntu_20_systemd
     image: geerlingguy/docker-ubuntu2004-ansible:latest
     privileged: yes
     volumes:
@@ -41,7 +47,7 @@ provisioner:
       force_valid_group_names: always
   inventory:
     host_vars:
-      debian9:
+      debian9_systemd:
         # auto_legacy is still the default behavior until Ansible 2.12
         # is released, but Molecule overrides this and forces the use
         # of auto.
@@ -54,7 +60,7 @@ provisioner:
         # we use auto_legacy or auto.
         #
         # The one place where it _does_ matter is our Debian9 AKA CyHy
-        # instances, where the /usr/bin/python _and_ /usr/bin/python3
+        # instances.  Here the /usr/bin/python _and_ /usr/bin/python3
         # interpreters are both installed.  In Ansible 2.10 a Debian
         # entry was added to the internal map, so now auto_legacy
         # selects the /usr/bin/python interpreter while auto selects
