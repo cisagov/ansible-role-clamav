@@ -1,0 +1,9 @@
+---
+# vars file for Kali
+
+# The ClamAV package names
+package_names:
+  - clamav-daemon
+  # Kali 2020.4 does not ship with a cron implementation, but we need
+  # one.
+  - cron
