@@ -4,7 +4,7 @@
   vars:
     params:
       files:
-        - "{{ ansible_distribution }}_{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml"
         - "{{ ansible_distribution }}.yml"
         - "{{ ansible_os_family }}.yml"
       paths:
@@ -26,7 +26,7 @@
   vars:
     params:
       files:
-        - setup_{{ ansible_distribution }}_{{ ansible_distribution_version }}.yml
+        - setup_{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml
         - setup_{{ ansible_distribution }}.yml
         - setup_{{ ansible_os_family }}.yml
       paths:
