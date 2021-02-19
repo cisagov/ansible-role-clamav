@@ -2,19 +2,19 @@
 # Unless you do this, systemd can sometimes get confused when you try
 # to start a service you just installed
 - name: Systemd daemon-reload
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
 
 # Debian seems to enable clamav-daemon by default
 - name: Disable clamav-daemon
-  service:
+  ansible.builtin.service:
     name: clamav-daemon
     enabled: no
 
 # freshclam is run via a cron job on RedHat, so there is no service to
 # start in that case
 - name: Start and enable freshclam
-  service:
+  ansible.builtin.service:
     name: clamav-freshclam
     enabled: yes
     state: started
