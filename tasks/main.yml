@@ -1,6 +1,6 @@
 ---
 - name: Load var file with package names based on the OS type
-  include_vars: "{{ lookup('first_found', params) }}"
+  ansible.builtin.include_vars: "{{ lookup('first_found', params) }}"
   vars:
     params:
       files:
@@ -11,18 +11,18 @@
         - "{{ role_path }}/vars"
 
 - name: Install ClamAV packages
-  package:
+  ansible.builtin.package:
     name: '{{ package_names }}'
     state: present
 
 - name: Install virus_scan cron job
-  copy:
+  ansible.builtin.copy:
     src: virus_scan.sh
     dest: /etc/cron.weekly/virus_scan
     mode: 0755
 
 - name: Load tasks file with setup tasks based on the OS type
-  include: "{{ lookup('first_found', params) }}"
+  ansible.builtin.include_tasks: "{{ lookup('first_found', params) }}"
   vars:
     params:
       files:
@@ -33,7 +33,7 @@
         - "{{ role_path }}/tasks"
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
-  wait_for:
+  ansible.builtin.wait_for:
     timeout: 600
     path: /var/lib/clamav/bytecode.cvd
     state: present

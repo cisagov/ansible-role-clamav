@@ -1,6 +1,6 @@
 ---
 - name: Create /var/log/clamav directory
-  file:
+  ansible.builtin.file:
     owner: root
     group: root
     mode: 0700
@@ -10,6 +10,6 @@
 # This happens automatically on Debian when we start the
 # clamav-freshclam service
 - name: Run freshclam
-  command: /usr/bin/freshclam
+  ansible.builtin.command: /usr/bin/freshclam
   args:
     creates: /var/lib/clamav/bytecode.cvd
