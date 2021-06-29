@@ -34,6 +34,6 @@
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   ansible.builtin.wait_for:
-    timeout: 600
+    timeout: 900
     path: /var/lib/clamav/bytecode.cvd
     state: present
