@@ -1,5 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  roles:
-    - role: ansible-role-clamav
+  tasks:
+    - name: Include ansible-role-clamav
+      ansible.builtin.include_role:
+        name: ansible-role-clamav
