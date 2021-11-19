@@ -1,5 +1,7 @@
 ---
-# vars file for Debian
+clamav_service_name: clamav-daemon
+
+freshclam_service_name: clamav-freshclam
 
 # The ClamAV package names
 package_names:
