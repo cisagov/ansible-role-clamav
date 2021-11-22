@@ -1,8 +1,7 @@
 ---
 # When installing packages during later steps, the Fedora Docker
-# images we are using (geerlingguy/docker-fedora32-ansible:latest and
-# cisagov/docker-fedora33-ansible:latest) can throw sporadic errors
-# like:
+# image we are using (geerlingguy/docker-fedora34-ansible:latest) can
+# throw sporadic errors like:
 #
 # No such file or directory: '/var/cache/dnf/metadata_lock.pid'
 #
