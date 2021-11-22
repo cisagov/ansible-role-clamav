@@ -5,16 +5,16 @@
   ansible.builtin.systemd:
     daemon_reload: true
 
-# Debian seems to enable clamav-daemon by default
-- name: Disable clamav-daemon
+# Debian seems to enable the clamav daemon by default
+- name: Disable main clamav daemon
   ansible.builtin.service:
-    name: clamav-daemon
+    name: "{{ clamav_service_name }}"
     enabled: no
 
-# freshclam is run via a cron job on RedHat, so there is no service to
-# start in that case
+# freshclam is run via a cron job on Fedora <34, so there is no
+# service to start in that case
 - name: Start and enable freshclam
   ansible.builtin.service:
-    name: clamav-freshclam
+    name: "{{ freshclam_service_name }}"
     enabled: yes
     state: started

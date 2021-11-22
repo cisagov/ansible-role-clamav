@@ -27,6 +27,10 @@
     params:
       files:
         - setup_{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml
+        # The ansible_distribution_release variable is always empty
+        # for Fedora, so this is necessary since we want to do
+        # something different for Fedora 34.
+        - setup_{{ ansible_distribution }}_{{ ansible_distribution_version }}.yml
         - setup_{{ ansible_distribution }}.yml
         - setup_{{ ansible_os_family }}.yml
       paths:

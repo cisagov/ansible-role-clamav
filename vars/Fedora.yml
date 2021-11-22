@@ -1,5 +1,7 @@
 ---
-# vars file for Fedora
+clamav_service_name: clamav-clamonacc
+
+freshclam_service_name: clamav-freshclam
 
 # The ClamAV package names
 package_names:

@@ -17,7 +17,7 @@ def test_packages(host):
     distribution = host.system_info.distribution
     if distribution == "fedora":
         pkgs = ["clamav", "clamav-update"]
-    elif distribution == "debian" or distribution == "ubuntu" or distribution == "kali":
+    elif distribution in ["debian", "kali", "ubuntu"]:
         pkgs = ["clamav-daemon"]
     else:
         # We don't support this distribution
@@ -33,8 +33,6 @@ def test_packages(host):
     [
         # The virus scan cron job
         "/etc/cron.weekly/virus_scan",
-        # The clamav log directory (created for Fedora)
-        "/var/log/clamav",
         # freshclam virus signatures
         "/var/lib/clamav/bytecode.cvd",
     ],
@@ -45,13 +43,22 @@ def test_files_and_dirs(host, path):
 
 
 @pytest.mark.parametrize(
-    "service,isEnabled", [("clamav-daemon", False), ("clamav-freshclam", True)]
+    "service,is_enabled", [("clamav-daemon", False), ("clamav-freshclam", True)]
 )
-def test_services(host, service, isEnabled):
+def test_services_debian(host, service, is_enabled):
     """Test that the expected services were enabled or disabled as intended."""
-    if (
-        host.system_info.distribution == "debian"
-        or host.system_info.distribution == "ubuntu"
-    ):
+    if host.system_info.distribution in ["debian", "kali", "ubuntu"]:
         svc = host.service(service)
-        assert svc.is_enabled == isEnabled
+        assert svc.is_enabled == is_enabled
+
+
+@pytest.mark.parametrize(
+    "service,is_enabled", [("clamav-clamonacc", False), ("clamav-freshclam", True)]
+)
+def test_services_fedora(host, service, is_enabled):
+    """Test that the expected services were enabled or disabled as intended."""
+    if host.system_info.distribution in ["fedora"] and host.system_info.release in [
+        "34"
+    ]:
+        svc = host.service(service)
+        assert svc.is_enabled == is_enabled

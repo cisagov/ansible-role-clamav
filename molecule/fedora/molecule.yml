@@ -23,13 +23,18 @@ platforms:
   #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
   #   command: /lib/systemd/systemd
   #   pre_build_image: yes
-  # systemd is not required for this role on RedHat
+  # systemd is not required for this role on Fedora 32 or 33
   - name: fedora32
     image: fedora:32
   - name: fedora33
     image: fedora:33
-  - name: fedora34
-    image: fedora:34
+  - name: fedora34_systemd
+    image: geerlingguy/docker-fedora34-ansible:latest
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+    pre_build_image: yes
 provisioner:
   name: ansible
   inventory:

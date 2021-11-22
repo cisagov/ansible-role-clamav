@@ -1,14 +1,6 @@
 ---
-- name: Create /var/log/clamav directory
-  ansible.builtin.file:
-    owner: root
-    group: root
-    mode: 0700
-    path: /var/log/clamav
-    state: directory
-
-# This happens automatically on Debian when we start the
-# clamav-freshclam service
+# This happens automatically on Debian or Fedora >=34 when we start
+# the freshclam service
 - name: Run freshclam
   ansible.builtin.command: /usr/bin/freshclam
   args:
