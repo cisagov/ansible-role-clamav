@@ -47,7 +47,7 @@ def test_files_and_dirs(host, path):
 )
 def test_services_debian(host, service, is_enabled):
     """Test that the expected services were enabled or disabled as intended."""
-    if host.system_info.distribution in ["debian", "ubuntu"]:
+    if host.system_info.distribution in ["debian", "kali", "ubuntu"]:
         svc = host.service(service)
         assert svc.is_enabled == is_enabled
 
