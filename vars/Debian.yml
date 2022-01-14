@@ -6,3 +6,6 @@ freshclam_service_name: clamav-freshclam
 # The ClamAV package names
 package_names:
   - clamav-daemon
+  # This package is missing from the Debian 12 Docker image that we
+  # use for Molecule testing.
+  - cron
