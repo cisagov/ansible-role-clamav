@@ -15,28 +15,35 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: debian9_systemd
+  - name: debian9-systemd
     image: geerlingguy/docker-debian9-ansible:latest
     privileged: yes
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     command: /lib/systemd/systemd
     pre_build_image: yes
-  - name: debian10_systemd
+  - name: debian10-systemd
     image: geerlingguy/docker-debian10-ansible:latest
     privileged: yes
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     command: /lib/systemd/systemd
     pre_build_image: yes
-  - name: debian11_systemd
+  - name: debian11-systemd
     image: geerlingguy/docker-debian11-ansible:latest
     privileged: yes
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     command: /lib/systemd/systemd
     pre_build_image: yes
-  - name: kali_systemd
+  - name: debian12-systemd
+    image: cisagov/docker-debian12-ansible:latest
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: /lib/systemd/systemd
+    pre_build_image: yes
+  - name: kali-systemd
     image: cisagov/docker-kali-ansible:latest
     privileged: yes
     volumes:

@@ -15,14 +15,14 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: ubuntu_18_systemd
+  - name: ubuntu-18-systemd
     image: geerlingguy/docker-ubuntu1804-ansible:latest
     privileged: yes
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     command: /lib/systemd/systemd
     pre_build_image: yes
-  - name: ubuntu_20_systemd
+  - name: ubuntu-20-systemd
     image: geerlingguy/docker-ubuntu2004-ansible:latest
     privileged: yes
     volumes:
