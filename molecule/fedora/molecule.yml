@@ -28,7 +28,7 @@ platforms:
     image: fedora:32
   - name: fedora33
     image: fedora:33
-  - name: fedora34_systemd
+  - name: fedora34-systemd
     image: geerlingguy/docker-fedora34-ansible:latest
     privileged: yes
     volumes:
