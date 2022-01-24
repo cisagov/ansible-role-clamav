@@ -30,7 +30,7 @@
 - name: Ensure log file will be world-readable
   ansible.builtin.file:
     path: /var/log/clamav/lastscan.log
-    state: file
+    state: touch
     mode: '0644'
 
 - name: Load tasks file with setup tasks based on the OS type
