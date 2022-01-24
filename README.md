@@ -16,11 +16,9 @@ None.
 
 ## Role Variables ##
 
-
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
 | clamav_cron_frequency | Set the cronjob frequency of clamscan. Must be one of : `hourly`,`daily`,`weekly` or `monthly` | `weelky` | No |
-
 
 ## Dependencies ##
 
