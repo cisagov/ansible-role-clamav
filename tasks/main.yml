@@ -29,6 +29,8 @@
 
 - name: Ensure log file will be world-readable
   ansible.builtin.file:
+    access_time: preserve
+    modification_time: preserve
     path: /var/log/clamav/lastscan.log
     state: touch
     mode: 0644
