@@ -21,7 +21,7 @@
     dest: /etc/cron.{{ clamav_cron_frequency }}/virus_scan
     mode: 0755
 
-- name: Ensure that log folder exist
+- name: Ensure that log folder exists
   ansible.builtin.file:
     path: /var/log/clamav
     state: directory
