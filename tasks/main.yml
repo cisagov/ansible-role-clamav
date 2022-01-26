@@ -21,6 +21,20 @@
     dest: /etc/cron.{{ clamav_cron_frequency }}/virus_scan
     mode: 0755
 
+- name: Ensure that log folder exists
+  ansible.builtin.file:
+    path: /var/log/clamav
+    state: directory
+    mode: 0755
+
+- name: Ensure log file will be world-readable
+  ansible.builtin.file:
+    access_time: preserve
+    modification_time: preserve
+    path: /var/log/clamav/lastscan.log
+    state: touch
+    mode: 0644
+
 - name: Load tasks file with setup tasks based on the OS type
   ansible.builtin.include_tasks: "{{ lookup('first_found', params) }}"
   vars:
