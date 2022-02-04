@@ -57,8 +57,6 @@ def test_services_debian(host, service, is_enabled):
 )
 def test_services_fedora(host, service, is_enabled):
     """Test that the expected services were enabled or disabled as intended."""
-    if host.system_info.distribution in ["fedora"] and host.system_info.release in [
-        "34"
-    ]:
+    if host.system_info.distribution in ["fedora"]:
         svc = host.service(service)
         assert svc.is_enabled == is_enabled
