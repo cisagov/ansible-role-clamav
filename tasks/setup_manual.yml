@@ -1,0 +1,8 @@
+---
+# This task runs freshclam and controls the virus database creation.
+# It happens automatically with SystemD when registering freshclam service.
+
+- name: Run freshclam
+  ansible.builtin.command: /usr/bin/freshclam
+  args:
+    creates: /var/lib/clamav/bytecode.cvd

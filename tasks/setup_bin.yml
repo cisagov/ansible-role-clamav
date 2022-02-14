@@ -1,7 +1,0 @@
----
-# This happens automatically on Debian or Fedora >=34 when we start
-# the freshclam service
-- name: Run freshclam
-  ansible.builtin.command: /usr/bin/freshclam
-  args:
-    creates: /var/lib/clamav/bytecode.cvd
