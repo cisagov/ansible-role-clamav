@@ -9,10 +9,10 @@ clamav_cron_frequency: weekly
 #   Bytecode: 'false'
 # clamv_clamd_conf:
 #   LogFile: /var/log/clamav/clamav.log
-#   
+#
 
 clamav_freshclam_conf: false
 clamav_clamd_conf: false
-  
+
 # whether or not we create a backup of configuration file before replacing
 clamav_configuration_backup: false

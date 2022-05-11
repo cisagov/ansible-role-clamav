@@ -36,15 +36,14 @@
     mode: 0644
 
 - name: Ensure configuration for freshclam
-  vars: 
+  vars:
   - task_conf_file: "{{ freshclam_configuration_path }}"
   - task_conf_parameters: "{{ clamav_freshclam_conf }}"
   ansible.builtin.include_tasks: configure.yml
   when: clamav_freshclam_conf
-  
 
 - name: Ensure configuration for clamd
-  vars: 
+  vars:
   - task_conf_file: "{{ clamd_configuration_path }}"
   - task_conf_parameters: "{{ clamav_clamd_conf }}"
   ansible.builtin.include_tasks: configure.yml
