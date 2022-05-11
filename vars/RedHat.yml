@@ -7,3 +7,6 @@ freshclam_service_name: clamav-freshclam
 package_names:
   - clamav
   - clamav-update
+
+clamd_configuration_path: /etc/clam.d/scan.conf
+freshclam_configuration_path: /etc/freshclam.conf
