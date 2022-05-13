@@ -19,9 +19,9 @@ clamav_clamd_configuration: {}
 # whether or not we create a backup of configuration file before replacing
 clamav_configuration_backup: false
 clamav_scan_exclude_directories:
-  - /dev
-  - /sys
-  - /proc
+  - ^/dev/
+  - ^/sys/
+  - ^/proc/
 clamav_scan_move: false
 clamav_scan_copy: false
 clamav_scan_quarantine_dir: '/var/spool/clamav'
