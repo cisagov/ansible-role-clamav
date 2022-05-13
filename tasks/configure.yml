@@ -19,10 +19,18 @@
     state: present
   loop: "{{ task_conf_parameters | dict2items | rejectattr('value','string') | subelements( 'value' ) }}"
 
-- name: "Configure | remove unwanted values in {{ task_conf_file }}"
+- name: "Configure | Remove unwanted values in {{ task_conf_file }}"
   lineinfile:
     path: "{{ task_conf_file }}"
     regexp: "^{{ item }} (?!{% for clamav_value in task_conf_parameters[item] %}{{ clamav_value | regex_escape() }}{{ '|' if not loop.last }}{% endfor %})"
     state: absent
     backup: "{{ clamav_configuration_backup }}"
   with_items: "{{ task_conf_parameters }}"
+
+- name: "Configure | Clear key with None value"
+  lineinfile:
+    path: "{{ task_conf_file }}"
+    regexp: "^{{ item }} .*$"
+    state: absent
+    backup: "{{ clamav_configuration_backup }}"
+  loop: "{{ task_conf_parameters | dict2items | selectattr('value','none') }}"
