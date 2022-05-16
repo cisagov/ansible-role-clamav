@@ -25,14 +25,16 @@ None.
 
 ### Example ###
 
-```
+```yaml
 clamav_freshclam_conf:
   DatabaseMirror: ['db.local.clamav.net', 'database.clamav.net']
   Bytecode: 'true'
   PrivateMirror: None
 ```
+
 would change :
-```
+
+```shell
   ...
   DatabaseMirror foo.bar.com
   DatabaseMirror bar.baz.com
@@ -40,8 +42,10 @@ would change :
   Bytecode false
   ...
 ```
+
 to :
-```
+
+```shell
   ...
   DatabaseMirror db.local.clamav.net
   DatabaseMirror database.clamav.net
