@@ -1,9 +1,4 @@
 ---
-- name: debug !
-  ansible.builtin.debug:
-    msg: ^{{ item }} (?!{% for clamav_value in task_conf_parameters[item] %}{{ clamav_value | regex_escape() }}{{ '|' if not loop.last }}{% endfor %})
-  with_items: "{{ task_conf_parameters }}"
-
 - name: "Configure | Single-valued - Ensure value exists in {{ task_conf_file }}"
   lineinfile:
     path: "{{ task_conf_file }}"
