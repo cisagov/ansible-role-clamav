@@ -22,6 +22,7 @@ clamav_scan_exclude_directories:
   - ^/dev/
   - ^/sys/
   - ^/proc/
+  - ^/var/spool/clamav
 clamav_scan_move: false
 clamav_scan_copy: false
 clamav_scan_quarantine_dir: '/var/spool/clamav'
