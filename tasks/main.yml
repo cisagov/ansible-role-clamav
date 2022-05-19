@@ -19,7 +19,7 @@
   ansible.builtin.template:
     dest: /etc/cron.{{ clamav_cron_frequency }}/virus_scan
     mode: 0755
-    src: virus_scan.sh
+    src: virus_scan.tpl.sh
 
 - name: Ensure that log folder exists
   ansible.builtin.file:
