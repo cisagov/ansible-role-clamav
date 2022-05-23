@@ -29,3 +29,8 @@
     state: absent
     backup: "{{ clamav_configuration_backup }}"
   loop: "{{ task_conf_parameters | dict2items | selectattr('value','none') }}"
+
+- name: "Configure | Secure configuration files"
+  file:
+    path: "{{ task_conf_file }}"
+    mode: 0700
