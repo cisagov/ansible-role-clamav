@@ -75,12 +75,12 @@
 
 - name: Ensure that quarantine folder exists
   ansible.builtin.file:
-    path: "{{ clamav_scan_quarantine_dir }}"
-    state: directory
-    owner: "{{ clamav_scan_quarantine_owner }}"
     group: "{{ clamav_scan_quarantine_group }}"
     mode: "{{ clamav_scan_quarantine_mode }}"
-  when: clamav_scan_move or clamav_scan_copy | bool
+    owner: "{{ clamav_scan_quarantine_owner }}"
+    path: "{{ clamav_scan_quarantine_dir }}"
+    state: directory
+  when: clamav_scan_copy or clamav_scan_move | bool
 
 - name: Load tasks file for systemd setup
   ansible.builtin.include_tasks: setup_systemd.yml
