@@ -1,9 +1,9 @@
 clamav_cron_frequency: weekly
 
-# Dictionnary of values to be configured.
-# Multivalued key are described in list.
-# None value means : clear the Key entirely from the file.
-# Example :
+# A dictionary of values to be configured in the clamd and freshclam configuration files.
+# Multivalued keys are specified as lists.
+# A value of None means that the key will be removed from the file.
+# Example:
 #
 # clamav_freshclam_conf:
 #   DatabaseMirror: ['db.local.clamav.net', 'database.clamav.net']

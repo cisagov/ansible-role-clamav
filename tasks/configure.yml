@@ -1,36 +1,36 @@
 ---
-- name: "Configure | Single-valued - Ensure value exists in {{ task_conf_file }}"
-  lineinfile:
+- name: Configure single-valued entries in {{ task_conf_file }}
+  ansible.builtin.lineinfile:
     path: "{{ task_conf_file }}"
     line: "{{ item.key }} {{ item.value }}"
     search_string: "{{ item.key }} "
     state: present
   loop: "{{ task_conf_parameters | dict2items | selectattr('value','string') }}"
 
-- name: "Configure | Multi-valued - Ensure values exists in {{ task_conf_file }}"
-  lineinfile:
+- name: Configure multi-valued entries in {{ task_conf_file }}
+  ansible.builtin.lineinfile:
     path: "{{ task_conf_file }}"
     line: "{{ item.0.key }} {{ item.1 }}"
     state: present
   loop: "{{ task_conf_parameters | dict2items | rejectattr('value','string') | subelements( 'value' ) }}"
 
-- name: "Configure | Remove unwanted values in {{ task_conf_file }}"
-  lineinfile:
+- name: Remove unwanted values from {{ task_conf_file }}
+  ansible.builtin.lineinfile:
     path: "{{ task_conf_file }}"
     regexp: "^{{ item }} (?!{% for clamav_value in task_conf_parameters[item] %}{{ clamav_value | regex_escape() }}{{ '|' if not loop.last }}{% endfor %})"
     state: absent
     backup: "{{ clamav_configuration_backup }}"
   with_items: "{{ task_conf_parameters }}"
 
-- name: "Configure | Clear key with None value"
-  lineinfile:
+- name: Remove unwanted keys from {{ task_conf_file }}
+  ansible.builtin.lineinfile:
     path: "{{ task_conf_file }}"
     regexp: "^{{ item }} .*$"
     state: absent
     backup: "{{ clamav_configuration_backup }}"
   loop: "{{ task_conf_parameters | dict2items | selectattr('value','none') }}"
 
-- name: "Configure | Secure configuration files"
-  file:
+- name: Set permissions on configuration file {{ task_conf_file }}
+  ansible.builtin.file:
     path: "{{ task_conf_file }}"
     mode: 0700

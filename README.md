@@ -19,9 +19,9 @@ None.
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
 | clamav_cron_frequency | The frequency of ClamAV scanning.  Must be one of: `hourly`, `daily`, `weekly`, or `monthly`. | `weekly` | No |
-| clamav_freshclam_conf | Dictionnary of values to set in freshclam configuration file  | false | No |
-| clamav_clamd_conf | Dictionnary of values to set in clamd configuration file  | false | No |
-| clamav_configuration_backup | Shall we backup configuration files when changed | false | No |
+| clamav_freshclam_conf | A dictionary of values to set in the freshclam configuration file. | false | No |
+| clamav_clamd_conf | A dictionary of values to set in the clamd configuration file. | false | No |
+| clamav_configuration_backup | Whether or not to backup configuration files before changing. | false | No |
 
 ### Example ###
 
@@ -32,9 +32,9 @@ clamav_freshclam_conf:
   PrivateMirror: None
 ```
 
-would change :
+would change:
 
-```shell
+```properties
   ...
   DatabaseMirror foo.bar.com
   DatabaseMirror bar.baz.com
@@ -43,9 +43,9 @@ would change :
   ...
 ```
 
-to :
+to:
 
-```shell
+```properties
   ...
   DatabaseMirror db.local.clamav.net
   DatabaseMirror database.clamav.net
