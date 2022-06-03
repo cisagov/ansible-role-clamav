@@ -29,7 +29,7 @@ None.
 clamav_freshclam_conf:
   DatabaseMirror: ['db.local.clamav.net', 'database.clamav.net']
   Bytecode: 'true'
-  PrivateMirror: None
+  PrivateMirror:
 ```
 
 would change:

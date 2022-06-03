@@ -21,19 +21,19 @@
     path: "{{ task_conf_file }}"
     line: "{{ item.0.key }} {{ item.1 }}"
     state: present
-  loop: "{{ task_conf_parameters | dict2items | rejectattr('value','string') | subelements( 'value' ) }}"
+  loop: "{{ task_conf_parameters | dict2items | rejectattr('value','string') | rejectattr('value','none') | subelements( 'value' ) }}"
 
 - name: Remove unwanted values from {{ task_conf_file }}
   ansible.builtin.lineinfile:
     path: "{{ task_conf_file }}"
-    regexp: "^{{ item }} (?!{% for clamav_value in task_conf_parameters[item] %}{{ clamav_value | regex_escape() }}{{ '|' if not loop.last }}{% endfor %})"
+    regexp: "^{{ item.key }} (?!{% for clamav_value in item.value %}{{ clamav_value | regex_escape() }}{{ '|' if not loop.last }}{% endfor %})"
     state: absent
-  with_items: "{{ task_conf_parameters }}"
+  loop: "{{ task_conf_parameters | dict2items | rejectattr('value','none') }}"
 
 - name: Remove unwanted keys from {{ task_conf_file }}
   ansible.builtin.lineinfile:
     path: "{{ task_conf_file }}"
-    regexp: "^{{ item }} .*$"
+    regexp: "^{{ item.key }} .*$"
     state: absent
   loop: "{{ task_conf_parameters | dict2items | selectattr('value','none') }}"
 
