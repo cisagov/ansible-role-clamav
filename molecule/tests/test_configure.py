@@ -13,4 +13,3 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 # clamd_configuration_path
 # freshclam_configuration_path
-
