@@ -26,7 +26,7 @@ None.
 | clamav_scan_exclude_directories | Directory trees to exclude from scan operations. | `{ /dev, /proc, /sys, /var/spool/clamav }` | No |
 | clamav_scan_extra_flags | Additional flags to pass to clamscan (see clamscan man page for reference).  | `[]` | No |
 | clamav_scan_move | Whether to move infected files to a quarantine directory. | false | No |
-| clamav_scan_quarantine_dir | Directory to store infected files. | `/var/spool/clamav` | No |
+| clamav_scan_quarantine_directory | Directory to store infected files. | `/var/spool/clamav` | No |
 | clamav_scan_quarantine_group | Group owner to apply to quarantine directory. | `root` | No |
 | clamav_scan_quarantine_mode | Permissions to apply to quarantine directory. | `0750` | No |
 | clamav_scan_quarantine_owner | Owner to apply to quarantine directory. | `root` | No |

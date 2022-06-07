@@ -11,7 +11,7 @@ LAST_DETECTION_FILENAME='/var/log/clamav/last_detection'
 # and write to the log
 clamscan \
 {% if clamav_scan_copy %}
-  --copy={{ clamav_scan_quarantine_dir }} \
+  --copy={{ clamav_scan_quarantine_directory }} \
 {% endif %}
 {% for dir in clamav_scan_exclude_directories %}
   --exclude-dir={{ dir }} \
@@ -19,7 +19,7 @@ clamscan \
   --infected \
   --log=${LAST_SCAN_LOG_FILENAME} \
 {% if clamav_scan_move %}
-  --move={{ clamav_scan_quarantine_dir }} \
+  --move={{ clamav_scan_quarantine_directory }} \
 {% endif %}
   --recursive \
 {% for flag in clamav_scan_extra_flags %}

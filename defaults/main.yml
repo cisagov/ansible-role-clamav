@@ -26,7 +26,7 @@ clamav_scan_exclude_directories:
   - ^/var/spool/clamav
 clamav_scan_extra_flags: []
 clamav_scan_move: false
-clamav_scan_quarantine_dir: '/var/spool/clamav'
+clamav_scan_quarantine_directory: '/var/spool/clamav'
 clamav_scan_quarantine_group: root
 clamav_scan_quarantine_mode: '0750'
 clamav_scan_quarantine_owner: root
