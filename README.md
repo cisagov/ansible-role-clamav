@@ -23,7 +23,7 @@ None.
 | clamav_cron_frequency | The frequency of ClamAV scanning.  Must be one of: `hourly`, `daily`, `weekly`, or `monthly`. | `weekly` | No |
 | clamav_freshclam_configuration | A dictionary of values to set in the freshclam configuration file. | `{}` | No |
 | clamav_scan_copy | Whether to copy infected files to quarantine folder. | false | No |
-| clamav_scan_exclude_directories | Directory trees to exclude from scan operations. | `{ /dev, /proc, /sys, /var/spool/clamav }` | No |
+| clamav_scan_exclude_directories | A list of regexes matching irectory trees that are to be excluded from scan operations. | `[^/dev, ^/proc, ^/sys, ^/var/spool/clamav]` | No |
 | clamav_scan_extra_flags | Additional flags to pass to clamscan (see clamscan man page for reference).  | `[]` | No |
 | clamav_scan_move | Whether to move infected files to a quarantine directory. | false | No |
 | clamav_scan_quarantine_directory | Directory to store infected files. | `/var/spool/clamav` | No |
