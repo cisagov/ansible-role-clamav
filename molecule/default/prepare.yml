@@ -1,7 +1,8 @@
 ---
 # When installing packages during later steps, the Fedora Docker
-# image we are using (geerlingguy/docker-fedora34-ansible:latest) can
-# throw sporadic errors like:
+# images we are using (geerlingguy/docker-fedora34-ansible:latest and
+# geerlingguy/docker-fedora35-ansible:latest) can throw sporadic
+# errors like:
 #
 # No such file or directory: '/var/cache/dnf/metadata_lock.pid'
 #
@@ -13,9 +14,9 @@
   tasks:
     - name: Group hosts by OS distribution
       group_by:
-        key: os_{{ ansible_distribution }}_{{ ansible_distribution_version }}
-- name: Wait for systemd to complete initialization (Fedora 34)
-  hosts: os_Fedora_34
+        key: os_{{ ansible_distribution }}
+- name: Wait for systemd to complete initialization (Fedora)
+  hosts: os_Fedora
   tasks:
     - name: Wait for systemd to complete initialization # noqa 303
       command: systemctl is-system-running
