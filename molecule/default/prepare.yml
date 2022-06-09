@@ -33,17 +33,17 @@
   ansible.builtin.import_playbook: python.yml
 
 # We want to copy a cron job to /etc/cron.daily, so that directory
-# needs to exist.  In our Debian 11 image it does not, so we need to
-# install a cron implementation.  On this platform, the default cron
-# package name is called cron.
+# needs to exist.  In our Debian Bullseye image it does not, so we
+# need to install a cron implementation.  On this platform, the
+# default cron package name is called cron.
 - name: Group hosts by OS distribution and major version
   hosts: all
   tasks:
     - name: Group hosts by OS distribution
       ansible.builtin.group_by:
-        key: os_{{ ansible_distribution }}_{{ ansible_distribution_major_version }}
+        key: os_{{ ansible_distribution }}_{{ ansible_distribution_release }}
 - name: Debian Bullseye-specific tasks
-  hosts: os_Debian_11
+  hosts: os_Debian_bullseye
   tasks:
     - name: Install cron
       ansible.builtin.package:
