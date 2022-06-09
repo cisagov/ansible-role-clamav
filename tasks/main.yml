@@ -17,23 +17,23 @@
 
 - name: Install virus_scan cron job
   ansible.builtin.copy:
-    src: virus_scan.sh
     dest: /etc/cron.{{ clamav_cron_frequency }}/virus_scan
     mode: 0755
+    src: virus_scan.sh
 
 - name: Ensure that log folder exists
   ansible.builtin.file:
+    mode: 0755
     path: /var/log/clamav
     state: directory
-    mode: 0755
 
 - name: Ensure log file will be world-readable
   ansible.builtin.file:
     access_time: preserve
+    mode: 0644
     modification_time: preserve
     path: /var/log/clamav/lastscan.log
     state: touch
-    mode: 0644
 
 - name: Load tasks file for systemd setup
   ansible.builtin.include_tasks: setup_systemd.yml
@@ -45,6 +45,6 @@
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   ansible.builtin.wait_for:
-    timeout: 600
     path: /var/lib/clamav/bytecode.cvd
     state: present
+    timeout: 600
