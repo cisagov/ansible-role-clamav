@@ -28,12 +28,36 @@
     state: directory
 
 - name: Ensure log file will be world-readable
-  ansible.builtin.file:
-    access_time: preserve
-    mode: 0644
-    modification_time: preserve
-    path: /var/log/clamav/lastscan.log
-    state: touch
+  block:
+    - name: Ensure log file will be world-readable (not Fedora)
+      ansible.builtin.file:
+        access_time: preserve
+        mode: 0644
+        modification_time: preserve
+        path: /var/log/clamav/lastscan.log
+        state: touch
+      when: ansible_distribution != "Fedora"
+
+    # Fedora has SELinux enabled, and if this module actually creates
+    # the file it needs to do so with the correct values for the the
+    # seuser, serole, setype, and selevel.  This is so that the
+    # clamscan process (which runs as antivirus_t) can access the
+    # file.
+    #
+    # I determined the correct values to use by running restorecon on
+    # /var/log/clamav/lastscan.log on a live system.
+    - name: Ensure log file will be world-readable (Fedora)
+      ansible.builtin.file:
+        access_time: preserve
+        mode: 0644
+        modification_time: preserve
+        path: /var/log/clamav/lastscan.log
+        selevel: s0
+        serole: object_r
+        setype: antivirus_log_t
+        seuser: system_u
+        state: touch
+      when: ansible_distribution == "Fedora"
 
 - name: Load tasks file for systemd setup
   ansible.builtin.include_tasks: setup_systemd.yml
