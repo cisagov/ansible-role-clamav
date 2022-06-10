@@ -16,6 +16,6 @@ clamscan --infected --recursive \
   /
 
 # if any infections are found, touch the detection file
-if ! grep -q "^Infected files: 0$" ${LAST_SCAN_LOG_FILENAME}; then
+if ! grep --quiet "^Infected files: 0$" ${LAST_SCAN_LOG_FILENAME}; then
   touch ${LAST_DETECTION_FILENAME}
 fi
