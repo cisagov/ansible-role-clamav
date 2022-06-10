@@ -12,7 +12,7 @@
 
 - name: Install ClamAV packages
   ansible.builtin.package:
-    name: '{{ package_names }}'
+    name: "{{ package_names }}"
     state: present
 
 - name: Install virus_scan cron job
