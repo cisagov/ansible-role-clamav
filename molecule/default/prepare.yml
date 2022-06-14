@@ -1,7 +1,8 @@
 ---
 # When installing packages during later steps, the Fedora Docker
-# image we are using (geerlingguy/docker-fedora34-ansible:latest) can
-# throw sporadic errors like:
+# images we are using (geerlingguy/docker-fedora34-ansible:latest and
+# geerlingguy/docker-fedora35-ansible:latest) can throw sporadic
+# errors like:
 #
 # No such file or directory: '/var/cache/dnf/metadata_lock.pid'
 #
@@ -13,12 +14,12 @@
   tasks:
     - name: Group hosts by OS distribution
       group_by:
-        key: os_{{ ansible_distribution }}_{{ ansible_distribution_version }}
-- name: Wait for systemd to complete initialization (Fedora 34)
-  hosts: os_Fedora_34
+        key: os_{{ ansible_distribution }}
+- name: Wait for systemd to complete initialization (Fedora)
+  hosts: os_Fedora
   tasks:
     - name: Wait for systemd to complete initialization # noqa 303
-      command: systemctl is-system-running
+      ansible.builtin.command: systemctl is-system-running
       register: systemctl_status
       until: "'running' in systemctl_status.stdout"
       retries: 30
@@ -32,17 +33,17 @@
   ansible.builtin.import_playbook: python.yml
 
 # We want to copy a cron job to /etc/cron.daily, so that directory
-# needs to exist.  In our Debian 11 image it does not, so we need to
-# install a cron implementation.  On this platform, the default cron
-# package name is called cron.
+# needs to exist.  In our Debian Bullseye image it does not, so we
+# need to install a cron implementation.  On this platform, the
+# default cron package name is called cron.
 - name: Group hosts by OS distribution and major version
   hosts: all
   tasks:
     - name: Group hosts by OS distribution
       ansible.builtin.group_by:
-        key: os_{{ ansible_distribution }}_{{ ansible_distribution_major_version }}
+        key: os_{{ ansible_distribution }}_{{ ansible_distribution_release }}
 - name: Debian Bullseye-specific tasks
-  hosts: os_Debian_11
+  hosts: os_Debian_bullseye
   tasks:
     - name: Install cron
       ansible.builtin.package:
