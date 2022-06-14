@@ -39,7 +39,7 @@
       when: ansible_distribution != "Fedora"
 
     # Fedora has SELinux enabled, and if this module actually creates
-    # the file it needs to do so with the correct values for the the
+    # the file it needs to do so with the correct values for the
     # seuser, serole, setype, and selevel.  This is so that the
     # clamscan process (which runs as antivirus_t) can access the
     # file.
