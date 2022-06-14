@@ -19,7 +19,7 @@
   hosts: os_Fedora
   tasks:
     - name: Wait for systemd to complete initialization # noqa 303
-      command: systemctl is-system-running
+      ansible.builtin.command: systemctl is-system-running
       register: systemctl_status
       until: "'running' in systemctl_status.stdout"
       retries: 30
