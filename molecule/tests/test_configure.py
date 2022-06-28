@@ -4,7 +4,6 @@
 import os
 
 # Third-Party Libraries
-import pytest
 import testinfra.utils.ansible_runner
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
@@ -36,7 +35,7 @@ def read_configuration_file(host, software_name):
         # We don't support this distribution
         assert False
 
-    with open(host.file(freshclam_path), 'r') as fh:
+    with open(host.file(file_path), 'r') as fh:
         file_content = fh.readlines()
 
     return file_content
