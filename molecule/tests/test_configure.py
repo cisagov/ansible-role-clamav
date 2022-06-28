@@ -10,14 +10,14 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ["MOLECULE_INVENTORY_FILE"]
 ).get_hosts("all")
 
-host_all_vars = host.ansible.get_variables()
-
 file_paths = {
-    'debian': {
+    'debian':
+    {
         'freshclam': '/etc/clamav/freshclam.conf',
         'clamd': '/etc/clamav/clamd.conf'
-        },
-    'redhat': {
+    },
+    'redhat':
+    {
         'freshclam': '/etc/freshclam.conf',
         'clamd': '/etc/clam.d/scan.conf'
     }
@@ -41,6 +41,7 @@ def read_configuration_file(host, software_name):
 
     return file_content
 
+
 def test_freshclam_conf(host):
     """Test freshclam configuration content."""
     databaseMirror_list_assertion = ['db.local.clamav.net', 'database.clamav.net', 'dummy.localhost']
@@ -56,6 +57,7 @@ def test_freshclam_conf(host):
         elif words[0] == 'Bytecode':
             # Should not be there
             assert False
+
 
 def test_clamd_conf(host):
     """Test clamd configuration content."""
