@@ -9,7 +9,6 @@
         clamav_freshclam_conf:
           DatabaseMirror: ['db.local.clamav.net', 'database.clamav.net', 'dummy.localhost']
           Bytecode:
-          PrivateMirror:
         clamv_clamd_conf:
           LogFile: /var/log/clamav/clamav.log
           StreamMaxLength: 22M
