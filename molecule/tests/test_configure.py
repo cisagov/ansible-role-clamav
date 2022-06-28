@@ -25,6 +25,7 @@ file_paths = {
 
 
 def read_configuration_file(host, software_name):
+    """Test distribution and read file content for further tests"""
     file_content = []
 
     if host.system_info.distribution in ["debian", "kali", "ubuntu"]:
@@ -41,7 +42,7 @@ def read_configuration_file(host, software_name):
     return file_content
 
 def test_freshclam_conf(host):
-
+    """Test freshclam configuration content"""
     databaseMirror_list_assertion = ['db.local.clamav.net', 'database.clamav.net', 'dummy.localhost']
 
     freshclam_conf_content = read_configuration_file(host, 'freshclam')
@@ -57,7 +58,7 @@ def test_freshclam_conf(host):
             assert False
 
 def test_clamd_conf(host):
-
+    """Test clamd configuration content"""
     clamd_conf_content = read_configuration_file(host, 'clamd')
 
     for lines in clamd_conf_content:
