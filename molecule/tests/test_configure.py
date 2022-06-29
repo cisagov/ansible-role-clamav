@@ -31,7 +31,8 @@ def read_configuration_file(host, software_name):
         # We don't support this distribution
         assert False
 
-    file_content = host.file(file_path).content
+    with open(file_path, "r") as fh:
+        file_content = fh.readlines()
 
     return file_content
 
