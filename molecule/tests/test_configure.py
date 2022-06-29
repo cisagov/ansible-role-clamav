@@ -21,7 +21,7 @@ file_paths = {
 
 def read_configuration_file(host, software_name):
     """Test distribution and read file content for further tests."""
-    file_content = []
+    file_lines = []
 
     if host.system_info.distribution in ["debian", "kali", "ubuntu"]:
         file_path = file_paths["debian"][software_name]
@@ -32,8 +32,9 @@ def read_configuration_file(host, software_name):
         assert False
 
     file_content = host.file(file_path).content_string
+    file_content.splitlines()
 
-    return file_content
+    return file_lines
 
 
 def test_freshclam_conf(host):
