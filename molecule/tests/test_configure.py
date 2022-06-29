@@ -31,8 +31,7 @@ def read_configuration_file(host, software_name):
         # We don't support this distribution
         assert False
 
-    with open(host.file(file_path), "r") as fh:
-        file_content = fh.readlines()
+    file_content = host.file(file_path).content
 
     return file_content
 
@@ -50,11 +49,13 @@ def test_freshclam_conf(host):
     for lines in freshclam_conf_content:
         words = lines.split(" ")
         if words[0] == "DatabaseMirror":
+            """Test DatabaseMirror values"""
             assert words[1] in databaseMirror_list_assertion
             databaseMirror_list_assertion.remove(words[1])
 
         elif words[0] == "Bytecode":
             # Should not be there
+            """Test Bytecode existence"""
             assert False
 
 
