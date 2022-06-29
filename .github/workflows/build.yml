@@ -136,7 +136,7 @@ jobs:
       # scenarios since the instances that GitHub Actions gives us are
       # not able to handle testing everything at once.
       - name: Run molecule tests
-        run: molecule --debug test --scenario-name ${{ matrix.scenario }}
+        run: molecule test --scenario-name ${{ matrix.scenario }}
       - name: Setup tmate debug session
         uses: mxschmitt/action-tmate@v3
         if: env.RUN_TMATE
