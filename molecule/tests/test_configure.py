@@ -32,7 +32,7 @@ def read_configuration_file(host, software_name):
         assert False
 
     file_content = host.file(file_path).content_string
-    file_content.splitlines()
+    file_lines = file_content.splitlines()
 
     return file_lines
 
