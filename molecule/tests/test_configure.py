@@ -57,7 +57,7 @@ def test_freshclam_conf(host):
             # Should not be there
             """Test Bytecode existence"""
             assert False
-    
+
     assert databaseMirror_list_assertion.len() == 0
 
 
