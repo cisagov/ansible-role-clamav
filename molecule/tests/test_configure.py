@@ -15,7 +15,7 @@ file_paths = {
         "freshclam": "/etc/clamav/freshclam.conf",
         "clamd": "/etc/clamav/clamd.conf",
     },
-    "redhat": {"freshclam": "/etc/freshclam.conf", "clamd": "/etc/clam.d/scan.conf"},
+    "redhat": {"freshclam": "/etc/freshclam.conf", "clamd": "/etc/clamd.d/scan.conf"},
 }
 
 
