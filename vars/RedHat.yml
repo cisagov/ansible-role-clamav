@@ -8,5 +8,5 @@ package_names:
   - clamav
   - clamav-update
 
-clamd_configuration_path: /etc/clam.d/scan.conf
+clamd_configuration_path: /etc/clamd.d/scan.conf
 freshclam_configuration_path: /etc/freshclam.conf

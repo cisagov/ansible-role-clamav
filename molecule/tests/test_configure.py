@@ -32,7 +32,6 @@ def read_configuration_file(host, software_name):
         assert False
 
     file_content = host.file(file_path).content_string
-    print(file_content)
 
     return file_content
 
