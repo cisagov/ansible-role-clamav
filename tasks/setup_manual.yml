@@ -3,6 +3,6 @@
 # It happens automatically with SystemD when registering freshclam service.
 
 - name: Run freshclam
-  ansible.builtin.command: /usr/bin/freshclam
-  args:
+  ansible.builtin.command:
+    cmd: /usr/bin/freshclam
     creates: /var/lib/clamav/bytecode.cvd
