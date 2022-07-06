@@ -86,7 +86,7 @@ repos:
     hooks:
       - id: bandit
         # Bandit complains about the use of assert() in tests
-        exclude: molecule/default/tests
+        exclude: molecule/(default|modify_config)/tests
         args:
           - --config=.bandit.yml
   - repo: https://github.com/psf/black
