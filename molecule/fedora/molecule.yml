@@ -72,4 +72,4 @@ scenario:
   name: fedora
 verifier:
   name: testinfra
-  directory: ../tests
+  directory: ../default/tests
