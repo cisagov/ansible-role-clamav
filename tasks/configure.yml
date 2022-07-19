@@ -1,26 +1,26 @@
 ---
 - name: Backup {{ task_conf_file }} to {{ task_conf_file }}.{{ ansible_date_time.iso8601 }}
   ansible.builtin.copy:
-    src: "{{ task_conf_file }}"
     dest: "{{ task_conf_file }}.{{ ansible_date_time.iso8601 }}"
     mode: 0700
     remote_src: true
-  when: clamav_configuration_backup
+    src: "{{ task_conf_file }}"
   tags:
     - molecule-idempotence-notest
+  when: clamav_configuration_backup
 
 - name: Configure single-valued entries in {{ task_conf_file }}
   ansible.builtin.lineinfile:
-    path: "{{ task_conf_file }}"
     line: "{{ item.key }} {{ item.value }}"
+    path: "{{ task_conf_file }}"
     search_string: "{{ item.key }} "
     state: present
   loop: "{{ task_conf_parameters | dict2items | selectattr('value','string') }}"
 
 - name: Configure multi-valued entries in {{ task_conf_file }}
   ansible.builtin.lineinfile:
-    path: "{{ task_conf_file }}"
     line: "{{ item.0.key }} {{ item.1 }}"
+    path: "{{ task_conf_file }}"
     state: present
   loop: "{{ task_conf_parameters | dict2items | rejectattr('value','string') | rejectattr('value','none') | subelements( 'value' ) }}"
 
@@ -40,5 +40,5 @@
 
 - name: Set permissions on configuration file {{ task_conf_file }}
   ansible.builtin.file:
-    path: "{{ task_conf_file }}"
     mode: 0700
+    path: "{{ task_conf_file }}"
