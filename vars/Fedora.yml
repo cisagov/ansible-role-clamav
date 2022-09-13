@@ -10,3 +10,6 @@ package_names:
   # Later versions of Fedora do not come with a cron implementation
   # installed, but we need one.
   - cronie
+
+clamd_configuration_path: /etc/clamd.d/scan.conf
+freshclam_configuration_path: /etc/freshclam.conf

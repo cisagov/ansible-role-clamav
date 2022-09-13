@@ -64,4 +64,4 @@ scenario:
   name: ubuntu
 verifier:
   name: testinfra
-  directory: ../tests
+  directory: ../default/tests

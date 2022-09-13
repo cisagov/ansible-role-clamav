@@ -59,6 +59,20 @@
         state: touch
       when: ansible_distribution == "Fedora"
 
+- name: Ensure configuration for freshclam
+  ansible.builtin.include_tasks: configure.yml
+  vars:
+    task_conf_file: "{{ freshclam_configuration_path }}"
+    task_conf_parameters: "{{ clamav_freshclam_configuration }}"
+  when: clamav_freshclam_configuration
+
+- name: Ensure configuration for clamd
+  ansible.builtin.include_tasks: configure.yml
+  vars:
+    task_conf_file: "{{ clamd_configuration_path }}"
+    task_conf_parameters: "{{ clamav_clamd_configuration }}"
+  when: clamav_clamd_configuration
+
 - name: Load tasks file for systemd setup
   ansible.builtin.include_tasks: setup_systemd.yml
   when: ansible_service_mgr == 'systemd'

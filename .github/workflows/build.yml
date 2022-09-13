@@ -108,8 +108,11 @@ jobs:
       matrix:
         scenario:
           - debian
+          - debian_modify_config
           - fedora
+          - fedora_modify_config
           - ubuntu
+          - ubuntu_modify_config
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

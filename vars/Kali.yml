@@ -9,3 +9,6 @@ package_names:
   # Kali 2020.4 does not ship with a cron implementation, but we need
   # one.
   - cron
+
+clamd_configuration_path: /etc/clamav/clamd.conf
+freshclam_configuration_path: /etc/clamav/freshclam.conf

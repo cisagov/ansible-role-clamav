@@ -15,63 +15,6 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  # Amazon Linux 2 doesn't appear to support clamav
-  # - name: amazonlinux2-systemd
-  #   image: geerlingguy/docker-amazonlinux2-ansible:latest
-  #   privileged: yes
-  #   volumes:
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  #   command: /lib/systemd/systemd
-  #   pre_build_image: yes
-  - name: debian9-systemd
-    image: geerlingguy/docker-debian9-ansible:latest
-    privileged: yes
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
-    pre_build_image: yes
-  - name: debian10-systemd
-    image: geerlingguy/docker-debian10-ansible:latest
-    privileged: yes
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
-    pre_build_image: yes
-  - name: debian11-systemd
-    image: geerlingguy/docker-debian11-ansible:latest
-    privileged: yes
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
-    pre_build_image: yes
-  - name: debian12-systemd
-    image: cisagov/docker-debian12-ansible:latest
-    privileged: yes
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
-    pre_build_image: yes
-  - name: kali-systemd
-    image: cisagov/docker-kali-ansible:latest
-    privileged: yes
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
-    pre_build_image: yes
-  - name: fedora34-systemd
-    image: geerlingguy/docker-fedora34-ansible:latest
-    privileged: yes
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
-    pre_build_image: yes
-  - name: fedora35-systemd
-    image: geerlingguy/docker-fedora35-ansible:latest
-    privileged: yes
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /lib/systemd/systemd
-    pre_build_image: yes
   - name: ubuntu-18-systemd
     image: geerlingguy/docker-ubuntu1804-ansible:latest
     privileged: yes
@@ -118,6 +61,7 @@ provisioner:
         # * https://github.com/ansible/ansible/blob/v2.10.1/lib/ansible/executor/interpreter_discovery.py
         ansible_python_interpreter: auto_legacy
 scenario:
-  name: default
+  name: ubuntu_modify_config
 verifier:
+  directory: ../modify_config/tests
   name: testinfra

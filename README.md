@@ -18,7 +18,40 @@ None.
 
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
+| clamav_clamd_configuration | A dictionary of values to set in the clamd configuration file. | `{}` | No |
+| clamav_configuration_backup | Whether or not to backup configuration files before changing. | `false` | No |
 | clamav_cron_frequency | The frequency of ClamAV scanning.  Must be one of: `hourly`, `daily`, `weekly`, or `monthly`. | `weekly` | No |
+| clamav_freshclam_configuration | A dictionary of values to set in the freshclam configuration file. | `{}` | No |
+
+### Example ###
+
+```yaml
+clamav_freshclam_configuration:
+  DatabaseMirror: ['db.local.clamav.net', 'database.clamav.net']
+  Bytecode: 'true'
+  PrivateMirror:
+```
+
+would change:
+
+```properties
+  ...
+  DatabaseMirror foo.bar.com
+  DatabaseMirror bar.baz.com
+  PrivateMirror private.mirror.local
+  Bytecode false
+  ...
+```
+
+to:
+
+```properties
+  ...
+  DatabaseMirror db.local.clamav.net
+  DatabaseMirror database.clamav.net
+  Bytecode true
+  ...
+```
 
 ## Dependencies ##
 

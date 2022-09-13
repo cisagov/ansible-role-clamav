@@ -1,1 +1,20 @@
 clamav_cron_frequency: weekly
+
+# A dictionary of values to be configured in the clamd and freshclam configuration files.
+# Multivalued keys are specified as lists.
+# A Nonetype value means that the key will be removed from the file.
+# Example:
+#
+# clamav_freshclam_configuration:
+#   DatabaseMirror: ['db.local.clamav.net', 'database.clamav.net']
+#   Bytecode: 'true'
+#   PrivateMirror:
+# clamav_clamd_configuration:
+#   LogFile: /var/log/clamav/clamav.log
+
+
+clamav_freshclam_configuration: {}
+clamav_clamd_configuration: {}
+
+# whether or not we create a backup of configuration file before replacing
+clamav_configuration_backup: false
