@@ -6,9 +6,9 @@
       ansible.builtin.include_role:
         name: ansible-role-clamav
       vars:
-        clamav_freshclam_conf:
+        clamav_freshclam_configuration:
           DatabaseMirror: ['db.local.clamav.net', 'database.clamav.net', 'dummy.localhost']
           Bytecode:
-        clamav_clamd_conf:
+        clamav_clamd_configuration:
           LogFile: /var/log/clamav/clamav.log
           StreamMaxLength: 22M

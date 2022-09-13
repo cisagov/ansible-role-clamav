@@ -5,16 +5,16 @@ clamav_cron_frequency: weekly
 # A Nonetype value means that the key will be removed from the file.
 # Example:
 #
-# clamav_freshclam_conf:
+# clamav_freshclam_configuration:
 #   DatabaseMirror: ['db.local.clamav.net', 'database.clamav.net']
 #   Bytecode: 'true'
 #   PrivateMirror:
-# clamv_clamd_conf:
+# clamav_clamd_configuration:
 #   LogFile: /var/log/clamav/clamav.log
 
 
-clamav_freshclam_conf: {}
-clamav_clamd_conf: {}
+clamav_freshclam_configuration: {}
+clamav_clamd_configuration: {}
 
 # whether or not we create a backup of configuration file before replacing
 clamav_configuration_backup: false
