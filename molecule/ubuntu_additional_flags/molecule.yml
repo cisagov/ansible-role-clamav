@@ -61,7 +61,7 @@ provisioner:
         # * https://github.com/ansible/ansible/blob/v2.10.1/lib/ansible/executor/interpreter_discovery.py
         ansible_python_interpreter: auto_legacy
 scenario:
-  name: ubuntu
+  name: ubuntu_additional_flags
 verifier:
   name: testinfra
   directory: ../additional_flags/tests
