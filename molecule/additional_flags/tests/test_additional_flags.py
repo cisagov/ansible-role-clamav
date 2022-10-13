@@ -42,13 +42,13 @@ fi
 
 
 def test_quarantine_folder(host):
-    """Test the quarantine folder"""
+    """Test the quarantine folder."""
     assert host.file("/var/spool/test-clamav").exists
     assert host.file("/var/spool/test-clamav").is_directory
 
 
 def test_virus_scan_shell(host):
-    """Test the scan shell script existence then content"""
+    """Test the scan shell script existence then content."""
     assert host.file("/etc/cron.daily/virus_scan").exists
     shell_content = host.file("/etc/cron.daily/virus_scan").content
     assert template_content == shell_content
