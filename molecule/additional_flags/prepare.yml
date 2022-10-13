@@ -1,0 +1,50 @@
+---
+# When installing packages during later steps, the Fedora Docker
+# image we are using (geerlingguy/docker-fedora34-ansible:latest) can
+# throw sporadic errors like:
+#
+# No such file or directory: '/var/cache/dnf/metadata_lock.pid'
+#
+# Our fix is to ensure that systemd finishes initializing before
+# continuing on to the converge tasks.  For details see:
+# https://www.jeffgeerling.com/blog/2020/resolving-fedora-dnf-error-no-such-file-or-directory-varlibdnfrpmdblockpid
+- name: Group hosts by OS distribution
+  hosts: all
+  tasks:
+    - name: Group hosts by OS distribution
+      group_by:
+        key: os_{{ ansible_distribution }}_{{ ansible_distribution_version }}
+- name: Wait for systemd to complete initialization (Fedora 34)
+  hosts: os_Fedora_34
+  tasks:
+    - name: Wait for systemd to complete initialization # noqa 303
+      command: systemctl is-system-running
+      register: systemctl_status
+      until: "'running' in systemctl_status.stdout"
+      retries: 30
+      delay: 5
+      when: ansible_service_mgr == 'systemd'
+
+- name: Import upgrade playbook
+  ansible.builtin.import_playbook: upgrade.yml
+
+- name: Import python playbook
+  ansible.builtin.import_playbook: python.yml
+
+# We want to copy a cron job to /etc/cron.daily, so that directory
+# needs to exist.  In our Debian 11 image it does not, so we need to
+# install a cron implementation.  On this platform, the default cron
+# package name is called cron.
+- name: Group hosts by OS distribution and major version
+  hosts: all
+  tasks:
+    - name: Group hosts by OS distribution
+      ansible.builtin.group_by:
+        key: os_{{ ansible_distribution }}_{{ ansible_distribution_major_version }}
+- name: Debian Bullseye-specific tasks
+  hosts: os_Debian_11
+  tasks:
+    - name: Install cron
+      ansible.builtin.package:
+        name:
+          - cron
