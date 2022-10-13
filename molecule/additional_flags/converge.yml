@@ -5,3 +5,12 @@
     - name: Include ansible-role-clamav
       ansible.builtin.include_role:
         name: ansible-role-clamav
+      vars:
+        clamav_scan_quarantine_directory: /var/spool/test-clamav
+        clamav_scan_exclude_directories:
+          - ^/dev/
+          - ^/proc/
+          - ^/sys/
+          - ^/var/spool/test-clamav
+        clamav_scan_extra_flags: ['--foo bar', '--bar foo']
+        clamav_cron_frequency: daily

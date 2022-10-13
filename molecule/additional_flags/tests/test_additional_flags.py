@@ -11,3 +11,40 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ["MOLECULE_INVENTORY_FILE"]
 ).get_hosts("all")
 
+template_content = '''#!/bin/bash
+# Managed by ansible role clamscan
+
+set -o nounset
+set -o pipefail
+
+LAST_SCAN_LOG_FILENAME='/var/log/clamav/lastscan.log'
+LAST_DETECTION_FILENAME='/var/log/clamav/last_detection'
+
+# Scan the entire file system (modulo excluded trees)
+# and write to the log
+clamscan \
+  --copy=/var/spool/test-clamav \
+  --exclude-dir=^/dev/ \
+  --exclude-dir=^/proc/ \
+  --exclude-dir=^/sys/ \
+  --exclude-dir=^/var/spool/test-clamav \
+  --infected \
+  --log=${LAST_SCAN_LOG_FILENAME} \
+  --recursive \
+  --bar foo \
+  --foo bar \
+  /
+
+# if any infections are found, touch the detection file
+if ! grep -q "^Infected files: 0$" ${LAST_SCAN_LOG_FILENAME}; then
+  touch ${LAST_DETECTION_FILENAME}
+fi
+'''
+
+def test_quarantine_folder(host):
+    assert host.file("/var/spool/test-clamav").exists
+    assert host.file("/var/spool/test-clamav").is_directory
+
+def test_virus_scan_shell(host):
+    shell_content = host.file("/etc/cron.daily/virus_scan").content
+    assert template_content == shell_content
