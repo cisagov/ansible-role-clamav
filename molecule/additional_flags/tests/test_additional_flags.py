@@ -21,17 +21,17 @@ LAST_DETECTION_FILENAME='/var/log/clamav/last_detection'
 
 # Scan the entire file system (modulo excluded trees)
 # and write to the log
-clamscan \
-  --copy=/var/spool/test-clamav \
-  --exclude-dir=^/dev/ \
-  --exclude-dir=^/proc/ \
-  --exclude-dir=^/sys/ \
-  --exclude-dir=^/var/spool/test-clamav \
-  --infected \
-  --log=${LAST_SCAN_LOG_FILENAME} \
-  --recursive \
-  --bar foo \
-  --foo bar \
+clamscan \\
+  --copy=/var/spool/test-clamav \\
+  --exclude-dir=^/dev/ \\
+  --exclude-dir=^/proc/ \\
+  --exclude-dir=^/sys/ \\
+  --exclude-dir=^/var/spool/test-clamav \\
+  --infected \\
+  --log=${LAST_SCAN_LOG_FILENAME} \\
+  --recursive \\
+  --bar foo \\
+  --foo bar \\
   /
 
 # if any infections are found, touch the detection file
