@@ -39,7 +39,8 @@ if ! grep -q "^Infected files: 0$" ${LAST_SCAN_LOG_FILENAME}; then
   touch ${LAST_DETECTION_FILENAME}
 fi
 '''
-
+# Bytify string content
+template_content = bytes(template_content, encoding= 'utf-8')
 
 def test_quarantine_folder(host):
     """Test the quarantine folder."""
@@ -50,5 +51,5 @@ def test_quarantine_folder(host):
 def test_virus_scan_shell(host):
     """Test the scan shell script existence then content."""
     assert host.file("/etc/cron.daily/virus_scan").exists
-    shell_content = host.file("/etc/cron.daily/virus_scan").content_string
+    shell_content = host.file("/etc/cron.daily/virus_scan").content
     assert template_content == shell_content
