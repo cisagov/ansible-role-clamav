@@ -41,7 +41,7 @@ fi
 '''
 
 # Bytify string content
-template_content = bytes(template_content,encoding= 'utf-8')
+template_content = bytes(template_content, encoding='utf-8')
 
 
 def test_quarantine_folder(host):
