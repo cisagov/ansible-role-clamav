@@ -10,7 +10,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ["MOLECULE_INVENTORY_FILE"]
 ).get_hosts("all")
 
-template_content = '''#!/bin/bash
+string_template_content = """#!/bin/bash
 # Managed by ansible role clamscan
 
 set -o nounset
@@ -38,10 +38,10 @@ clamscan \
 if ! grep -q "^Infected files: 0$" ${LAST_SCAN_LOG_FILENAME}; then
   touch ${LAST_DETECTION_FILENAME}
 fi
-'''
+"""
 
 # Bytify string content
-template_content = bytes(template_content, encoding='utf-8')
+template_content = bytes(string_template_content, encoding="utf-8")
 
 
 def test_quarantine_folder(host):
