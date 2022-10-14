@@ -39,8 +39,10 @@ if ! grep -q "^Infected files: 0$" ${LAST_SCAN_LOG_FILENAME}; then
   touch ${LAST_DETECTION_FILENAME}
 fi
 '''
+
 # Bytify string content
-template_content = bytes(template_content, encoding= 'utf-8')
+template_content = bytes(template_content,encoding= 'utf-8')
+
 
 def test_quarantine_folder(host):
     """Test the quarantine folder."""
