@@ -30,8 +30,8 @@ clamscan \\
   --infected \\
   --log=${LAST_SCAN_LOG_FILENAME} \\
   --recursive \\
-  --bar foo \\
   --foo bar \\
+  --bar foo \\
   /
 
 # if any infections are found, touch the detection file
