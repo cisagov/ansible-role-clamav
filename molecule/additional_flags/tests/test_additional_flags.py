@@ -1,4 +1,4 @@
-"""Module containing the tests for the additional flags scenario."""
+"""Module containing the tests for the additional_flags scenario."""
 
 # Standard Python Libraries
 import os
