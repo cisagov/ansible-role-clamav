@@ -29,20 +29,6 @@ def test_packages(host):
 
 
 @pytest.mark.parametrize(
-    "path",
-    [
-        # The virus scan cron job
-        "/etc/cron.weekly/virus_scan",
-        # freshclam virus signatures
-        "/var/lib/clamav/bytecode.cvd",
-    ],
-)
-def test_files_and_dirs(host, path):
-    """Test that the expected files and directories were created."""
-    assert host.file(path).exists
-
-
-@pytest.mark.parametrize(
     "service,is_enabled", [("clamav-daemon", False), ("clamav-freshclam", True)]
 )
 def test_services_debian(host, service, is_enabled):
