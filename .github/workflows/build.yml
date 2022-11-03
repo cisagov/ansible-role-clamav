@@ -108,10 +108,13 @@ jobs:
       matrix:
         scenario:
           - debian
+          - debian_additional_flags
           - debian_modify_config
           - fedora
+          - fedora_additional_flags
           - fedora_modify_config
           - ubuntu
+          - ubuntu_additional_flags
           - ubuntu_modify_config
     runs-on: ubuntu-latest
     steps:
