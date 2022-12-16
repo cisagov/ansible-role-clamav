@@ -29,9 +29,6 @@
 - name: Import upgrade playbook
   ansible.builtin.import_playbook: upgrade.yml
 
-- name: Import python playbook
-  ansible.builtin.import_playbook: python.yml
-
 # We want to copy a cron job to /etc/cron.daily, so that directory
 # needs to exist.  In our Debian Bullseye image it does not, so we
 # need to install a cron implementation.  On this platform, the
