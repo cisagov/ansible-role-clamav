@@ -15,28 +15,33 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  # Amazon Linux 2 doesn't appear to support clamav
-  # - name: amazonlinux2-systemd
-  #   image: geerlingguy/docker-amazonlinux2-ansible:latest
-  #   privileged: yes
-  #   volumes:
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  #   command: /lib/systemd/systemd
-  #   pre_build_image: yes
-  - name: fedora34-systemd
-    image: geerlingguy/docker-fedora34-ansible:latest
-    privileged: yes
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - cgroupns_mode: host
     command: /lib/systemd/systemd
-    pre_build_image: yes
-  - name: fedora35-systemd
     image: geerlingguy/docker-fedora35-ansible:latest
+    name: fedora35-systemd
+    platform: amd64
+    pre_build_image: yes
     privileged: yes
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  - cgroupns_mode: host
     command: /lib/systemd/systemd
+    image: geerlingguy/docker-fedora36-ansible:latest
+    name: fedora36-systemd
+    platform: amd64
     pre_build_image: yes
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  - cgroupns_mode: host
+    command: /lib/systemd/systemd
+    image: geerlingguy/docker-fedora37-ansible:latest
+    name: fedora37-systemd
+    platform: amd64
+    pre_build_image: yes
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
 provisioner:
   name: ansible
   inventory:
