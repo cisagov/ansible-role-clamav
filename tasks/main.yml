@@ -1,6 +1,14 @@
 ---
+- name: Load tasks file for adding kali-dev package repo for Kali
+  ansible.builtin.include_tasks:
+    file: setup_Kali.yml
+  when:
+    - ansible_os_family == "Debian"
+    - ansible_distribution == "Kali"
+
 - name: Load var file with package names based on the OS type
-  ansible.builtin.include_vars: "{{ lookup('first_found', params) }}"
+  ansible.builtin.include_vars:
+    file: "{{ lookup('first_found', params) }}"
   vars:
     params:
       files:
@@ -60,14 +68,16 @@
       when: ansible_distribution == "Fedora"
 
 - name: Ensure configuration for freshclam
-  ansible.builtin.include_tasks: configure.yml
+  ansible.builtin.include_tasks:
+    file: configure.yml
   vars:
     task_conf_file: "{{ freshclam_configuration_path }}"
     task_conf_parameters: "{{ clamav_freshclam_configuration }}"
   when: clamav_freshclam_configuration
 
 - name: Ensure configuration for clamd
-  ansible.builtin.include_tasks: configure.yml
+  ansible.builtin.include_tasks:
+    file: configure.yml
   vars:
     task_conf_file: "{{ clamd_configuration_path }}"
     task_conf_parameters: "{{ clamav_clamd_configuration }}"
@@ -83,11 +93,13 @@
   when: clamav_scan_copy or clamav_scan_move | bool
 
 - name: Load tasks file for systemd setup
-  ansible.builtin.include_tasks: setup_systemd.yml
+  ansible.builtin.include_tasks:
+    file: setup_systemd.yml
   when: ansible_service_mgr == 'systemd'
 
 - name: Load tasks file for manual setup
-  ansible.builtin.include_tasks: setup_manual.yml
+  ansible.builtin.include_tasks:
+    file: setup_manual.yml
   when: ansible_service_mgr != 'systemd'
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
