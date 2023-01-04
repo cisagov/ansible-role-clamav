@@ -2,7 +2,7 @@
 # Add kali-dev package repo
 #
 # TODO: These tasks should be removed once libtfm1>=0.13.1-1 is
-# available in kali-rolling.
+# available in kali-rolling.  See #61 for more details.
 
 - name: Add the kali-dev package repository
   ansible.builtin.apt_repository:
