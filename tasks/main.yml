@@ -67,6 +67,18 @@
         state: touch
       when: ansible_distribution == "Fedora"
 
+- name: selinux
+  block:
+
+  - name: Generate selinux policy for freshclam
+    ansible.builtin.shell: grep freshclam /var/log/audit/audit.log | audit2allow -M freshclam
+
+  - name: Apply selinux policy for freshclam
+    ansible.builtin.shell: semodule -i freshclam.pp
+
+  when:
+    - ansible_selinux.status == "enabled"
+
 - name: Ensure configuration for freshclam
   ansible.builtin.include_tasks:
     file: configure.yml
