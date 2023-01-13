@@ -76,6 +76,12 @@
   - name: Apply selinux policy for freshclam
     ansible.builtin.shell: semodule -i freshclam.pp
 
+  - name: Set selinux antivirus_can_scan_system flag persistently
+    ansible.posix.seboolean:
+      name: antivirus_can_scan_system
+      state: yes
+      persistent: yes
+
   when:
     - ansible_selinux.status == "enabled"
 
