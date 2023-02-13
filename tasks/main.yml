@@ -67,7 +67,7 @@
         state: touch
       when: ansible_distribution == "Fedora"
 
-- name: selinux
+- name: Configure SELinux to allow freshclam downloads and file system scan
   block:
   - name: Generate SELinux policy for freshclam
     ansible.builtin.shell: grep freshclam /var/log/audit/audit.log | audit2allow -M freshclam
