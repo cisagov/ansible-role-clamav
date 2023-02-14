@@ -69,20 +69,19 @@
 
 - name: Configure SELinux to allow freshclam downloads and file system scan
   block:
-  - name: Generate SELinux policy for freshclam
-    ansible.builtin.shell:
-      cmd: grep freshclam /var/log/audit/audit.log | audit2allow -M freshclam
+    - name: Generate SELinux policy for freshclam
+      ansible.builtin.shell:
+        cmd: grep freshclam /var/log/audit/audit.log | audit2allow -M freshclam
 
-  - name: Apply SELinux policy for freshclam
-    ansible.builtin.command:
-      cmd: semodule --install freshclam.pp
+    - name: Apply SELinux policy for freshclam
+      ansible.builtin.command:
+        cmd: semodule --install freshclam.pp
 
-  - name: Set SELinux antivirus_can_scan_system flag persistently
-    ansible.posix.seboolean:
-      name: antivirus_can_scan_system
-      persistent: yes
-      state: yes
-
+    - name: Set SELinux antivirus_can_scan_system flag persistently
+      ansible.posix.seboolean:
+        name: antivirus_can_scan_system
+        persistent: yes
+        state: yes
   when:
     - ansible_selinux.status == "enabled"
 
