@@ -74,7 +74,7 @@
       cmd: grep freshclam /var/log/audit/audit.log | audit2allow -M freshclam
 
   - name: Apply SELinux policy for freshclam
-    ansible.builtin.shell:
+    ansible.builtin.command:
       cmd: semodule --install freshclam.pp
 
   - name: Set SELinux antivirus_can_scan_system flag persistently
