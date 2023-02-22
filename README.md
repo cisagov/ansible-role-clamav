@@ -29,6 +29,8 @@ None.
 | clamav_scan_quarantine_group | Group owner to apply to quarantine directory. | `root` | No |
 | clamav_scan_quarantine_mode | Permissions to apply to quarantine directory. | `0750` | No |
 | clamav_scan_quarantine_owner | Owner to apply to quarantine directory. | `root` | No |
+| clamav_seboolean_name | On hosts with SELinux enabled, name of the boolean to allow clamav to scan files. | `antivirus_can_scan_system` | No |
+| clamav_seboolean_state | On hosts with SELinux enabled, wether to allow clamav to scan files. | `antivirus_can_scan_system` | No |
 
 ### Example ###
 
