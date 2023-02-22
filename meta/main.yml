@@ -1,8 +1,9 @@
 ---
+dependencies: []
 galaxy_info:
   author: Mark Feldhousen, Jr.
-  description: Install ClamAV and a cron job to run automated AV scans
   company: CISA Cyber Assessments
+  description: Install ClamAV and a cron job to run automated AV scans
   galaxy_tags:
     - clamav
   license: CC0
@@ -29,7 +30,6 @@ galaxy_info:
         - bookworm
     - name: Fedora
       versions:
-        - "35"
         - "36"
         - "37"
     - name: Ubuntu
@@ -38,5 +38,3 @@ galaxy_info:
         - focal
         - jammy
   role_name: clamav
-
-dependencies: []
