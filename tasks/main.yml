@@ -67,6 +67,14 @@
         state: touch
       when: ansible_distribution == "Fedora"
 
+- name: "Set SELinux {{ clamav_seboolean_name }} flag persistently"
+  ansible.posix.seboolean:
+    name: "{{ clamav_seboolean_name }}"
+    persistent: true
+    state: "{{ clamav_seboolean_state }}"
+  when:
+    - ansible_selinux.status == "enabled"
+
 - name: Ensure configuration for freshclam
   ansible.builtin.include_tasks:
     file: configure.yml
