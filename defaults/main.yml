@@ -32,4 +32,4 @@ clamav_scan_quarantine_mode: 0750
 clamav_scan_quarantine_owner: root
 
 clamav_seboolean_name: antivirus_can_scan_system
-clamav_seboolean_state: yes
+clamav_seboolean_state: true
