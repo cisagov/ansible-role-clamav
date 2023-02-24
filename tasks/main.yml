@@ -70,7 +70,7 @@
 - name: "Set SELinux {{ clamav_seboolean_name }} flag persistently"
   ansible.posix.seboolean:
     name: "{{ clamav_seboolean_name }}"
-    persistent: yes
+    persistent: true
     state: "{{ clamav_seboolean_state }}"
   when:
     - ansible_selinux.status == "enabled"
