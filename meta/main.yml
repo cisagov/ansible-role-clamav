@@ -15,23 +15,22 @@ galaxy_info:
   min_ansible_version: "2.10"
   namespace: cisagov
   platforms:
-    # Amazon Linux 2 does not appear to offer ClamAV
-    # - name: Amazon Linux 2
+    # Amazon Linux 2023 does not appear to offer ClamAV
+    # - name: Amazon Linux 2023
     #   versions:
     #     - any
     - name: Debian
       versions:
-        - stretch
         - buster
         - bullseye
-        # Kali linux isn't an option here, but it is based on
-        # Debian Testing:
-        # https://www.kali.org/docs/policy/kali-linux-relationship-with-debian
         - bookworm
     - name: Fedora
       versions:
         - "36"
         - "37"
+    - name: Kali
+      versions:
+        - "2023"
     - name: Ubuntu
       versions:
         - bionic
