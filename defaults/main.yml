@@ -1,4 +1,15 @@
+---
+# Frequency of cronjob, must be one of "custom" or a special_time handled by ansible.builtin.cron
 clamav_cron_frequency: weekly
+
+# If custom frequency, the role uses this variable to install the cronjob:
+clamav_cron_custom:
+  day: "*"
+  job: "/usr/local/share/virus_scan.sh"
+  minute: "*"
+  month: "*"
+  hour: "*"
+  weekday: "*"
 
 # A dictionary of values to be configured in the clamd and freshclam configuration files.
 # Multivalued keys are specified as lists.
