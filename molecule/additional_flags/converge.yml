@@ -3,7 +3,10 @@
   hosts: all
   tasks:
     - name: Include ansible-role-clamav
-      ansible.builtin.include_role:
+      # We do prepend the name of the role to the role variables, but
+      # Molecule does its own role discovery with inconsistent naming.
+      # This is the reason for the noqa below.
+      ansible.builtin.include_role: # noqa var-naming[no-role-prefix]
         name: ansible-role-clamav
       vars:
         clamav_cron_frequency: daily
