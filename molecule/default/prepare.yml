@@ -13,7 +13,7 @@
   hosts: all
   tasks:
     - name: Group hosts by OS distribution
-      group_by:
+      ansible.builtin.group_by:
         key: os_{{ ansible_distribution }}
 - name: Wait for systemd to complete initialization (Fedora)
   hosts: os_Fedora
