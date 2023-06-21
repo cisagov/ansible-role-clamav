@@ -18,7 +18,11 @@
 - name: Wait for systemd to complete initialization (Fedora)
   hosts: os_Fedora
   tasks:
-    - name: Wait for systemd to complete initialization # noqa 303
+    # ansible-lint wants us to use the ansible.builtin.systemd module
+    # here, but that module does not provide the is-system-running
+    # functionality.  This is the reason for the noqa comment on the
+    # next line.
+    - name: Wait for systemd to complete initialization # noqa command-instead-of-module
       ansible.builtin.command: systemctl is-system-running
       register: systemctl_status
       until: "'running' in systemctl_status.stdout"
