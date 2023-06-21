@@ -29,6 +29,7 @@
       retries: 30
       delay: 5
       when: ansible_service_mgr == 'systemd'
+      changed_when: false
 
 - name: Import upgrade playbook
   ansible.builtin.import_playbook: upgrade.yml
