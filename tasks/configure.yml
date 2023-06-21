@@ -1,5 +1,5 @@
 ---
-- name: Backup {{ task_conf_file }} to {{ task_conf_file }}.{{ ansible_date_time.iso8601 }}
+- name: Backup {{ task_conf_file }}
   ansible.builtin.copy:
     dest: "{{ task_conf_file }}.{{ ansible_date_time.iso8601 }}"
     mode: 0700

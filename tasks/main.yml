@@ -60,7 +60,7 @@
         state: touch
       when: ansible_distribution == "Fedora"
 
-- name: "Set SELinux {{ clamav_seboolean_name }} flag persistently"
+- name: "Set SELinux flag persistently ({{ clamav_seboolean_name }})"
   ansible.posix.seboolean:
     name: "{{ clamav_seboolean_name }}"
     persistent: true
