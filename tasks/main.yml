@@ -96,12 +96,12 @@
 - name: Load tasks file for systemd setup
   ansible.builtin.include_tasks:
     file: setup_systemd.yml
-  when: ansible_service_mgr == 'systemd'
+  when: ansible_service_mgr == "systemd"
 
 - name: Load tasks file for manual setup
   ansible.builtin.include_tasks:
     file: setup_manual.yml
-  when: ansible_service_mgr != 'systemd'
+  when: ansible_service_mgr != "systemd"
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   ansible.builtin.wait_for:
