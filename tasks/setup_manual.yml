@@ -1,6 +1,7 @@
 ---
 # This task runs freshclam and controls the virus database creation.
-# It happens automatically with SystemD when registering freshclam service.
+# It happens automatically with SystemD when registering freshclam
+# service.
 
 - name: Run freshclam
   ansible.builtin.command:
