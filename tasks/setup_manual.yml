@@ -1,6 +1,6 @@
 ---
 # This task runs freshclam and controls the virus database creation.
-# It happens automatically with SystemD when registering freshclam
+# It happens automatically with SystemD when registering the freshclam
 # service.
 
 - name: Run freshclam
