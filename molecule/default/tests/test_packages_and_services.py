@@ -15,8 +15,11 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_packages(host):
     """Test that the appropriate packages were installed."""
     distribution = host.system_info.distribution
-    if distribution == "fedora":
-        pkgs = ["clamav", "clamav-update"]
+    if distribution in ["fedora"]:
+        if host.system_info.release == "38":
+            pkgs = ["clamav", "clamav-freshclam"]
+        else:
+            pkgs = ["clamav", "clamav-update"]
     elif distribution in ["debian", "kali", "ubuntu"]:
         pkgs = ["clamav-daemon"]
     else:

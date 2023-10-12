@@ -11,8 +11,6 @@
     enabled: no
     name: "{{ clamav_service_name }}"
 
-# freshclam is run via a cron job on Fedora <34, so there is no
-# service to start in that case
 - name: Start and enable freshclam
   ansible.builtin.service:
     enabled: yes
