@@ -19,7 +19,7 @@ def test_quarantine_folder(host):
 
 def test_virus_scan_shell(host):
     """Test the scan shell script exists with the expected content."""
-    f = host.file("/etc/cron.daily/virus_scan")
+    f = host.file("/usr/local/share/virus_scan.sh")
     assert f.exists
     assert f.is_file
     assert f.contains(r"--exclude-dir=^/var/spool/test-clamav")
