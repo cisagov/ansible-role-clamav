@@ -7,9 +7,9 @@ set -o pipefail
 LAST_SCAN_LOG_FILENAME='/var/log/clamav/lastscan.log'
 LAST_DETECTION_FILENAME='/var/log/clamav/last_detection'
 
-# Scan the entire file system (modulo excluded trees)
-# and write to the log
-clamscan \
+# Scan the entire file system (modulo excluded trees) and write to the
+# log.  Use nice since clamscan can be temporarily CPU-hungry.
+nice clamscan \
 {% if clamav_scan_copy %}
   --copy={{ clamav_scan_quarantine_directory }} \
 {% endif %}
@@ -27,7 +27,7 @@ clamscan \
 {% endfor %}
   /
 
-# if any infections are found, touch the detection file
+# If any infections are found, touch the detection file.
 if ! grep --quiet "^Infected files: 0$" ${LAST_SCAN_LOG_FILENAME}; then
   touch ${LAST_DETECTION_FILENAME}
 fi
