@@ -1,0 +1,26 @@
+---
+
+# Example playbook to clean cronjobs that was previously
+# deployed in /etc/cron.{{ clamav_cron_frequency }} 
+# instead of /etc/cron.d/
+# ======================================================
+
+- hosts: yourhosts
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: List all cronjob files in /etc path
+      ansible.builtin.find:
+        paths:
+          - /etc/
+        patterns:
+          - virus_scan
+        recurse: true
+      register: jobs_list
+
+    - name: Delete all found cronjob files
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop: "{{ jobs_list.files }}"
