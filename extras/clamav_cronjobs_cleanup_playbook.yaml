@@ -5,9 +5,10 @@
 # instead of /etc/cron.d/
 # ======================================================
 
-- hosts: yourhosts
+- name: Cronjob cleaning facility playbook
+  hosts: yourhosts
   become: yes
-  become_method: sudo
+  become_method: ansible.builtin.sudo
 
   tasks:
     - name: List all cronjob files in /etc path
