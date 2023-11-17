@@ -44,7 +44,6 @@
   ansible.builtin.service:
     name: apparmor
     state: reloaded
-
 - name: Install virus_scan cron job
   ansible.builtin.template:
     dest: /etc/cron.{{ clamav_cron_frequency }}/virus_scan
