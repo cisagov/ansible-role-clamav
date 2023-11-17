@@ -31,7 +31,7 @@
     user: root
   when: clamav_cron_frequency != "custom"
 
-- name: "Install custom virus_scan cron job"
+- name: Install custom virus_scan cron job
   ansible.builtin.cron:
     cron_file: virus_scan
     day: "{{ clamav_cron_custom.day }}"
