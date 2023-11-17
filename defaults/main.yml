@@ -2,7 +2,7 @@ clamav_cron_frequency: weekly
 
 apparmor_clamd_configuration_path: /etc/apparmor.d/usr.sbin.clamd
 apparmor_freshclam_configuration_path: /etc/apparmor.d/usr.bin.freshclam
-apparmor_complain: true
+apparmor_complain: false
 
 # A dictionary of values to be configured in the clamd and freshclam configuration files.
 # Multivalued keys are specified as lists.
