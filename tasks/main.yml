@@ -37,8 +37,8 @@
 
     - name: Reload AppArmor profiles
       ansible.builtin.service:
-        name: 'apparmor'
-        state: 'reloaded'
+        name: apparmor
+        state: reloaded
 
 - name: Reload AppArmor all profiles
   ansible.builtin.service:
