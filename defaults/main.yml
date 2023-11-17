@@ -1,5 +1,5 @@
 ---
-# Frequency of cronjob, must be one of "custom" or a special_time handled by ansible.builtin.cron
+# Frequency of clamav cronjob, must be one of "custom" or a special_time handled by ansible.builtin.cron
 clamav_cron_frequency: weekly
 
 # If custom frequency, the role uses this variable to install the cronjob.
