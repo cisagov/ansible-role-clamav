@@ -1,7 +1,7 @@
 ---
 
 # Example playbook to clean cronjobs that was previously
-# deployed in /etc/cron.{{ clamav_cron_frequency }} 
+# deployed in /etc/cron.{{ clamav_cron_frequency }}
 # instead of /etc/cron.d/
 # ======================================================
 
