@@ -22,9 +22,9 @@
     - name: Configure clamd in apparmor
       ansible.builtin.lineinfile:
         firstmatch: true
-        line: "/usr/sbin/clamd flags=(complain) {"
+        line: /usr/sbin/clamd flags=(complain) {
         path: "{{ apparmor_clamd_configuration_path }}"
-        search_string: "/usr/sbin/clamd {"
+        search_string: /usr/sbin/clamd {
         state: present
 
     - name: Configure freshclam in apparmor

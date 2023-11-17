@@ -1,5 +1,9 @@
 clamav_cron_frequency: weekly
 
+# Task control to handle an AppArmor/Clamd defect
+# Defect: Defect Notes: https://bugs.launchpad.net/ubuntu/+source/clamav/+bug/1842695
+# Evidence: This issue is evident by daemon permission errors accessing clamd or freshclam
+#   log files or in AuditD logs "apparmor="DENIED""
 apparmor_clamd_configuration_path: /etc/apparmor.d/usr.sbin.clamd
 apparmor_freshclam_configuration_path: /etc/apparmor.d/usr.bin.freshclam
 apparmor_complain: false
