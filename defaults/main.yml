@@ -2,8 +2,8 @@
 # Frequency of clamav cronjob, must be one of "custom" or a special_time handled by ansible.builtin.cron
 clamav_cron_frequency: weekly
 
-# If custom frequency, the role uses this variable to install the cronjob.
-# This dict doesn't merge, every line needs to be valuated:
+# If clamav cronjob frequency is custom, the role uses this variable to install the cronjob.
+# This dict doesn't merge, every line needs to be present.
 clamav_cron_custom:
   day: "*"
   job: "/usr/local/share/virus_scan.sh"
