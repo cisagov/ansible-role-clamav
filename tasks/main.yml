@@ -22,10 +22,10 @@
     mode: 0755
     src: virus_scan.sh.j2
 
-- name: "Install virus_scan cron job as {{ clamav_cron_frequency }}"
+- name: Install virus_scan cron job as {{ clamav_cron_frequency }}
   ansible.builtin.cron:
     cron_file: virus_scan
-    job: "/usr/local/share/virus_scan.sh"
+    job: /usr/local/share/virus_scan.sh
     name: virus_scan
     special_time: "{{ clamav_cron_frequency }}"
     user: root

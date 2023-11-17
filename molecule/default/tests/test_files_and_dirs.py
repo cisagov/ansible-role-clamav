@@ -17,7 +17,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     [
         # The virus scan cron job
         "/etc/cron.d/virus_scan",
-        # The virus scan shell
+        # The virus scan shell script
         "/usr/local/share/virus_scan.sh",
         # freshclam virus signatures
         "/var/lib/clamav/bytecode.cvd",
