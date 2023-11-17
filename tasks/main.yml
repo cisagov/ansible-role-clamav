@@ -42,9 +42,8 @@
 
 - name: Reload AppArmor all profiles
   ansible.builtin.service:
-    name: 'apparmor'
-    state: 'reloaded'
-
+    name: apparmor
+    state: reloaded
 
 - name: Install virus_scan cron job
   ansible.builtin.template:
