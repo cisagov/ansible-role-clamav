@@ -22,6 +22,6 @@
 
     - name: Delete all found cronjob files
       ansible.builtin.file:
-        path: "{{ item }}"
+        path: "{{ item.path }}"
         state: absent
       loop: "{{ jobs_list.files }}"
