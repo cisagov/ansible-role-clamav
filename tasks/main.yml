@@ -17,7 +17,7 @@
     state: present
 
 - name: Configure AppArmor for Clamd
-  when: "ansible_apparmor.status == 'enabled' and apparmor_complain"
+  when: ansible_apparmor.status == "enabled" and apparmor_complain
   block:
     - name: Configure clamd in apparmor
       ansible.builtin.lineinfile:
