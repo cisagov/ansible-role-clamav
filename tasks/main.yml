@@ -96,6 +96,7 @@
   vars:
     task_conf_file: "{{ freshclam_configuration_path }}"
     task_conf_parameters: "{{ clamav_freshclam_configuration }}"
+    task_conf_service: "{{ freshclam_service_name }}"
   when: clamav_freshclam_configuration
 
 - name: Ensure configuration for clamd
@@ -104,6 +105,7 @@
   vars:
     task_conf_file: "{{ clamd_configuration_path }}"
     task_conf_parameters: "{{ clamav_clamd_configuration }}"
+    task_conf_service: "{{ clamav_service_name }}"
   when: clamav_clamd_configuration
 
 - name: Ensure that quarantine folder exists

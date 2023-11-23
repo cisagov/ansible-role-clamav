@@ -1,4 +1,5 @@
 ---
+
 - name: Backup {{ task_conf_file }}
   ansible.builtin.copy:
     dest: "{{ task_conf_file }}.{{ ansible_date_time.iso8601 }}"
@@ -42,3 +43,15 @@
   ansible.builtin.file:
     mode: 0700
     path: "{{ task_conf_file }}"
+
+- name: Stop service {{ task_conf_service }}
+  ansible.builtin.service:
+    name: "{{ task_conf_service }}"
+    state: stopped
+  register: service_status
+
+- name: Restart service if it was started
+  ansible.builtin.service:
+    name: "{{ task_conf_service }}"
+    state: started
+  when: service_status.changed
