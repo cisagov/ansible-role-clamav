@@ -1,5 +1,4 @@
 ---
-
 - name: Backup {{ task_conf_file }}
   ansible.builtin.copy:
     dest: "{{ task_conf_file }}.{{ ansible_date_time.iso8601 }}"
