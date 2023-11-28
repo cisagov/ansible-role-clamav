@@ -1,56 +1,48 @@
 ---
-- name: Backup {{ task_conf_file }}
-  ansible.builtin.copy:
-    dest: "{{ task_conf_file }}.{{ ansible_date_time.iso8601 }}"
-    mode: 0700
-    remote_src: true
-    src: "{{ task_conf_file }}"
-  tags:
-    - molecule-idempotence-notest
-  when: clamav_configuration_backup
+- name: Handle service configuration and notify restart if needed
+  block:
+    - name: Backup {{ task_conf_file }}
+      ansible.builtin.copy:
+        dest: "{{ task_conf_file }}.{{ ansible_date_time.iso8601 }}"
+        mode: 0700
+        remote_src: true
+        src: "{{ task_conf_file }}"
+      tags:
+        - molecule-idempotence-notest
+      when: clamav_configuration_backup
 
-- name: Configure single-valued entries in {{ task_conf_file }}
-  ansible.builtin.lineinfile:
-    line: "{{ item.key }} {{ item.value }}"
-    path: "{{ task_conf_file }}"
-    search_string: "{{ item.key }} "
-    state: present
-  loop: "{{ task_conf_parameters | dict2items | selectattr('value', 'string') }}"
+    - name: Configure single-valued entries in {{ task_conf_file }}
+      ansible.builtin.lineinfile:
+        line: "{{ item.key }} {{ item.value }}"
+        path: "{{ task_conf_file }}"
+        search_string: "{{ item.key }} "
+        state: present
+      loop: "{{ task_conf_parameters | dict2items | selectattr('value', 'string') }}"
 
-- name: Configure multi-valued entries in {{ task_conf_file }}
-  ansible.builtin.lineinfile:
-    line: "{{ item.0.key }} {{ item.1 }}"
-    path: "{{ task_conf_file }}"
-    state: present
-  loop: "{{ task_conf_parameters | dict2items | rejectattr('value', 'string') | rejectattr('value', 'none') | subelements('value') }}"
+    - name: Configure multi-valued entries in {{ task_conf_file }}
+      ansible.builtin.lineinfile:
+        line: "{{ item.0.key }} {{ item.1 }}"
+        path: "{{ task_conf_file }}"
+        state: present
+      loop: "{{ task_conf_parameters | dict2items | rejectattr('value', 'string') | rejectattr('value', 'none') | subelements('value') }}"
 
-- name: Remove unwanted values from {{ task_conf_file }}
-  ansible.builtin.lineinfile:
-    path: "{{ task_conf_file }}"
-    regexp: "^{{ item.key }} (?!{% for clamav_value in item.value %}{{ clamav_value | regex_escape() }}{{ '|' if not loop.last }}{% endfor %})"
-    state: absent
-  loop: "{{ task_conf_parameters | dict2items | rejectattr('value', 'none') }}"
+    - name: Remove unwanted values from {{ task_conf_file }}
+      ansible.builtin.lineinfile:
+        path: "{{ task_conf_file }}"
+        regexp: "^{{ item.key }} (?!{% for clamav_value in item.value %}{{ clamav_value | regex_escape() }}{{ '|' if not loop.last }}{% endfor %})"
+        state: absent
+      loop: "{{ task_conf_parameters | dict2items | rejectattr('value', 'none') }}"
 
-- name: Remove unwanted keys from {{ task_conf_file }}
-  ansible.builtin.lineinfile:
-    path: "{{ task_conf_file }}"
-    regexp: "^{{ item.key }} .*$"
-    state: absent
-  loop: "{{ task_conf_parameters | dict2items | selectattr('value', 'none') }}"
+    - name: Remove unwanted keys from {{ task_conf_file }}
+      ansible.builtin.lineinfile:
+        path: "{{ task_conf_file }}"
+        regexp: "^{{ item.key }} .*$"
+        state: absent
+      loop: "{{ task_conf_parameters | dict2items | selectattr('value', 'none') }}"
 
-- name: Set permissions on configuration file {{ task_conf_file }}
-  ansible.builtin.file:
-    mode: 0700
-    path: "{{ task_conf_file }}"
+    - name: Set permissions on configuration file {{ task_conf_file }}
+      ansible.builtin.file:
+        mode: 0700
+        path: "{{ task_conf_file }}"
 
-- name: Stop service {{ task_conf_service }}
-  ansible.builtin.service:
-    name: "{{ task_conf_service }}"
-    state: stopped
-  register: service_status
-
-- name: Restart service if it was started
-  ansible.builtin.service:
-    name: "{{ task_conf_service }}"
-    state: started
-  when: service_status.changed
+  notify: "Handle {{ task_conf_service }} service"
