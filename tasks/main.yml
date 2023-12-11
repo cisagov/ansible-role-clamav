@@ -16,6 +16,30 @@
     name: "{{ package_names }}"
     state: present
 
+- name: Configure AppArmor for Clamd
+  when: ansible_apparmor.status == "enabled" and apparmor_complain
+  block:
+    - name: Configure clamd in apparmor
+      ansible.builtin.lineinfile:
+        firstmatch: true
+        line: /usr/sbin/clamd flags=(complain) {
+        path: "{{ apparmor_clamd_configuration_path }}"
+        search_string: /usr/sbin/clamd {
+        state: present
+
+    - name: Configure freshclam in apparmor
+      ansible.builtin.lineinfile:
+        firstmatch: true
+        line: "/usr/bin/freshclam flags=(attach_disconnected,complain) {"
+        path: "{{ apparmor_freshclam_configuration_path }}"
+        search_string: "/usr/bin/freshclam flags=(attach_disconnected) {"
+        state: present
+
+    - name: Reload AppArmor profiles
+      ansible.builtin.service:
+        name: apparmor
+        state: reloaded
+
 - name: Install virus_scan cron job
   ansible.builtin.template:
     dest: /etc/cron.{{ clamav_cron_frequency }}/virus_scan
