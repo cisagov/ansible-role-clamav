@@ -1,6 +1,6 @@
 ---
 - name: Handle service configuration and notify restart if needed
-  notify: "Handle {{ task_conf_service }} service"
+  notify: "Restart {{ task_conf_service }} service"
   block:
     - name: Backup {{ task_conf_file }}
       ansible.builtin.copy:
