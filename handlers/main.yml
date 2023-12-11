@@ -1,22 +1,10 @@
 ---
-- name: Handle freshclam service
+- name: Restart freshclam service
   ansible.builtin.service:
     name: "{{ freshclam_service_name }}"
-    state: stopped
-  notify: Start freschlam
+    state: restart
 
-- name: Start freschlam
+- name: Restart clamd service
   ansible.builtin.service:
-    name: "{{ freshclam_service_name }}"
-    state: started
-
-- name: Handle clamd service
-  ansible.builtin.service:
-    name: "{{ freshclam_service_name }}"
-    state: stopped
-  notify: Start clamd
-
-- name: Start clamd
-  ansible.builtin.service:
-    name: "{{ freshclam_service_name }}"
-    state: started
+    name: "{{ clamd_service_name }}"
+    state: restart
