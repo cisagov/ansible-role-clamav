@@ -6,5 +6,5 @@
 
 - name: Restart clamd service
   ansible.builtin.service:
-    name: "{{ clamd_service_name }}"
+    name: "{{ clamav_service_name }}"
     state: restarted
