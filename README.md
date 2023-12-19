@@ -19,7 +19,8 @@ None.
 |----------|-------------|---------|----------|
 | clamav_clamd_configuration | A dictionary of values to set in the clamd configuration file. | `{}` | No |
 | clamav_configuration_backup | Whether or not to backup configuration files before changing. | `false` | No |
-| clamav_cron_frequency | The frequency of ClamAV scanning.  Must be one of: `hourly`, `daily`, `weekly`, or `monthly`. | `weekly` | No |
+| clamav_cron_frequency | The frequency of ClamAV scanning.  Must be `custom` or an ansible.builtin.cron [special_time](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/cron_module.html#parameter-special_time). | `weekly` | No |
+| clamav_cron_custom    | If frequency is set to `custom`, a dictionary to define the timer. | `{"day": "*", "job": "/usr/local/share/virus_scan.sh", "minute": "30", "month": "*", "hour": "5", "weekday": "*"}` | No |
 | clamav_freshclam_configuration | A dictionary of values to set in the freshclam configuration file. | `{}` | No |
 | clamav_scan_copy | Whether to copy infected files to quarantine folder. | `false` | No |
 | clamav_scan_exclude_directories | A list of regexes matching directory trees that are to be excluded from scan operations. | `[^/dev, ^/proc, ^/sys, ^/var/spool/clamav]` | No |

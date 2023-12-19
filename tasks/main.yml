@@ -16,11 +16,33 @@
     name: "{{ package_names }}"
     state: present
 
-- name: Install virus_scan cron job
+- name: Install shell script to be run by cron
   ansible.builtin.template:
-    dest: /etc/cron.{{ clamav_cron_frequency }}/virus_scan
+    dest: /usr/local/share/virus_scan.sh
     mode: 0755
     src: virus_scan.sh.j2
+
+- name: Install virus_scan cron job as {{ clamav_cron_frequency }}
+  ansible.builtin.cron:
+    cron_file: virus_scan
+    job: /usr/local/share/virus_scan.sh
+    name: virus_scan
+    special_time: "{{ clamav_cron_frequency }}"
+    user: root
+  when: clamav_cron_frequency != "custom"
+
+- name: Install custom virus_scan cron job
+  ansible.builtin.cron:
+    cron_file: virus_scan
+    day: "{{ clamav_cron_custom.day }}"
+    hour: "{{ clamav_cron_custom.hour }}"
+    job: "{{ clamav_cron_custom.job }}"
+    minute: "{{ clamav_cron_custom.minute }}"
+    month: "{{ clamav_cron_custom.month }}"
+    name: virus_scan
+    user: root
+    weekday: "{{ clamav_cron_custom.weekday }}"
+  when: clamav_cron_frequency == "custom"
 
 - name: Ensure that log folder exists
   ansible.builtin.file:
