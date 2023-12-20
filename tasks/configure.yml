@@ -1,5 +1,5 @@
 ---
-- name: Handle service configuration and notify restart if needed
+- name: Configure service and notify restart handler
   notify: "Restart {{ task_conf_service }} service"
   block:
     - name: Backup {{ task_conf_file }}
