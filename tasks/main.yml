@@ -96,6 +96,7 @@
   vars:
     task_conf_file: "{{ freshclam_configuration_path }}"
     task_conf_parameters: "{{ clamav_freshclam_configuration }}"
+    task_conf_service: freshclam
   when: clamav_freshclam_configuration
 
 - name: Ensure configuration for clamd
@@ -104,7 +105,13 @@
   vars:
     task_conf_file: "{{ clamd_configuration_path }}"
     task_conf_parameters: "{{ clamav_clamd_configuration }}"
+    task_conf_service: clamd
   when: clamav_clamd_configuration
+
+# We need to flush handlers as configuration changes might be necessary
+# to pass the wait_for signatures test.
+- name: Flush possible pending handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Ensure that quarantine folder exists
   ansible.builtin.file:
