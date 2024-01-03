@@ -8,11 +8,11 @@
 # Debian seems to enable the clamav daemon by default
 - name: Disable main clamav daemon
   ansible.builtin.service:
-    enabled: no
+    enabled: false
     name: "{{ clamav_service_name }}"
 
 - name: Start and enable freshclam
   ansible.builtin.service:
-    enabled: yes
+    enabled: true
     name: "{{ freshclam_service_name }}"
     state: started
