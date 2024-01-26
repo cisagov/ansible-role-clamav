@@ -31,6 +31,14 @@ def test_packages(host):
     assert all(installed)
 
 
+def test_clamscan_executable_present(host):
+    """Test that the clamscan executable is present.
+
+    This test is added in response to issue #49.
+    """
+    assert host.exists("clamscan")
+
+
 @pytest.mark.parametrize(
     "service,is_enabled", [("clamav-daemon", False), ("clamav-freshclam", True)]
 )
