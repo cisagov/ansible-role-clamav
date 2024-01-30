@@ -30,7 +30,6 @@ galaxy_info:
         - bookworm
     - name: Fedora
       versions:
-        - "37"
         - "38"
     - name: Kali
       versions:
