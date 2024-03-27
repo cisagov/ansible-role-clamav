@@ -6,7 +6,7 @@ driver:
 platforms:
   - cgroupns_mode: host
     command: /lib/systemd/systemd
-    image: geerlingguy/docker-amazonlinux2023-ansible:latest
+    image: docker.io/geerlingguy/docker-amazonlinux2023-ansible:latest
     name: amazonlinux2023-systemd
     platform: amd64
     pre_build_image: true
@@ -15,7 +15,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - cgroupns_mode: host
     command: /lib/systemd/systemd
-    image: geerlingguy/docker-debian10-ansible:latest
+    image: docker.io/geerlingguy/docker-debian10-ansible:latest
     name: debian10-systemd
     platform: amd64
     pre_build_image: true
@@ -24,7 +24,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - cgroupns_mode: host
     command: /lib/systemd/systemd
-    image: geerlingguy/docker-debian11-ansible:latest
+    image: docker.io/geerlingguy/docker-debian11-ansible:latest
     name: debian11-systemd
     platform: amd64
     pre_build_image: true
@@ -33,7 +33,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - cgroupns_mode: host
     command: /lib/systemd/systemd
-    image: cisagov/docker-debian12-ansible:latest
+    image: docker.io/cisagov/docker-debian12-ansible:latest
     name: debian12-systemd
     platform: amd64
     pre_build_image: true
@@ -42,7 +42,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - cgroupns_mode: host
     command: /lib/systemd/systemd
-    image: cisagov/docker-kali-ansible:latest
+    image: docker.io/cisagov/docker-kali-ansible:latest
     name: kali-systemd
     platform: amd64
     pre_build_image: true
@@ -51,7 +51,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - cgroupns_mode: host
     command: /lib/systemd/systemd
-    image: geerlingguy/docker-fedora37-ansible:latest
+    image: docker.io/geerlingguy/docker-fedora37-ansible:latest
     name: fedora37-systemd
     platform: amd64
     pre_build_image: true
@@ -60,7 +60,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - cgroupns_mode: host
     command: /lib/systemd/systemd
-    image: geerlingguy/docker-fedora38-ansible:latest
+    image: docker.io/geerlingguy/docker-fedora38-ansible:latest
     name: fedora38-systemd
     platform: amd64
     pre_build_image: true
@@ -69,7 +69,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - cgroupns_mode: host
     command: /lib/systemd/systemd
-    image: geerlingguy/docker-ubuntu2004-ansible:latest
+    image: docker.io/geerlingguy/docker-ubuntu2004-ansible:latest
     name: ubuntu-20-systemd
     platform: amd64
     pre_build_image: true
@@ -78,7 +78,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
   - cgroupns_mode: host
     command: /lib/systemd/systemd
-    image: geerlingguy/docker-ubuntu2204-ansible:latest
+    image: docker.io/geerlingguy/docker-ubuntu2204-ansible:latest
     name: ubuntu-22-systemd
     platform: amd64
     pre_build_image: true
