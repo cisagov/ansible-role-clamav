@@ -7,6 +7,9 @@
 name: CodeQL
 
 on:
+  merge_group:
+    types:
+      - checks_requested
   push:
     # Dependabot triggered push events have read-only access, but uploading code
     # scanning requires write access.
