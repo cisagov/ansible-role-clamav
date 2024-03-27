@@ -31,7 +31,6 @@ galaxy_info:
         - trixie
     - name: Fedora
       versions:
-        - "37"
         - "38"
         - "39"
     - name: Kali
