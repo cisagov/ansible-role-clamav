@@ -29,10 +29,11 @@ galaxy_info:
         - buster
         - bullseye
         - bookworm
+        - trixie
     - name: Fedora
       versions:
-        - "37"
         - "38"
+        - "39"
     - name: Kali
       versions:
         - "2023"
