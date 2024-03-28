@@ -19,15 +19,24 @@ updates:
       - dependency-name: hashicorp/setup-terraform
       - dependency-name: mxschmitt/action-tmate
       - dependency-name: step-security/harden-runner
+      # # Managed by cisagov/skeleton-ansible-role
+      # - dependency-name: github/codeql-action
     package-ecosystem: github-actions
     schedule:
       interval: weekly
 
   - directory: /
+<<<<<<< HEAD
     ignore:
       # Managed by cisagov/skeleton-ansible-role
       - dependency-name: ansible
       - dependency-name: ansible-lint
+=======
+    # ignore:
+    #   # Managed by cisagov/skeleton-ansible-role
+    #   - dependency-name: ansible
+    #   - dependency-name: ansible-core
+>>>>>>> c121f6c2d751ea234695e5ff5188c9a834537efd
     package-ecosystem: pip
     schedule:
       interval: weekly
