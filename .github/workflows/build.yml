@@ -180,6 +180,12 @@ jobs:
         architecture:
           - amd64
           - arm64
+        exclude:
+          # The packages that ClamAV offers directly on its website do
+          # not support the ARM64 architecture.
+          # https://www.clamav.net/downloads
+          - architecture: arm64
+            scenario: package_install
         platform:
           # Amazon Linux 2023 doesn't appear to support clamav
           # - amazonlinux2023-systemd
@@ -197,6 +203,7 @@ jobs:
           - default
           - additional_flags
           - modify_config
+          - package_install
     steps:
       - id: harden-runner
         name: Harden the runner

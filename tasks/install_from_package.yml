@@ -1,0 +1,28 @@
+- name: Install ClamAV from package URL with apt
+  ansible.builtin.apt:
+    deb: "{{ clamav_linux_package_url }}"
+    state: present
+  when: ansible_pkg_mgr == "apt"
+
+- name: Install ClamAV from package URL with dnf
+  ansible.builtin.dnf:
+    disable_gpg_check: true
+    name: "{{ clamav_linux_package_url }}"
+    state: present
+  when: ansible_pkg_mgr == "dnf"
+
+- name: Create the directory {{ freshclam_configuration_path | dirname }}
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ freshclam_configuration_path | dirname }}"
+    state: directory
+
+- name: Copy freshclam.conf to {{ freshclam_configuration_path }}
+  ansible.builtin.template:
+    backup: true
+    dest: "{{ freshclam_configuration_path }}"
+    force: true
+    group: root
+    mode: "0644"
+    owner: root
+    src: freshclam.conf.j2

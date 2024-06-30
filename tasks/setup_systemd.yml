@@ -10,6 +10,16 @@
   ansible.builtin.service:
     enabled: false
     name: "{{ clamav_service_name }}"
+  when: clamav_install_from_package_manager
+
+- name: Create freshclam service file
+  ansible.builtin.template:
+    dest: /etc/systemd/system/{{ freshclam_service_name }}.service
+    group: root
+    mode: "0644"
+    owner: root
+    src: freshclam.service.j2
+  when: not clamav_install_from_package_manager and ansible_service_mgr == "systemd"
 
 - name: Start and enable freshclam
   ansible.builtin.service:

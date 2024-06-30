@@ -4,11 +4,16 @@ clamav_service_name: clamav-daemon
 freshclam_service_name: clamav-freshclam
 
 # The ClamAV package names
-package_names:
+clamav_packages:
   - clamav-daemon
-  # Kali 2020.4 does not ship with a cron implementation, but we need
-  # one.
+
+# Kali 2020.4 does not ship with a cron implementation, but we need
+# one.
+dependencies:
   - cron
 
 clamd_configuration_path: /etc/clamav/clamd.conf
 freshclam_configuration_path: /etc/clamav/freshclam.conf
+
+clamav_package: "clamav-{{ clamav_package_version }}.linux.{{ ansible_architecture }}.deb"
+clamav_linux_package_url: "https://www.clamav.net/downloads/production/{{ clamav_package }}"

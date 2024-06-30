@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Include ansible-role-clamav
+      ansible.builtin.include_role:
+        name: ansible-role-clamav
+      vars:
+        clamav_install_from_package_manager: false

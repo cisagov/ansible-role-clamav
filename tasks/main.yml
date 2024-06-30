@@ -11,10 +11,22 @@
       paths:
         - "{{ role_path }}/vars"
 
-- name: Install ClamAV packages
+- name: Install package dependencies with package manager
   ansible.builtin.package:
-    name: "{{ package_names }}"
+    name: "{{ dependencies }}"
     state: present
+  when: dependencies is defined
+
+- name: Install ClamAV packages with package manager
+  ansible.builtin.package:
+    name: "{{ clamav_packages }}"
+    state: present
+  when: clamav_install_from_package_manager
+
+- name: Install ClamAV from package URL
+  ansible.builtin.include_tasks:
+    file: install_from_package.yml
+  when: not clamav_install_from_package_manager
 
 - name: Install shell script to be run by cron
   ansible.builtin.template:
@@ -90,6 +102,16 @@
   when:
     - ansible_selinux.status == "enabled"
 
+- name: Load tasks file for systemd setup
+  ansible.builtin.include_tasks:
+    file: setup_systemd.yml
+  when: ansible_service_mgr == "systemd"
+
+- name: Load tasks file for manual setup
+  ansible.builtin.include_tasks:
+    file: setup_manual.yml
+  when: ansible_service_mgr != "systemd"
+
 - name: Ensure configuration for freshclam
   ansible.builtin.include_tasks:
     file: configure.yml
@@ -121,16 +143,6 @@
     path: "{{ clamav_scan_quarantine_directory }}"
     state: directory
   when: clamav_scan_copy or clamav_scan_move | bool
-
-- name: Load tasks file for systemd setup
-  ansible.builtin.include_tasks:
-    file: setup_systemd.yml
-  when: ansible_service_mgr == "systemd"
-
-- name: Load tasks file for manual setup
-  ansible.builtin.include_tasks:
-    file: setup_manual.yml
-  when: ansible_service_mgr != "systemd"
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   ansible.builtin.wait_for:
