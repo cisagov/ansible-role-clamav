@@ -185,6 +185,20 @@ jobs:
           - amd64
           - arm64
         exclude:
+          # Debian 13 has a very recent version of systemd (currently
+          # 257), and the freshclam service cannot be started under
+          # QEMU emulation.  We support this platform, but we cannot
+          # test it until we have native ARM64 runners.  See #82 for
+          # more details.
+          - architecture: arm64
+            platform: debian13-systemd
+          # Kali has a recent version of systemd (currently 256), and
+          # the freshclam service cannot be started under QEMU
+          # emulation.  We support this platform, but we cannot test
+          # it until we have native ARM64 runners.  See #83 for more
+          # details.
+          - architecture: arm64
+            platform: kali-systemd
           # The packages that ClamAV offers directly on its website do
           # not support the ARM64 architecture.
           # https://www.clamav.net/downloads
