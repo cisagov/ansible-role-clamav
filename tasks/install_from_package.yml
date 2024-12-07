@@ -11,6 +11,13 @@
     state: present
   when: ansible_pkg_mgr == "dnf"
 
+- name: Install ClamAV from package URL with dnf5
+  ansible.builtin.dnf5:
+    disable_gpg_check: true
+    name: "{{ clamav_linux_package_url }}"
+    state: present
+  when: ansible_pkg_mgr == "dnf5"
+
 - name: Create the directory {{ freshclam_configuration_path | dirname }}
   ansible.builtin.file:
     mode: "0755"
