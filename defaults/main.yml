@@ -1,17 +1,4 @@
 ---
-# Frequency of clamav cronjob, must be "custom" or a special_time handled by ansible.builtin.cron
-clamav_cron_frequency: weekly
-
-# If clamav cronjob frequency is "custom", the role uses this variable to install the cronjob.
-# This dict doesn't merge, so every line needs to be present.
-clamav_cron_custom:
-  day: "*"
-  job: "/usr/local/share/virus_scan.sh"
-  minute: "30"
-  month: "*"
-  hour: "5"
-  weekday: "*"
-
 # A dictionary of values to be configured in the clamd and freshclam configuration files.
 # Multivalued keys are specified as lists.
 # A Nonetype value means that the key will be removed from the file.
@@ -39,6 +26,10 @@ clamav_scan_exclude_directories:
   - ^/sys/
   - ^/var/spool/clamav
 clamav_scan_extra_flags: []
+# Frequency of clamscan virus scan.  Must be a calendar event in the
+# format understood by systemd:
+# https://www.freedesktop.org/software/systemd/man/latest/systemd.time.html#Calendar%20Events)
+clamav_scan_frequency: weekly
 clamav_scan_move: false
 clamav_scan_quarantine_directory: /var/spool/clamav
 clamav_scan_quarantine_group: root
