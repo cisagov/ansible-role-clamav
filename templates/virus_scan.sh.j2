@@ -34,7 +34,40 @@ LAST_DETECTION_FILENAME=/var/log/clamav/last_detection
 {% endfor %}
   /
 
-# If any infections are found, touch the detection file.
-if ! grep --quiet "^Infected files: 0$" ${LAST_SCAN_LOG_FILENAME}; then
-  touch ${LAST_DETECTION_FILENAME}
+# If any infections were found in the most recent run, touch the
+# detection file.
+prefix=${LAST_SCAN_LOG_FILENAME}-
+latest_scan_log=${LAST_SCAN_LOG_FILENAME}-00
+
+# This function cleans the individual scan logs created by the csplit
+# command.
+cleanup_after_csplit () {
+    echo "Cleaning up individual scan logs created by csplit." >&2
+    rm -f ${prefix}*
+}
+# Run cleanup_after_csplit when the script exits.
+trap cleanup_after_csplit EXIT
+
+# Split the scan log so that each scan is its own log file.
+tac "$LAST_SCAN_LOG_FILENAME" | csplit --prefix="$prefix" --quiet - \
+                                       "/^-* SCAN SUMMARY -*$/" "{*}"
+if [ -f "$latest_scan_log" ]; then
+    # Extract the number of infected files found.
+    num_infected_files=$(sed --quiet --regexp-extended \
+                             "s/^Infected files: ([[:digit:]]+)$/\1/p" \
+                             "$latest_scan_log")
+    if [ -n "$num_infected_files" ]; then
+        if [ "$num_infected_files" -ne 0 ]; then
+            # An infected file was found.
+            touch "$LAST_DETECTION_FILENAME"
+        fi
+    else
+        echo Unable to parse number of infected files from file \
+             $latest_scan_log. >&2
+        exit 1
+    fi
+else
+    echo Unable to split file $LAST_DETECTION_FILENAME into constituent \
+         scan logs via csplit. >&2
+    exit 1
 fi
