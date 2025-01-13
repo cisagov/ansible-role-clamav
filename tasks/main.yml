@@ -30,8 +30,8 @@
 
 - name: Install shell script to be run by cron
   ansible.builtin.template:
-    dest: /usr/local/share/virus_scan.sh
-    mode: 0755
+    dest: /usr/local/sbin/virus_scan.sh
+    mode: 0500
     src: virus_scan.sh.j2
 
 - name: Install virus_scan cron job as {{ clamav_cron_frequency }}
