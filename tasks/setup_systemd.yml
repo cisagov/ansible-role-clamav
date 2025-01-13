@@ -26,3 +26,26 @@
     enabled: true
     name: "{{ freshclam_service_name }}"
     state: started
+
+- name: Copy systemd service to run virus scan
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/run-virus-scan.service
+    mode: 0500
+    src: run-virus-scan.service
+    # I'd like to validate the file here, but that can't be done
+    # cleanly.  See ansible/ansible#19243.
+    # validate: systemd-analyze verify %s
+
+- name: Copy systemd timer to run virus scan
+  ansible.builtin.template:
+    dest: /etc/systemd/system/run-virus-scan.timer
+    mode: 0500
+    src: run-virus-scan.timer.j2
+    # I'd like to validate the file here, but that can't be done
+    # cleanly.  See ansible/ansible#19243.
+    # validate: systemd-analyze verify %s
+
+- name: Enable the systemd timer
+  ansible.builtin.systemd_service:
+    enabled: true
+    name: run-virus-scan.timer
