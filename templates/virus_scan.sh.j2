@@ -6,8 +6,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-LAST_SCAN_LOG_FILENAME='/var/log/clamav/lastscan.log'
-LAST_DETECTION_FILENAME='/var/log/clamav/last_detection'
+LAST_SCAN_LOG_FILENAME=/var/log/clamav/lastscan.log
+LAST_DETECTION_FILENAME=/var/log/clamav/last_detection
 
 # Scan the entire file system (modulo excluded trees) and write to the
 # log.  Use nice since clamscan can be temporarily CPU-hungry.
