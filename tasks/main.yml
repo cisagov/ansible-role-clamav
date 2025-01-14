@@ -28,12 +28,6 @@
     file: install_from_package.yml
   when: not clamav_install_from_package_manager
 
-- name: Install virus scan shell script to be run by systemd service
-  ansible.builtin.template:
-    dest: /usr/local/sbin/virus_scan.sh
-    mode: 0500
-    src: virus_scan.sh.j2
-
 - name: Ensure that log folder exists
   ansible.builtin.file:
     mode: 0755
@@ -121,6 +115,10 @@
     path: "{{ clamav_scan_quarantine_directory }}"
     state: directory
   when: clamav_scan_copy or clamav_scan_move | bool
+
+- name: Install systemd timer and service to run virus scan script
+  ansible.builtin.include_tasks:
+    file: setup_virus_scan.yml
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   ansible.builtin.wait_for:
