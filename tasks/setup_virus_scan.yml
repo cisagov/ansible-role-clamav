@@ -3,7 +3,7 @@
   ansible.builtin.template:
     dest: /usr/local/sbin/virus_scan.sh
     mode: 0500
-    src: virus_scan.sh.j2
+    src: virus_scan.j2.sh
 
 - name: Copy systemd service to run virus scan
   ansible.builtin.copy:
