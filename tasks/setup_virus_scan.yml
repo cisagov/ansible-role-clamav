@@ -18,7 +18,7 @@
   ansible.builtin.template:
     dest: /etc/systemd/system/run-virus-scan.timer
     mode: 0500
-    src: run-virus-scan.timer.j2
+    src: run-virus-scan.j2.timer
     # I'd like to validate the file here, but that can't be done
     # cleanly.  See ansible/ansible#19243.
     # validate: systemd-analyze verify %s
