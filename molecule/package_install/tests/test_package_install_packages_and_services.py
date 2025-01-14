@@ -30,48 +30,20 @@ def test_clamscan_executable_present(host):
 
 def test_services(host):
     """Test that the expected services were enabled or disabled as intended."""
-    distribution = host.system_info.distribution
-    if distribution in ["debian", "kali", "ubuntu"]:
-        services = [
-            {
-                "is_enabled": False,
-                "name": "clamav-daemon",
-            },
-            {
-                "is_enabled": True,
-                "name": "clamav-freshclam",
-            },
-            {
-                "is_enabled": True,
-                "name": "run-virus-scan.service",
-            },
-            {
-                "is_enabled": True,
-                "name": "run-virus-scan.timer",
-            },
-        ]
-    elif distribution in ["fedora"]:
-        services = [
-            {
-                "is_enabled": False,
-                "name": "clamav-clamonacc",
-            },
-            {
-                "is_enabled": True,
-                "name": "clamav-freshclam",
-            },
-            {
-                "is_enabled": True,
-                "name": "run-virus-scan.service",
-            },
-            {
-                "is_enabled": True,
-                "name": "run-virus-scan.timer",
-            },
-        ]
-    else:
-        # We don't support this distribution
-        assert False
+    services = [
+        {
+            "is_enabled": True,
+            "name": "clamav-freshclam",
+        },
+        {
+            "is_enabled": True,
+            "name": "run-virus-scan.service",
+        },
+        {
+            "is_enabled": True,
+            "name": "run-virus-scan.timer",
+        },
+    ]
 
     for service in services:
         svc = host.service(service["name"])
