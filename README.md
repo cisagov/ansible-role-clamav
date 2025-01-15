@@ -3,7 +3,7 @@
 [![GitHub Build Status](https://github.com/cisagov/ansible-role-clamav/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-clamav/actions)
 [![CodeQL](https://github.com/cisagov/ansible-role-clamav/workflows/CodeQL/badge.svg)](https://github.com/cisagov/ansible-role-clamav/actions/workflows/codeql-analysis.yml)
 
-Installs [ClamAV](https://www.clamav.net) and a related systed units.
+Installs [ClamAV](https://www.clamav.net) and a related systemd units.
 This allows servers to be quickly queried en mass for any matched
 signatures.  The
 [ClamAV-Report](https://github.com/cisagov/clamav-report) tool can be
