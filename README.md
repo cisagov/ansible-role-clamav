@@ -3,7 +3,7 @@
 [![GitHub Build Status](https://github.com/cisagov/ansible-role-clamav/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-clamav/actions)
 [![CodeQL](https://github.com/cisagov/ansible-role-clamav/workflows/CodeQL/badge.svg)](https://github.com/cisagov/ansible-role-clamav/actions/workflows/codeql-analysis.yml)
 
-Installs [ClamAV](https://www.clamav.net) and a related cron job.
+Installs [ClamAV](https://www.clamav.net) and a related systed units.
 This allows servers to be quickly queried en mass for any matched
 signatures.  The
 [ClamAV-Report](https://github.com/cisagov/clamav-report) tool can be
@@ -99,12 +99,12 @@ Here's how to use it in a playbook:
   become: true
   become_method: sudo
   tasks:
-    - name: Install ClamAV and a cron job to run automated AV scans
+    - name: Install ClamAV and systemd units to run automated AV scans
       ansible.builtin.include_role:
         name: clamav
 ```
 
-## Cron job output ##
+## systemd unit output ##
 
 The log of the last scan is accessible at: `/var/log/clamav/lastscan.log`
 
