@@ -15,10 +15,12 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 @pytest.mark.parametrize(
     "path",
     [
-        # The virus scan cron job
-        "/etc/cron.d/virus_scan",
+        # The virus scan systemd service unit
+        "/etc/systemd/system/run-virus-scan.service",
+        # The virus scan systemd timer unit
+        "/etc/systemd/system/run-virus-scan.timer",
         # The virus scan shell script
-        "/usr/local/share/virus_scan.sh",
+        "/usr/local/sbin/virus_scan.sh",
         # freshclam virus signatures
         "/var/lib/clamav/bytecode.cvd",
     ],

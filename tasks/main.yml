@@ -28,34 +28,6 @@
     file: install_from_package.yml
   when: not clamav_install_from_package_manager
 
-- name: Install shell script to be run by cron
-  ansible.builtin.template:
-    dest: /usr/local/share/virus_scan.sh
-    mode: 0755
-    src: virus_scan.sh.j2
-
-- name: Install virus_scan cron job as {{ clamav_cron_frequency }}
-  ansible.builtin.cron:
-    cron_file: virus_scan
-    job: /usr/local/share/virus_scan.sh
-    name: virus_scan
-    special_time: "{{ clamav_cron_frequency }}"
-    user: root
-  when: clamav_cron_frequency != "custom"
-
-- name: Install custom virus_scan cron job
-  ansible.builtin.cron:
-    cron_file: virus_scan
-    day: "{{ clamav_cron_custom.day }}"
-    hour: "{{ clamav_cron_custom.hour }}"
-    job: "{{ clamav_cron_custom.job }}"
-    minute: "{{ clamav_cron_custom.minute }}"
-    month: "{{ clamav_cron_custom.month }}"
-    name: virus_scan
-    user: root
-    weekday: "{{ clamav_cron_custom.weekday }}"
-  when: clamav_cron_frequency == "custom"
-
 - name: Ensure that log folder exists
   ansible.builtin.file:
     mode: 0755
@@ -143,6 +115,10 @@
     path: "{{ clamav_scan_quarantine_directory }}"
     state: directory
   when: clamav_scan_copy or clamav_scan_move | bool
+
+- name: Install systemd timer and service to run virus scan script
+  ansible.builtin.include_tasks:
+    file: setup_virus_scan.yml
 
 - name: Wait for new signatures to be downloaded and installed by freshclam
   ansible.builtin.wait_for:

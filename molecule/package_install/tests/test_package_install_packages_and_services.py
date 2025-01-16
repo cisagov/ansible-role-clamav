@@ -4,7 +4,6 @@
 import os
 
 # Third-Party Libraries
-import pytest
 import testinfra.utils.ansible_runner
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
@@ -29,17 +28,23 @@ def test_clamscan_executable_present(host):
     assert host.exists("clamscan")
 
 
-@pytest.mark.parametrize("service,is_enabled", [("clamav-freshclam", True)])
-def test_services_debian(host, service, is_enabled):
+def test_services(host):
     """Test that the expected services were enabled or disabled as intended."""
-    if host.system_info.distribution in ["debian", "kali", "ubuntu"]:
-        svc = host.service(service)
-        assert svc.is_enabled == is_enabled
+    services = [
+        {
+            "is_enabled": True,
+            "name": "clamav-freshclam",
+        },
+        {
+            "is_enabled": True,
+            "name": "run-virus-scan.service",
+        },
+        {
+            "is_enabled": True,
+            "name": "run-virus-scan.timer",
+        },
+    ]
 
-
-@pytest.mark.parametrize("service,is_enabled", [("clamav-freshclam", True)])
-def test_services_fedora(host, service, is_enabled):
-    """Test that the expected services were enabled or disabled as intended."""
-    if host.system_info.distribution in ["fedora"]:
-        svc = host.service(service)
-        assert svc.is_enabled == is_enabled
+    for service in services:
+        svc = host.service(service["name"])
+        assert svc.is_enabled == service["is_enabled"]

@@ -1,0 +1,9 @@
+[Unit]
+Description=Run a clamscan virus scan.
+
+[Timer]
+OnCalendar={{ clamav_scan_frequency }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target

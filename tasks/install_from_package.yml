@@ -32,4 +32,4 @@
     group: root
     mode: "0644"
     owner: root
-    src: freshclam.conf.j2
+    src: freshclam.j2.conf

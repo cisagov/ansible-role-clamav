@@ -18,7 +18,7 @@
     group: root
     mode: "0644"
     owner: root
-    src: freshclam.service.j2
+    src: freshclam.j2.service
   when: not clamav_install_from_package_manager and ansible_service_mgr == "systemd"
 
 - name: Start and enable freshclam

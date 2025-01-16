@@ -1,0 +1,6 @@
+[Unit]
+Description=Run clamscan virus scan.
+
+[Service]
+ExecStart=/usr/local/sbin/virus_scan.sh
+Type=oneshot
