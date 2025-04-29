@@ -3,7 +3,8 @@ clamav_service_name: clamav-clamonacc
 
 freshclam_service_name: clamav-freshclam
 
-# The ClamAV package names, as well as the name of a Python package necessary to handle selinux
+# The ClamAV package names, as well as the name of a Python package
+# necessary to handle selinux
 clamav_packages:
   - clamav
   - clamav-update
@@ -12,5 +13,7 @@ clamav_packages:
 clamd_configuration_path: /etc/clamd.d/scan.conf
 freshclam_configuration_path: /etc/freshclam.conf
 
-clamav_package: "clamav-{{ clamav_package_version }}.linux.{{ ansible_architecture }}.rpm"
-clamav_linux_package_url: "https://www.clamav.net/downloads/production/{{ clamav_package }}"
+clamav_package: >-
+  clamav-{{ clamav_package_version }}.linux.{{ ansible_architecture }}.rpm
+clamav_linux_package_url: >-
+  https://www.clamav.net/downloads/production/{{ clamav_package }}
