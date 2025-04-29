@@ -1,7 +1,9 @@
 ---
-# A dictionary of values to be configured in the clamd and freshclam configuration files.
-# Multivalued keys are specified as lists.
+# A dictionary of values to be configured in the clamd and freshclam
+# configuration files.  Multivalued keys are specified as lists.
+#
 # A Nonetype value means that the key will be removed from the file.
+#
 # Example:
 #
 # clamav_freshclam_configuration:
