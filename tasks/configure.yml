@@ -5,7 +5,7 @@
     - name: Backup {{ task_conf_file }}
       ansible.builtin.copy:
         dest: "{{ task_conf_file }}.{{ ansible_date_time.iso8601 }}"
-        mode: 0700
+        mode: u=rwx,g=,o=
         remote_src: true
         src: "{{ task_conf_file }}"
       tags:
@@ -43,5 +43,5 @@
 
     - name: Set permissions on configuration file {{ task_conf_file }}
       ansible.builtin.file:
-        mode: 0700
+        mode: u=rwx,g=,o=
         path: "{{ task_conf_file }}"

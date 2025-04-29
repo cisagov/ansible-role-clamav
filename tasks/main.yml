@@ -30,7 +30,7 @@
 
 - name: Ensure that log folder exists
   ansible.builtin.file:
-    mode: 0755
+    mode: u=rwx,g=rx,o=rx
     path: /var/log/clamav
     state: directory
 
@@ -39,7 +39,7 @@
     - name: Ensure log file will be world-readable (not Fedora)
       ansible.builtin.file:
         access_time: preserve
-        mode: 0644
+        mode: u=rw,g=r,o=r
         modification_time: preserve
         path: /var/log/clamav/lastscan.log
         state: touch
@@ -56,7 +56,7 @@
     - name: Ensure log file will be world-readable (Fedora)
       ansible.builtin.file:
         access_time: preserve
-        mode: 0644
+        mode: u=rw,g=r,o=r
         modification_time: preserve
         path: /var/log/clamav/lastscan.log
         selevel: s0
