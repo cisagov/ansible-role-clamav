@@ -10,7 +10,10 @@
         name: ansible-role-clamav
       vars:
         clamav_freshclam_configuration:
-          DatabaseMirror: ['db.local.clamav.net', 'database.clamav.net', 'dummy.localhost']
+          DatabaseMirror:
+            - db.local.clamav.net
+            - database.clamav.net
+            - dummy.localhost
           Bytecode:
         clamav_clamd_configuration:
           LogFile: /var/log/clamav/clamav.log
