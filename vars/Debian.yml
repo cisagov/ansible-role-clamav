@@ -13,5 +13,7 @@ dependencies:
 clamd_configuration_path: /etc/clamav/clamd.conf
 freshclam_configuration_path: /etc/clamav/freshclam.conf
 
-clamav_package: "clamav-{{ clamav_package_version }}.linux.{{ ansible_architecture }}.deb"
-clamav_linux_package_url: "https://www.clamav.net/downloads/production/{{ clamav_package }}"
+clamav_package: >-
+  clamav-{{ clamav_package_version }}.linux.{{ ansible_architecture }}.deb
+clamav_linux_package_url: >-
+  https://www.clamav.net/downloads/production/{{ clamav_package }}

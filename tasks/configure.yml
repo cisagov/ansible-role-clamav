@@ -1,11 +1,11 @@
 ---
 - name: Configure service and notify restart handler
-  notify: "Restart {{ task_conf_service }} service"
+  notify: Restart {{ task_conf_service }} service
   block:
     - name: Backup {{ task_conf_file }}
       ansible.builtin.copy:
         dest: "{{ task_conf_file }}.{{ ansible_date_time.iso8601 }}"
-        mode: 0700
+        mode: u=rwx,g=,o=
         remote_src: true
         src: "{{ task_conf_file }}"
       tags:
@@ -25,11 +25,23 @@
         line: "{{ item.0.key }} {{ item.1 }}"
         path: "{{ task_conf_file }}"
         state: present
+      # yamllint complains about this line being too long, but there
+      # is no clean way to break it up.
+      #
+      # yamllint disable-line rule:line-length
       loop: "{{ task_conf_parameters | dict2items | rejectattr('value', 'string') | rejectattr('value', 'none') | subelements('value') }}"
 
     - name: Remove unwanted values from {{ task_conf_file }}
       ansible.builtin.lineinfile:
         path: "{{ task_conf_file }}"
+        # yamllint complains about this line being too long, but there
+        # is no clean way to break it up.
+        #
+        # yamllint complains about this string being needlessly
+        # quoted, but we want to ensure that regex special characters
+        # do not conflict with YAML special characters.
+        #
+        # yamllint disable-line rule:line-length rule:quoted-strings
         regexp: "^{{ item.key }} (?!{% for clamav_value in item.value %}{{ clamav_value | regex_escape() }}{{ '|' if not loop.last }}{% endfor %})"
         state: absent
       loop: "{{ task_conf_parameters | dict2items | rejectattr('value', 'none') }}"
@@ -37,11 +49,16 @@
     - name: Remove unwanted keys from {{ task_conf_file }}
       ansible.builtin.lineinfile:
         path: "{{ task_conf_file }}"
+        # yamllint complains about this string being needlessly
+        # quoted, but we want to ensure that regex special characters
+        # do not conflict with YAML special characters.
+        #
+        # yamllint disable-line rule:quoted-strings
         regexp: "^{{ item.key }} .*$"
         state: absent
       loop: "{{ task_conf_parameters | dict2items | selectattr('value', 'none') }}"
 
     - name: Set permissions on configuration file {{ task_conf_file }}
       ansible.builtin.file:
-        mode: 0700
+        mode: u=rwx,g=,o=
         path: "{{ task_conf_file }}"

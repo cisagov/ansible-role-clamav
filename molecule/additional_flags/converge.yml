@@ -16,5 +16,7 @@
           - ^/proc/
           - ^/sys/
           - ^/var/spool/test-clamav
-        clamav_scan_extra_flags: ['--foo bar', '--bar foo']
+        clamav_scan_extra_flags:
+          - --foo bar
+          - --bar foo
         clamav_scan_quarantine_directory: /var/spool/test-clamav
