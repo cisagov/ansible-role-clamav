@@ -14,7 +14,13 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 def test_packages(host):
     """Test that the appropriate packages were installed."""
     distribution = host.system_info.distribution
-    if distribution in ["fedora"]:
+    if distribution in [
+        "amzn",
+    ]:
+        pkgs = ["clamav", "clamav-update"]
+    elif distribution in [
+        "fedora",
+    ]:
         pkgs = ["clamav", "clamav-freshclam"]
     elif distribution in ["debian", "kali", "ubuntu"]:
         pkgs = ["clamav-daemon"]
@@ -57,7 +63,7 @@ def test_services(host):
                 "name": "run-virus-scan.timer",
             },
         ]
-    elif distribution in ["fedora"]:
+    elif distribution in ["amzn", "fedora"]:
         services = [
             {
                 "is_enabled": False,
