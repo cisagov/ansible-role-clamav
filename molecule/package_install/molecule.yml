@@ -1,15 +1,16 @@
 ---
 platforms:
-  # Amazon Linux 2023 doesn't appear to support clamav
-  # - cgroupns_mode: host
-  #   command: /lib/systemd/systemd
-  #   image: docker.io/geerlingguy/docker-amazonlinux2023-ansible:latest
-  #   name: amazonlinux2023-systemd-amd64
-  #   platform: amd64
-  #   pre_build_image: true
-  #   privileged: true
-  #   volumes:
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  - cgroupns_mode: host
+    command: /lib/systemd/systemd
+    image: docker.io/geerlingguy/docker-amazonlinux2023-ansible:latest
+    name: amazonlinux2023-systemd-amd64
+    platform: amd64
+    pre_build_image: true
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+  # The packages that ClamAV offers directly on its website do not
+  # support the ARM64 architecture.
   # - cgroupns_mode: host
   #   command: /lib/systemd/systemd
   #   image: docker.io/geerlingguy/docker-amazonlinux2023-ansible:latest

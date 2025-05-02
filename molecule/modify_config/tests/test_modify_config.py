@@ -25,7 +25,7 @@ def read_configuration_file(host, software_name):
 
     if host.system_info.distribution in ["debian", "kali", "ubuntu"]:
         file_path = file_paths["debian"][software_name]
-    elif host.system_info.distribution in ["fedora", "redhat"]:
+    elif host.system_info.distribution in ["amzn", "fedora"]:
         file_path = file_paths["redhat"][software_name]
     else:
         # We don't support this distribution

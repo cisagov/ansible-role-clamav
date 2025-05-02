@@ -222,8 +222,7 @@ jobs:
           - architecture: arm64
             scenario: package_install
         platform:
-          # Amazon Linux 2023 doesn't appear to support clamav
-          # - amazonlinux2023-systemd
+          - amazonlinux2023-systemd
           - debian10-systemd
           - debian11-systemd
           - debian12-systemd
