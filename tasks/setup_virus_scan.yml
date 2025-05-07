@@ -2,6 +2,10 @@
 - name: Install virus scan shell script to be run by systemd service
   ansible.builtin.template:
     dest: /usr/local/sbin/virus_scan.sh
+    # Starting with Fedora 42, /usr/local/sbin is a symlink to /bin.
+    # See here for more details:
+    # https://docs.fedoraproject.org/en-US/fedora/latest/release-notes/sysadmin/#usr-bin-usr-sbin-unification
+    follow: true
     mode: u=rx,g=,o=
     src: virus_scan.j2.sh
 
