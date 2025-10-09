@@ -25,6 +25,12 @@ galaxy_info:
         - "2023"
     - name: Debian
       versions:
+        # Debian Buster only offers a very old version of ClamAV (even
+        # in the backports package repo) that is no longer allowed to
+        # download signatures from the official ClamAV site;
+        # therefore, on this platform ClamAV can *only* be installed
+        # by setting the clamav_install_from_package_manager role
+        # variable to false.
         - buster
         - bullseye
         - bookworm
