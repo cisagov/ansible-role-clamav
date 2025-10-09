@@ -17,7 +17,7 @@ def test_packages(host):
     if distribution in [
         "amzn",
     ]:
-        pkgs = ["clamav", "clamav-update"]
+        pkgs = ["clamav1.4", "clamav1.4-freshclam"]
     elif distribution in [
         "fedora",
     ]:
