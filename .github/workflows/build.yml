@@ -221,6 +221,19 @@ jobs:
           # https://www.clamav.net/downloads
           - architecture: arm64
             scenario: package_install
+          # Debian Buster only offers a very old version of ClamAV
+          # (even in the backports package repo) that is no longer
+          # allowed to download signatures from the official ClamAV
+          # site; therefore, on this platform ClamAV can *only* be
+          # installed by setting the
+          # clamav_install_from_package_manager role variable to
+          # false.
+          - platform: debian10-systemd
+            scenario: default
+          - platform: debian10-systemd
+            scenario: additional_flags
+          - platform: debian10-systemd
+            scenario: modify_config
         platform:
           - amazonlinux2023-systemd
           - debian10-systemd

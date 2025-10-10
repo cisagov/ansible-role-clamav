@@ -3,11 +3,18 @@
 [![GitHub Build Status](https://github.com/cisagov/ansible-role-clamav/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-clamav/actions)
 [![CodeQL](https://github.com/cisagov/ansible-role-clamav/workflows/CodeQL/badge.svg)](https://github.com/cisagov/ansible-role-clamav/actions/workflows/codeql-analysis.yml)
 
-Installs [ClamAV](https://www.clamav.net) and a related systemd units.
+Installs [ClamAV](https://www.clamav.net) and a related systemd unit.
 This allows servers to be quickly queried en mass for any matched
 signatures.  The
 [ClamAV-Report](https://github.com/cisagov/clamav-report) tool can be
 used to gather scan data from systems using this role.
+
+> [!WARNING]
+> Debian Buster only offers a very old version of ClamAV (even in the
+> backports package repository) that is no longer allowed to download
+> signatures from the official ClamAV site; therefore, on this
+> platform ClamAV can *only* be installed by setting the
+> `clamav_install_from_package_manager` role variable to `false`.
 
 ## Requirements ##
 
