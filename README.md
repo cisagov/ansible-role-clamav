@@ -1,6 +1,7 @@
 # ansible-role-clamav 🦪 #
 
 [![GitHub Build Status](https://github.com/cisagov/ansible-role-clamav/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-clamav/actions)
+[![License](https://img.shields.io/github/license/cisagov/ansible-role-clamav)](https://spdx.org/licenses/)
 [![CodeQL](https://github.com/cisagov/ansible-role-clamav/workflows/CodeQL/badge.svg)](https://github.com/cisagov/ansible-role-clamav/actions/workflows/codeql-analysis.yml)
 
 Installs [ClamAV](https://www.clamav.net) and a related systemd unit.
