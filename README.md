@@ -1,6 +1,7 @@
 # ansible-role-clamav 🦪 #
 
 [![GitHub Build Status](https://github.com/cisagov/ansible-role-clamav/workflows/build/badge.svg)](https://github.com/cisagov/ansible-role-clamav/actions)
+[![License](https://img.shields.io/github/license/cisagov/ansible-role-clamav)](https://spdx.org/licenses/)
 [![CodeQL](https://github.com/cisagov/ansible-role-clamav/workflows/CodeQL/badge.svg)](https://github.com/cisagov/ansible-role-clamav/actions/workflows/codeql-analysis.yml)
 
 Installs [ClamAV](https://www.clamav.net) and a related systemd unit.
@@ -28,7 +29,7 @@ None.
 | clamav_configuration_backup | Whether or not to backup configuration files before changing. | `false` | No |
 | clamav_freshclam_configuration | A dictionary of values to set in the freshclam configuration file. | `{}` | No |
 | clamav_install_from_package_manager | A boolean value to determine if the role should install from the system package manager. | `true` | No |
-| clamav_package_version | The package version to install from the URL if not installing from the system package manager. | `1.3.1` | No |
+| clamav_package_version | The package version to install from the URL if not installing from the system package manager. | `1.5.1` | No |
 | clamav_scan_copy | Whether to copy infected files to quarantine folder. | `false` | No |
 | clamav_scan_exclude_directories | A list of regexes matching directory trees that are to be excluded from scan operations. | `[^/dev, ^/proc, ^/sys, ^/var/spool/clamav]` | No |
 | clamav_scan_extra_flags | Additional flags to pass to clamscan (see clamscan man page for reference).  | `[]` | No |
