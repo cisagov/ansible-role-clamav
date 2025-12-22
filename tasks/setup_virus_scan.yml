@@ -8,7 +8,7 @@
 - name: Copy systemd service to run virus scan
   ansible.builtin.copy:
     dest: /etc/systemd/system/run-virus-scan.service
-    mode: u=rx,g=,o=
+    mode: u=rw,g=r,o=r
     src: run-virus-scan.service
     # I'd like to validate the file here, but that can't be done
     # cleanly.  See ansible/ansible#19243.
@@ -17,7 +17,7 @@
 - name: Copy systemd timer to run virus scan
   ansible.builtin.template:
     dest: /etc/systemd/system/run-virus-scan.timer
-    mode: u=rx,g=,o=
+    mode: u=rw,g=r,o=r
     src: run-virus-scan.j2.timer
     # I'd like to validate the file here, but that can't be done
     # cleanly.  See ansible/ansible#19243.
