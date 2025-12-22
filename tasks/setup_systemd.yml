@@ -16,7 +16,7 @@
   ansible.builtin.template:
     dest: /etc/systemd/system/{{ freshclam_service_name }}.service
     group: root
-    mode: "0644"
+    mode: u=rw,g=r,o=r
     owner: root
     src: freshclam.j2.service
   when: not clamav_install_from_package_manager and ansible_service_mgr == "systemd"
