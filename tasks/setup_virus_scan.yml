@@ -26,4 +26,5 @@
 - name: Enable the systemd timer
   ansible.builtin.systemd_service:
     enabled: true
+    state: "{{ 'started' if clamav_scan_start_timer else omit }}"
     name: run-virus-scan.timer

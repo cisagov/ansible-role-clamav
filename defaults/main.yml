@@ -34,6 +34,7 @@ clamav_scan_extra_flags: []
 # format understood by systemd:
 # https://www.freedesktop.org/software/systemd/man/latest/systemd.time.html#Calendar%20Events)
 clamav_scan_frequency: weekly
+clamav_scan_start_timer: false
 clamav_scan_move: false
 clamav_scan_quarantine_directory: /var/spool/clamav
 clamav_scan_quarantine_group: root

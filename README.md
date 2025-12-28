@@ -34,6 +34,7 @@ None.
 | clamav_scan_exclude_directories | A list of regexes matching directory trees that are to be excluded from scan operations. | `[^/dev, ^/proc, ^/sys, ^/var/spool/clamav]` | No |
 | clamav_scan_extra_flags | Additional flags to pass to clamscan (see clamscan man page for reference).  | `[]` | No |
 | clamav_scan_frequency | The frequency of ClamAV scanning.  Must be a calendar event in [the format understood by systemd](https://www.freedesktop.org/software/systemd/man/latest/systemd.time.html#Calendar%20Events). | `weekly` | No |
+| clamav_scan_start_timer | Whether or not to start the clamav scan timer service. Should be `false` if using this role to build VM images. | `false` | No |
 | clamav_scan_move | Whether to move infected files to a quarantine directory. | `false` | No |
 | clamav_scan_quarantine_directory | Directory to store infected files. | `/var/spool/clamav` | No |
 | clamav_scan_quarantine_group | Group owner to apply to quarantine directory. | `root` | No |
