@@ -1,4 +1,4 @@
-"""Module containing the tests for the default scenario."""
+"""Module containing the tests for the additional_flags scenario."""
 
 # Standard Python Libraries
 import os
@@ -11,83 +11,53 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ).get_hosts("all")
 
 
-def test_packages(host):
-    """Test that the appropriate packages were installed."""
-    distribution = host.system_info.distribution
-    if distribution in [
-        "amzn",
-    ]:
-        pkgs = ["clamav1.4", "clamav1.4-freshclam"]
-    elif distribution in [
-        "fedora",
-    ]:
-        pkgs = ["clamav", "clamav-freshclam"]
-    elif distribution in ["debian", "kali", "ubuntu"]:
-        pkgs = ["clamav-daemon"]
-    else:
-        # We don't support this distribution
-        assert False
-    packages = [host.package(pkg) for pkg in pkgs]
-    installed = [package.is_installed for package in packages]
-    assert len(pkgs) != 0
-    assert all(installed)
-
-
-def test_clamscan_executable_present(host):
-    """Test that the clamscan executable is present.
-
-    This test is added in response to issue #49.
-    """
-    assert host.exists("clamscan")
-
-
 def test_services(host):
-    """Test that the expected services were enabled, disabled or running as intended."""
+    """Test that the expected services were enabled or running as intended."""
     distribution = host.system_info.distribution
     if distribution in ["debian", "kali", "ubuntu"]:
         services = [
             {
+                "name": "clamav-daemon",
                 "is_enabled": False,
                 "is_running": False,
-                "name": "clamav-daemon",
             },
             {
+                "name": "clamav-freshclam",
                 "is_enabled": True,
                 "is_running": True,
-                "name": "clamav-freshclam",
             },
             {
-                "is_enabled": True,
-                "is_running": False,
                 "name": "run-virus-scan.service",
-            },
-            {
                 "is_enabled": True,
                 "is_running": False,
+            },
+            {
                 "name": "run-virus-scan.timer",
+                "is_enabled": True,
+                "is_running": True,    # default value has been overridden by role variable configuration
             },
         ]
     elif distribution in ["amzn", "fedora"]:
         services = [
             {
+                "name": "clamav-clamonacc",
                 "is_enabled": False,
                 "is_running": False,
-                "name": "clamav-clamonacc",
             },
             {
+                "name": "clamav-freshclam",
                 "is_enabled": True,
                 "is_running": True,
-                "name": "clamav-freshclam",
             },
             {
-                "is_enabled": True,
-                "is_running": False,
                 "name": "run-virus-scan.service",
-            },
-            {
                 "is_enabled": True,
                 "is_running": False,
+            },
+            {
                 "name": "run-virus-scan.timer",
+                "is_enabled": True,
+                "is_running": True,    # default value has been overridden by role variable configuration
             },
         ]
     else:
