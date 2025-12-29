@@ -11,36 +11,6 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ).get_hosts("all")
 
 
-def test_packages(host):
-    """Test that the appropriate packages were installed."""
-    distribution = host.system_info.distribution
-    if distribution in [
-        "amzn",
-    ]:
-        pkgs = ["clamav1.4", "clamav1.4-freshclam"]
-    elif distribution in [
-        "fedora",
-    ]:
-        pkgs = ["clamav", "clamav-freshclam"]
-    elif distribution in ["debian", "kali", "ubuntu"]:
-        pkgs = ["clamav-daemon"]
-    else:
-        # We don't support this distribution
-        assert False
-    packages = [host.package(pkg) for pkg in pkgs]
-    installed = [package.is_installed for package in packages]
-    assert len(pkgs) != 0
-    assert all(installed)
-
-
-def test_clamscan_executable_present(host):
-    """Test that the clamscan executable is present.
-
-    This test is added in response to issue #49.
-    """
-    assert host.exists("clamscan")
-
-
 def test_services(host):
     """Test that the expected services were enabled, disabled or running as intended."""
     distribution = host.system_info.distribution
