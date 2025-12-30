@@ -10,7 +10,6 @@
         name: ansible-role-clamav
       vars:
         clamav_cron_frequency: daily
-        clamav_scan_start_timer: true
         clamav_scan_copy: true
         clamav_scan_exclude_directories:
           - ^/dev/
@@ -21,3 +20,4 @@
           - --foo bar
           - --bar foo
         clamav_scan_quarantine_directory: /var/spool/test-clamav
+        clamav_scan_start_timer: true
