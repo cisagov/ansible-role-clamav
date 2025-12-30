@@ -11,55 +11,29 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 ).get_hosts("all")
 
 
-def test_packages(host):
-    """Test that the appropriate packages were installed."""
-    distribution = host.system_info.distribution
-    if distribution in [
-        "amzn",
-    ]:
-        pkgs = ["clamav1.4", "clamav1.4-freshclam"]
-    elif distribution in [
-        "fedora",
-    ]:
-        pkgs = ["clamav", "clamav-freshclam"]
-    elif distribution in ["debian", "kali", "ubuntu"]:
-        pkgs = ["clamav-daemon"]
-    else:
-        # We don't support this distribution
-        assert False
-    packages = [host.package(pkg) for pkg in pkgs]
-    installed = [package.is_installed for package in packages]
-    assert len(pkgs) != 0
-    assert all(installed)
-
-
-def test_clamscan_executable_present(host):
-    """Test that the clamscan executable is present.
-
-    This test is added in response to issue #49.
-    """
-    assert host.exists("clamscan")
-
-
 def test_services(host):
-    """Test that the expected services were enabled or disabled as intended."""
+    """Test that the expected services were enabled, disabled or running as intended."""
     distribution = host.system_info.distribution
     if distribution in ["debian", "kali", "ubuntu"]:
         services = [
             {
                 "is_enabled": False,
+                "is_running": False,
                 "name": "clamav-daemon",
             },
             {
                 "is_enabled": True,
+                "is_running": True,
                 "name": "clamav-freshclam",
             },
             {
                 "is_enabled": True,
+                "is_running": False,
                 "name": "run-virus-scan.service",
             },
             {
                 "is_enabled": True,
+                "is_running": False,
                 "name": "run-virus-scan.timer",
             },
         ]
@@ -67,18 +41,22 @@ def test_services(host):
         services = [
             {
                 "is_enabled": False,
+                "is_running": False,
                 "name": "clamav-clamonacc",
             },
             {
                 "is_enabled": True,
+                "is_running": True,
                 "name": "clamav-freshclam",
             },
             {
                 "is_enabled": True,
+                "is_running": False,
                 "name": "run-virus-scan.service",
             },
             {
                 "is_enabled": True,
+                "is_running": False,
                 "name": "run-virus-scan.timer",
             },
         ]
@@ -89,3 +67,4 @@ def test_services(host):
     for service in services:
         svc = host.service(service["name"])
         assert svc.is_enabled == service["is_enabled"]
+        assert svc.is_running == service["is_running"]

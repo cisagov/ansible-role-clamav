@@ -39,6 +39,7 @@ None.
 | clamav_scan_quarantine_group | Group owner to apply to quarantine directory. | `root` | No |
 | clamav_scan_quarantine_mode | Permissions to apply to quarantine directory. | `0750` | No |
 | clamav_scan_quarantine_owner | Owner to apply to quarantine directory. | `root` | No |
+| clamav_scan_start_timer | Whether or not to start the clamav scan timer service. Should be `false` if using this role to build VM images. | `false` | No |
 | clamav_seboolean_name | The name of the SELinux boolean used to configure whether or not ClamAV is allowed to scan files.  Note that this variable is only used when SELinux is enabled. | `antivirus_can_scan_system` | No |
 | clamav_seboolean_state | The value to use for the SELinux boolean that configures whether or not ClamAV is allowed to scan files.  Note that this variable is only used when SELinux is enabled. | `true` | No |
 

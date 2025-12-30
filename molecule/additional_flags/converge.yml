@@ -20,3 +20,4 @@
           - --foo bar
           - --bar foo
         clamav_scan_quarantine_directory: /var/spool/test-clamav
+        clamav_scan_start_timer: true

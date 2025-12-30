@@ -1,1 +1,0 @@
-../../default/tests/test_packages_and_services.py

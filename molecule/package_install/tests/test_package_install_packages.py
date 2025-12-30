@@ -26,25 +26,3 @@ def test_clamscan_executable_present(host):
     This test is added in response to issue #49.
     """
     assert host.exists("clamscan")
-
-
-def test_services(host):
-    """Test that the expected services were enabled or disabled as intended."""
-    services = [
-        {
-            "is_enabled": True,
-            "name": "clamav-freshclam",
-        },
-        {
-            "is_enabled": True,
-            "name": "run-virus-scan.service",
-        },
-        {
-            "is_enabled": True,
-            "name": "run-virus-scan.timer",
-        },
-    ]
-
-    for service in services:
-        svc = host.service(service["name"])
-        assert svc.is_enabled == service["is_enabled"]
