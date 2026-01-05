@@ -215,12 +215,6 @@ jobs:
         architecture:
           - amd64
           - arm64
-        exclude:
-          # The packages that ClamAV offers directly on its website do
-          # not support the ARM64 architecture.
-          # https://www.clamav.net/downloads
-          - architecture: arm64
-            scenario: package_install
         platform:
           - amazonlinux2023-systemd
           - debian11-systemd
