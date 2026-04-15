@@ -7,7 +7,7 @@
     src: "{{ task_conf_file }}"
   tags:
     - molecule-idempotence-notest
-  when: clamav_configuration_backup
+  when: clamav_configuration_backup | bool
 
 - name: Configure single-valued entries in {{ task_conf_file }}
   ansible.builtin.lineinfile:
