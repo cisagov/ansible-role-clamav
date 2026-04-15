@@ -98,7 +98,7 @@
   vars:
     task_conf_file: "{{ freshclam_configuration_path }}"
     task_conf_parameters: "{{ clamav_freshclam_configuration }}"
-  when: clamav_freshclam_configuration
+  when: clamav_freshclam_configuration | length > 0
 
 - name: Ensure configuration for clamd
   ansible.builtin.include_tasks:
@@ -106,7 +106,7 @@
   vars:
     task_conf_file: "{{ clamd_configuration_path }}"
     task_conf_parameters: "{{ clamav_clamd_configuration }}"
-  when: clamav_clamd_configuration
+  when: clamav_clamd_configuration | length > 0
 
 - name: Ensure that quarantine folder exists
   ansible.builtin.file:
@@ -115,7 +115,7 @@
     owner: "{{ clamav_scan_quarantine_owner }}"
     path: "{{ clamav_scan_quarantine_directory }}"
     state: directory
-  when: clamav_scan_copy or clamav_scan_move | bool
+  when: (clamav_scan_copy or clamav_scan_move) | bool
 
 - name: Load tasks file for systemd setup
   ansible.builtin.include_tasks:
