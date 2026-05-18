@@ -21,8 +21,6 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
         "/etc/systemd/system/run-virus-scan.timer",
         # The virus scan shell script
         "/usr/local/sbin/virus_scan.sh",
-        # freshclam virus signatures
-        "/var/lib/clamav/bytecode.cvd",
     ],
 )
 def test_files_and_dirs(host, path):

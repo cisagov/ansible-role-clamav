@@ -125,3 +125,4 @@
     path: /var/lib/clamav/bytecode.cvd
     state: present
     timeout: 600
+  when: clamav_preinstall_signatures
