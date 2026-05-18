@@ -16,7 +16,7 @@ def test_services(host):
     services = [
         {
             "is_enabled": True,
-            "is_running": True,
+            "is_running": False,
             "name": "clamav-freshclam",
         },
         {

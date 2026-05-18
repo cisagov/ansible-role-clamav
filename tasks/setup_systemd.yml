@@ -21,8 +21,8 @@
     src: freshclam.j2.service
   when: not clamav_install_from_package_manager and ansible_service_mgr == "systemd"
 
-- name: Start and enable freshclam
+- name: Enable and potentially start freshclam
   ansible.builtin.service:
     enabled: true
     name: "{{ freshclam_service_name }}"
-    state: started
+    state: "{{ clamav_preinstall_signatures | ternary('started', 'stopped') }}"
