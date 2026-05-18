@@ -23,6 +23,8 @@ clamav_clamd_configuration: {}
 
 # whether or not we create a backup of configuration file before replacing
 clamav_configuration_backup: false
+# Whether to pre-install the ClamAV signature database or not
+clamav_preinstall_signatures: false
 clamav_scan_copy: false
 clamav_scan_exclude_directories:
   - ^/dev/
