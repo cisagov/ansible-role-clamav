@@ -25,4 +25,4 @@
   ansible.builtin.service:
     enabled: true
     name: "{{ freshclam_service_name }}"
-    state: "{{ clamav_preinstall_signatures | ternary('started', 'stopped') }}"
+    state: "{{ 'started' if clamav_preinstall_signatures else omit }}"
