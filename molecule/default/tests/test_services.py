@@ -23,7 +23,7 @@ def test_services(host):
             },
             {
                 "is_enabled": True,
-                "is_running": True,
+                "is_running": False,
                 "name": "clamav-freshclam",
             },
             {
@@ -46,7 +46,7 @@ def test_services(host):
             },
             {
                 "is_enabled": True,
-                "is_running": True,
+                "is_running": False,
                 "name": "clamav-freshclam",
             },
             {

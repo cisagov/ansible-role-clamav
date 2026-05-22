@@ -7,3 +7,4 @@
   ansible.builtin.command:
     cmd: /usr/bin/freshclam
     creates: /var/lib/clamav/bytecode.cvd
+  when: clamav_preinstall_signatures

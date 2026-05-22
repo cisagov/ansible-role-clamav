@@ -24,7 +24,7 @@ def test_services(host):
             {
                 "name": "clamav-freshclam",
                 "is_enabled": True,
-                "is_running": True,
+                "is_running": False,
             },
             {
                 "name": "run-virus-scan.service",
@@ -47,7 +47,7 @@ def test_services(host):
             {
                 "name": "clamav-freshclam",
                 "is_enabled": True,
-                "is_running": True,
+                "is_running": False,
             },
             {
                 "name": "run-virus-scan.service",
