@@ -50,12 +50,9 @@ def test_freshclam_conf(host):
     for lines in freshclam_conf_content:
         words = lines.split(" ")
         if words[0] == "DatabaseMirror":
-            """Test DatabaseMirror values"""
             assert words[1] in databasemirror_list_assertion
             databasemirror_list_assertion.remove(words[1])
         elif words[0] == "Bytecode":
-            # Should not be there
-            """Test Bytecode existence"""
             raise AssertionError('Key "Bytecode" should not exist')
 
     assert len(databasemirror_list_assertion) == 0
