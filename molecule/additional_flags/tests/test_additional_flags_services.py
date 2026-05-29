@@ -34,7 +34,9 @@ def test_services(host):
             {
                 "name": "run-virus-scan.timer",
                 "is_enabled": True,
-                "is_running": True,  # default value has been overridden by role variable configuration
+                # Default value has been overridden by role variable
+                # configuration
+                "is_running": True,
             },
         ]
     elif distribution in ["amzn", "fedora"]:
@@ -57,12 +59,14 @@ def test_services(host):
             {
                 "name": "run-virus-scan.timer",
                 "is_enabled": True,
-                "is_running": True,  # default value has been overridden by role variable configuration
+                # Default value has been overridden by role variable
+                # configuration
+                "is_running": True,
             },
         ]
     else:
         # We don't support this distribution
-        assert False
+        raise ValueError(f"Distribution {distribution} is unsupported")
 
     for service in services:
         svc = host.service(service["name"])

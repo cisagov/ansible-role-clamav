@@ -12,7 +12,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 def test_services(host):
-    """Test that the expected services were enabled, disabled, or running as intended."""
+    """Test expected services were enabled, disabled, or running as intended."""
     services = [
         {
             "is_enabled": True,

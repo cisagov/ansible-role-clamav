@@ -17,7 +17,7 @@ None.
 ## Role Variables ##
 
 | Variable | Description | Default | Required |
-|----------|-------------|---------|----------|
+| -------- | ----------- | ------- | -------- |
 | clamav_clamd_configuration | A dictionary of values to set in the clamd configuration file. | `{}` | No |
 | clamav_configuration_backup | Whether or not to backup configuration files before changing. | `false` | No |
 | clamav_freshclam_configuration | A dictionary of values to set in the freshclam configuration file. | `{}` | No |
@@ -26,7 +26,7 @@ None.
 | clamav_preinstall_signatures | A boolean value that determines whether or not the ClamAV signature database will be pre-installed. | `false` | No |
 | clamav_scan_copy | Whether to copy infected files to quarantine folder. | `false` | No |
 | clamav_scan_exclude_directories | A list of regexes matching directory trees that are to be excluded from scan operations. | `[^/dev, ^/proc, ^/sys, ^/var/spool/clamav]` | No |
-| clamav_scan_extra_flags | Additional flags to pass to clamscan (see clamscan man page for reference).  | `[]` | No |
+| clamav_scan_extra_flags | Additional flags to pass to clamscan (see clamscan man page for reference). | `[]` | No |
 | clamav_scan_frequency | The frequency of ClamAV scanning.  Must be a calendar event in [the format understood by systemd](https://www.freedesktop.org/software/systemd/man/latest/systemd.time.html#Calendar%20Events). | `weekly` | No |
 | clamav_scan_move | Whether to move infected files to a quarantine directory. | `false` | No |
 | clamav_scan_quarantine_directory | Directory to store infected files. | `/var/spool/clamav` | No |

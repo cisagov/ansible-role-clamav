@@ -29,7 +29,7 @@ def read_configuration_file(host, software_name):
         file_path = file_paths["redhat"][software_name]
     else:
         # We don't support this distribution
-        assert False, f"Unsupported distribution {host.system_info.distribution}"
+        raise ValueError(f"Unsupported distribution {host.system_info.distribution}")
 
     file_content = host.file(file_path).content_string
     file_lines = file_content.splitlines()
@@ -39,7 +39,7 @@ def read_configuration_file(host, software_name):
 
 def test_freshclam_conf(host):
     """Test freshclam configuration content."""
-    databaseMirror_list_assertion = [
+    databasemirror_list_assertion = [
         "db.local.clamav.net",
         "database.clamav.net",
         "dummy.localhost",
@@ -50,15 +50,12 @@ def test_freshclam_conf(host):
     for lines in freshclam_conf_content:
         words = lines.split(" ")
         if words[0] == "DatabaseMirror":
-            """Test DatabaseMirror values"""
-            assert words[1] in databaseMirror_list_assertion
-            databaseMirror_list_assertion.remove(words[1])
+            assert words[1] in databasemirror_list_assertion
+            databasemirror_list_assertion.remove(words[1])
         elif words[0] == "Bytecode":
-            # Should not be there
-            """Test Bytecode existence"""
-            assert False, "Bytecode should not exist"
+            raise AssertionError('Key "Bytecode" should not exist')
 
-    assert len(databaseMirror_list_assertion) == 0
+    assert len(databasemirror_list_assertion) == 0
 
 
 def test_clamd_conf(host):
