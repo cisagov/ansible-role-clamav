@@ -17,7 +17,7 @@ None.
 ## Role Variables ##
 
 | Variable | Description | Default | Required |
-|----------|-------------|---------|----------|
+| -------- | ----------- | ------- | -------- |
 | clamav_clamd_configuration | A dictionary of values to set in the clamd configuration file. | `{}` | No |
 | clamav_configuration_backup | Whether or not to backup configuration files before changing. | `false` | No |
 | clamav_freshclam_configuration | A dictionary of values to set in the freshclam configuration file. | `{}` | No |
