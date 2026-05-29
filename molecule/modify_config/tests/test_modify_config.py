@@ -29,7 +29,7 @@ def read_configuration_file(host, software_name):
         file_path = file_paths["redhat"][software_name]
     else:
         # We don't support this distribution
-        assert False, f"Unsupported distribution {host.system_info.distribution}"
+        raise ValueError(f"Unsupported distribution {host.system_info.distribution}")
 
     file_content = host.file(file_path).content_string
     file_lines = file_content.splitlines()
@@ -56,7 +56,7 @@ def test_freshclam_conf(host):
         elif words[0] == "Bytecode":
             # Should not be there
             """Test Bytecode existence"""
-            assert False, "Bytecode should not exist"
+            raise AssertionError('Key "Bytecode" should not exist')
 
     assert len(databaseMirror_list_assertion) == 0
 

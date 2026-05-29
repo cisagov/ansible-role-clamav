@@ -62,7 +62,7 @@ def test_services(host):
         ]
     else:
         # We don't support this distribution
-        assert False
+        raise ValueError(f"Unsupported distribution {distribution}")
 
     for service in services:
         svc = host.service(service["name"])
